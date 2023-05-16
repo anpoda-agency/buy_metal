@@ -1,4 +1,4 @@
-import 'package:buy_metal_app/widgets/label_widget.dart';
+import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegPage extends StatefulWidget {
