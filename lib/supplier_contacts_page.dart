@@ -18,18 +18,18 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
           child: Text('Описание предложения'),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'РЕКВИЗИТЫ',
                 style: TextStyle(fontSize: 40, color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Align(
@@ -38,33 +38,33 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Полное наименование организации:',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SelectableText(
+                    const SelectableText(
                       'Общество с ограниченной ответственностью "МЕТАЛЛ"',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    SizedBox(height: 5),
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       'ЮРИДИЧЕСКИЙ АДРЕС:',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SelectableText(
+                    const SelectableText(
                       '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    SizedBox(height: 5),
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       'Почтовый адрес:',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SelectableText(
+                    const SelectableText(
                       '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     //SelectableText(data)
 
                     // ИНН 7712345678
@@ -72,13 +72,13 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   ],
                 ),
               ),
-              SelectableText(''),
-              SizedBox(height: 100),
-              Text(
+              const SelectableText(''),
+              const SizedBox(height: 100),
+              const Text(
                 'КОНТАКТЫ',
                 style: TextStyle(fontSize: 40, color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Align(
@@ -87,24 +87,24 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Электронная почта:',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SelectableText(
+                    const SelectableText(
                       'info@metall.ru',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    SizedBox(height: 5),
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       'Телефон:',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SelectableText(
+                    const SelectableText(
                       '+749512345678',
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
 
                     /*
                     const Text(

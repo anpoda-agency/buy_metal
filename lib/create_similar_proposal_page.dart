@@ -68,8 +68,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                     style: TextStyle(fontSize: 25, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
-                  const Row(
-                    children: [
+                  Row(
+                    children: const [
                       Text(
                         'Цена за кг:',
                         style: TextStyle(fontSize: 20, color: Colors.black),
@@ -97,8 +97,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           ),
                     ),
                   ),
-                  const Row(
-                    children: [
+                  Row(
+                    children: const [
                       Text(
                         'Наличие:',
                         style: TextStyle(fontSize: 20, color: Colors.black),

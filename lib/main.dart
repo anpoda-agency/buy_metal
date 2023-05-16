@@ -50,7 +50,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
         '/home_page': (context) => const HomePage(), // new 1.0 start page
 
