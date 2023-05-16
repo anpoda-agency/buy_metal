@@ -193,7 +193,7 @@ class _RegPageState extends State<RegPage> {
                                 _passwordController.text ==
                                     _confirmPasswordController.text) {
                               Navigator.pushNamed(
-                                  context, '/buyer_workplace_page');
+                                  context, '/supplier_workplace_page');
                             }
                           },
                           style: ElevatedButton.styleFrom(
