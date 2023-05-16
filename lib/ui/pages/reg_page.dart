@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/widgets/label_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegPage extends StatefulWidget {
@@ -33,10 +34,7 @@ class _RegPageState extends State<RegPage> {
                 children: [
                   const SizedBox.shrink(),
                   const Center(
-                    child: Text(
-                      'Регистрация',
-                      style: TextStyle(fontSize: 42, color: Colors.white),
-                    ),
+                    child: LabelWidget(title: 'Регистрация'),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

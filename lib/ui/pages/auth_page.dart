@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/widgets/label_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,10 +32,7 @@ class _AuthPageState extends State<AuthPage> {
                 children: [
                   const SizedBox.shrink(),
                   const Center(
-                    child: Text(
-                      'Авторизация',
-                      style: TextStyle(fontSize: 42, color: Colors.white),
-                    ),
+                    child: LabelWidget(title: 'Авторизация'),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

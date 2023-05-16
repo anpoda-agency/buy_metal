@@ -1,19 +1,19 @@
-import 'package:buy_metal_app/auth_page.dart';
-import 'package:buy_metal_app/buyer_orders_list_page.dart';
-import 'package:buy_metal_app/buyer_workplace_page.dart';
-import 'package:buy_metal_app/create_compliance_proposal_page.dart';
-import 'package:buy_metal_app/create_order_page.dart';
-import 'package:buy_metal_app/create_similar_proposal_page.dart';
-import 'package:buy_metal_app/description_of_buyer_order_page.dart';
-import 'package:buy_metal_app/description_of_supplier_proposal_page.dart';
-import 'package:buy_metal_app/home_page.dart';
-import 'package:buy_metal_app/reg_page.dart';
-import 'package:buy_metal_app/selected_buyer_list_of_orders_page.dart';
-import 'package:buy_metal_app/selection_of_create_proposal_page.dart';
-import 'package:buy_metal_app/supplier_contacts_page.dart';
-import 'package:buy_metal_app/supplier_proposals_list_page.dart';
-import 'package:buy_metal_app/supplier_workplace_page.dart';
-import 'package:buy_metal_app/suppliers_list_page.dart';
+import 'package:buy_metal_app/ui/pages/auth_page.dart';
+import 'package:buy_metal_app/ui/pages/buyer_orders_list_page.dart';
+import 'package:buy_metal_app/ui/pages/buyer_workplace_page.dart';
+import 'package:buy_metal_app/ui/pages/create_compliance_proposal_page.dart';
+import 'package:buy_metal_app/ui/pages/create_order_page.dart';
+import 'package:buy_metal_app/ui/pages/create_similar_proposal_page.dart';
+import 'package:buy_metal_app/ui/pages/description_of_buyer_order_page.dart';
+import 'package:buy_metal_app/ui/pages/description_of_supplier_proposal_page.dart';
+import 'package:buy_metal_app/ui/pages/home_page.dart';
+import 'package:buy_metal_app/ui/pages/reg_page.dart';
+import 'package:buy_metal_app/ui/pages/selected_buyer_list_of_orders_page.dart';
+import 'package:buy_metal_app/ui/pages/selection_of_create_proposal_page.dart';
+import 'package:buy_metal_app/ui/pages/supplier_contacts_page.dart';
+import 'package:buy_metal_app/ui/pages/supplier_proposals_list_page.dart';
+import 'package:buy_metal_app/ui/pages/supplier_workplace_page.dart';
+import 'package:buy_metal_app/ui/pages/suppliers_list_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -46,10 +46,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       routes: {
         '/home_page': (context) => const HomePage(), // new 1.0 start page
 
@@ -110,73 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     //var repo = GetIt.instance.get<MainRepository>();
-
     return const HomePage();
-
-    /*
-    Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              repo.pipi,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-      ),
-    );
-    */
   }
 }
-
-/*
-import 'package:buy_metal_app/start_page.dart';
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AnMetal',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black87,
-        )
-        //primarySwatch: Colors.blue,
-      ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: {
-        
-        '/start_page':(context) => const StartWidget(), // new 1.0 start page
-
-   
-
-        /*
-        
-        '/supplier_proposal_'   //ПО МОЕМУ ЭТО ЛИШНЕЕ ЧТО ТО 
-        '/buyers_list_page' 2.1   //ПО МОЕМУ ЭТО ЛИШНЕЕ
-
-        */
-
-        // косяки с логикой названий страниц, переписать селлеров на правые экраны по схеме, а экраны на схеме с поставщиком переименовать в баеров
-      },
-      initialRoute: '/start_page',
-    );
-  }
-}
-*/

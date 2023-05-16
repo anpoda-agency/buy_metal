@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,10 +19,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox.shrink(),
-            const Text(
-              'BuyMetal',
-              style: TextStyle(fontSize: 42, color: Colors.white),
-            ),
+            const LabelWidget(title: 'BuyMetal'),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Column(
