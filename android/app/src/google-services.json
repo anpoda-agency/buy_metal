@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "667451689375",
+    "project_id": "anmetal-72487",
+    "storage_bucket": "anmetal-72487.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667451689375:android:2e85ac9c87d1a8b38495aa",
+        "android_client_info": {
+          "package_name": "com.example.buy_metal_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667451689375-9r0cik9br89b03rf7knodrakv8s3fb3v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buy_metal_app",
+            "certificate_hash": "9f2e226586b6d42bb4bb2f5e74ed3258aec5e29d"
+          }
+        },
+        {
+          "client_id": "667451689375-dplb319htl2lgt25cg6096dogvhrtknr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoXWzMysUo_Wtwrq4ojjHnmnoNf_XAGNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667451689375-dplb319htl2lgt25cg6096dogvhrtknr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
