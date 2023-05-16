@@ -69,9 +69,9 @@ class _CreateComplianceProposalPageState
                     style: TextStyle(fontSize: 25, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
-                  Row(
+                  const Row(
                     children: [
-                      const Text(
+                      Text(
                         'Цена за кг:',
                         style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -117,9 +117,9 @@ class _CreateComplianceProposalPageState
                           ),
                     ),
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      const Text(
+                      Text(
                         'Наличие:',
                         style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -152,14 +152,14 @@ class _CreateComplianceProposalPageState
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   const Text(
                     'Дата поступления на склад поставщика:',
                     style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   const Text(
@@ -168,7 +168,7 @@ class _CreateComplianceProposalPageState
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
