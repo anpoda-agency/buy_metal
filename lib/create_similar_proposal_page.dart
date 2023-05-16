@@ -4,7 +4,8 @@ class CreateSimilarProposalPage extends StatefulWidget {
   const CreateSimilarProposalPage({super.key});
 
   @override
-  State<CreateSimilarProposalPage> createState() => _CreateSimilarProposalPageState();
+  State<CreateSimilarProposalPage> createState() =>
+      _CreateSimilarProposalPageState();
 }
 
 class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
@@ -12,56 +13,102 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.grey,
-      appBar: AppBar(backgroundColor: Colors.black87,title: const Center(child: Text('Описание предложения'),),),
-     body: Center(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: const Center(
+          child: Text('Описание предложения'),
+        ),
+      ),
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              const Text('ООО "МЕТАЛЛ" г. Москва', style: TextStyle(fontSize: 20, color: Colors.black),),
+              const Text(
+                'ООО "МЕТАЛЛ" г. Москва',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
               const SizedBox(height: 10),
-              const Text('АНАЛОГ', style: TextStyle(fontSize: 20, color: Colors.black),),
-              const SizedBox(height: 15,),
+              const Text(
+                'АНАЛОГ',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Сортамент:', style: TextStyle(fontSize: 20, color: Colors.black),),
-                  const Text('Лист 2x1250x2500', style: TextStyle(fontSize: 25, color: Colors.black),),
+                  const Text(
+                    'Сортамент:',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  const Text(
+                    'Лист 2x1250x2500',
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                  ),
                   const SizedBox(height: 5),
-                  const Text('Требования к параметрам проката:', style: TextStyle(fontSize: 20, color: Colors.black),),
-                  const Text('БТ-ПО ГОСТ 19904-90', style: TextStyle(fontSize: 25, color: Colors.black),),
+                  const Text(
+                    'Требования к параметрам проката:',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  const Text(
+                    'БТ-ПО ГОСТ 19904-90',
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                  ),
                   const SizedBox(height: 5),
-                  const Text('Требования к марке металла:', style: TextStyle(fontSize: 20, color: Colors.black),),
-                  const Text('08пс-II-Г ГОСТ 16523-97', style: TextStyle(fontSize: 25, color: Colors.black),),
+                  const Text(
+                    'Требования к марке металла:',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                  const Text(
+                    '08пс-II-Г ГОСТ 16523-97',
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                  ),
                   const SizedBox(height: 10),
                   const Row(
                     children: [
-                      Text('Цена за кг:', style: TextStyle(fontSize: 20, color: Colors.black),),
+                      Text(
+                        'Цена за кг:',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                       Expanded(
-                        child: NDSWidget(startBool: [true, false],),
+                        child: NDSWidget(
+                          startBool: [true, false],
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width, 
-                  //height: 120, 
-                  //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
-                       child: TextFormField(
-                        //decoration: InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 30),),
-                    //initialValue: 'Выберите прокат',
-                       ),
+                      width: MediaQuery.of(context).size.width,
+                      //height: 120,
+                      //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
+                      child: TextFormField(
+                          //decoration: InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 30),),
+                          //initialValue: 'Выберите прокат',
+                          ),
                     ),
-                 ),
-                 const Row(
+                  ),
+                  const Row(
                     children: [
-                      Text('Наличие:', style: TextStyle(fontSize: 20, color: Colors.black),),
+                      Text(
+                        'Наличие:',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                       Expanded(
-                        child: Row(
+                        child: AvailableWidget(
+                          startBool: [true, false],
+                        ),
+                        /*
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -71,36 +118,51 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                             SizedBox(width: 25,),
                           ],
                         ),
+                        */
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30,),
-                  const Text('Дата поступления на склад поставщика:', style: TextStyle(fontSize: 15, color: Colors.black),),
-                  const SizedBox(height: 5,),
-                  const Text('19.02.2024', style: TextStyle(fontSize: 20, color: Colors.black),),
-                  
-
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    'Дата поступления на склад поставщика:',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    '19.02.2024',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
                 ],
               ),
-              const SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width, 
-                height: 60,
-                child: ElevatedButton(onPressed: () {
-                  //Navigator.pushNamed(context, '/supplier_contacts_page'); 
-                  }, 
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
-                            //side: BorderSide(width:8, color: Colors.yellow),
-                    shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      //Navigator.pushNamed(context, '/supplier_contacts_page');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      //side: BorderSide(width:8, color: Colors.yellow),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                    child: const Text(
+                      'ОТПРАВИТЬ',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                child: const Text('ОТПРАВИТЬ', style: TextStyle(fontSize: 20),),),),
-                
-            ),
-   
+                ),
+              ),
             ],
           ),
         ),
@@ -134,27 +196,89 @@ class _NDSWidgetState extends State<NDSWidget> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
-      children: listBool.map((e) => Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: InkWell(
-              onTap: () {
-                setState(() {
-                  if (listBool.indexOf(e) == 0){
-                    listBool = [true, false];
-                  } else {
-                    listBool = [false, true];
-                  }
-                });
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                 borderRadius: BorderRadius.circular(5),
-                  color: e ? Colors.orange : Colors.grey
+      children: listBool
+          .map((e) => Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (listBool.indexOf(e) == 0) {
+                        listBool = [true, false];
+                      } else {
+                        listBool = [false, true];
+                      }
+                    });
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: e ? Colors.orange : Colors.grey),
+                      child: Text(
+                        listNames[listBool.indexOf(e)],
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: e ? Colors.white : Colors.black),
+                      )),
                 ),
-              child:  Text(listNames[listBool.indexOf(e)], style: TextStyle(fontSize: 20, color: e  ? Colors.white : Colors.black),)),
-          ),
-      )).toList(),
+              ))
+          .toList(),
+    );
+  }
+}
+
+class AvailableWidget extends StatefulWidget {
+  const AvailableWidget({super.key, required this.startBool});
+  final List<bool> startBool;
+
+  @override
+  State<AvailableWidget> createState() => _AvailableWidgetState();
+}
+
+class _AvailableWidgetState extends State<AvailableWidget> {
+  List<bool> listBool = [];
+  List<String> listNames = ['НЕТ', 'ДА'];
+
+  @override
+  void initState() {
+    listBool.addAll(widget.startBool);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: listBool
+          .map((e) => Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (listBool.indexOf(e) == 0) {
+                        listBool = [true, false];
+                      } else {
+                        listBool = [false, true];
+                      }
+                    });
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: e ? Colors.orange : Colors.grey),
+                      child: Text(
+                        listNames[listBool.indexOf(e)],
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: e ? Colors.white : Colors.black),
+                      )),
+                ),
+              ))
+          .toList(),
     );
   }
 }

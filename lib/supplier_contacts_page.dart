@@ -12,18 +12,118 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.grey,
-      appBar: AppBar(backgroundColor: Colors.black87,title: const Center(child: Text('Описание предложения'),),),
-     body: Center(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: const Center(
+          child: Text('Описание предложения'),
+        ),
+      ),
+      body: const Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-              const Text('РЕКВИЗИТЫ', style: TextStyle(fontSize: 40, color: Colors.black),),
-              const SizedBox(height: 200),
+              const Text(
+                'РЕКВИЗИТЫ',
+                style: TextStyle(fontSize: 40, color: Colors.black),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Полное наименование организации:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      'Общество с ограниченной ответственностью "МЕТАЛЛ"',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'ЮРИДИЧЕСКИЙ АДРЕС:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'Почтовый адрес:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 10),
+                    //SelectableText(data)
 
-              const Text('КОНТАКТЫ', style: TextStyle(fontSize: 40, color: Colors.black),),
+                    // ИНН 7712345678
+                    //ОГРН 1047712345678
+                  ],
+                ),
+              ),
+              SelectableText(''),
+              const SizedBox(height: 100),
+              const Text(
+                'КОНТАКТЫ',
+                style: TextStyle(fontSize: 40, color: Colors.black),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Электронная почта:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      'info@metall.ru',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'Телефон:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      '+749512345678',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 5),
+
+                    /*
+                    const Text(
+                      'Почтовый адрес:',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SelectableText(
+                      '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    const SizedBox(height: 10),
+                    */
+                    //SelectableText(data)
+
+                    // ИНН 7712345678
+                    //ОГРН 1047712345678
+                  ],
+                ),
+              ),
 
               /*
               const Text('СООТВЕТСТВИЕ или АНАЛОГ', style: TextStyle(fontSize: 20, color: Colors.black),),
