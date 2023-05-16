@@ -9,6 +9,9 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +47,7 @@ class _AuthPageState extends State<AuthPage> {
                         height: 10,
                       ),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.grey[300],
@@ -69,6 +73,7 @@ class _AuthPageState extends State<AuthPage> {
                         height: 10,
                       ),
                       TextField(
+                        controller: _passwordController,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.grey[300],
@@ -91,8 +96,11 @@ class _AuthPageState extends State<AuthPage> {
                         height: 75,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(
-                                context, '/buyer_workplace_page');
+                            if (_emailController.text.isNotEmpty &&
+                                _passwordController.text.isNotEmpty) {
+                              Navigator.pushNamed(
+                                  context, '/buyer_workplace_page');
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],

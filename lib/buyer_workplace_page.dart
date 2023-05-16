@@ -7,12 +7,11 @@ class BuyerWorkplacePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: const Center(
-          child: Text('AnMetal'),
-        ),
+        backgroundColor: Colors.grey[900],
+        title: const Text('РП Заказчика'),
+        elevation: 0,
       ),
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.grey[900],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +26,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     Navigator.pushNamed(context, '/buyer_orders_list_page');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
+                    primary: Colors.orange[700],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -48,8 +47,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     Navigator.pushNamed(context, '/create_order_page');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
-                    //side: BorderSide(width:8, color: Colors.yellow),
+                    primary: Colors.orange[700],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
