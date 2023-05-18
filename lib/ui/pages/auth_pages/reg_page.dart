@@ -10,10 +10,18 @@ class RegPage extends StatefulWidget {
 
 class _RegPageState extends State<RegPage> {
   int _selectedType = 0;
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _ownerNameController = TextEditingController();
+  final TextEditingController _adressController = TextEditingController();
+  final TextEditingController _innController = TextEditingController();
+  final TextEditingController _ogrnController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,16 +33,21 @@ class _RegPageState extends State<RegPage> {
       backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.85,
+          // height: MediaQuery.of(context).size.height * 0.85,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox.shrink(),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   const Center(
                     child: LabelWidget(title: 'Регистрация'),
+                  ),
+                  const SizedBox(
+                    height: 50,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,83 +117,46 @@ class _RegPageState extends State<RegPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        'Эл. почта',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      RegFieldWidget(
+                        controller: _ownerNameController,
+                        title: 'ФИО Генерального Директора',
+                        inputType: TextInputType.text,
                       ),
+                      RegFieldWidget(
+                        controller: _companyNameController,
+                        title: 'Наименование организации',
+                        inputType: TextInputType.text,
+                      ),
+                      RegFieldWidget(
+                          controller: _adressController,
+                          title: 'Фактический адрес',
+                          inputType: TextInputType.text),
+                      RegFieldWidget(
+                          controller: _innController,
+                          title: 'ИНН',
+                          inputType: TextInputType.number),
+                      RegFieldWidget(
+                          controller: _ogrnController,
+                          title: 'ОГРН',
+                          inputType: TextInputType.number),
+                      RegFieldWidget(
+                          controller: _phoneController,
+                          title: 'Телефон',
+                          inputType: TextInputType.phone),
+                      RegFieldWidget(
+                          controller: _emailController,
+                          title: 'Эл. почта',
+                          inputType: TextInputType.emailAddress),
+                      RegFieldWidget(
+                          controller: _passwordController,
+                          title: 'Пароль',
+                          inputType: TextInputType.text),
+                      RegFieldWidget(
+                          controller: _confirmPasswordController,
+                          title: 'Подтвердите пароль',
+                          inputType: TextInputType.text),
                       const SizedBox(
                         height: 10,
-                      ),
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey[300],
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(color: Colors.white)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                                borderRadius: BorderRadius.circular(15))),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Пароль',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey[300],
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(color: Colors.white)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                                borderRadius: BorderRadius.circular(15))),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Подтвердите пароль',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey[300],
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(color: Colors.white)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                                borderRadius: BorderRadius.circular(15))),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(
-                        height: 30,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
@@ -189,7 +165,13 @@ class _RegPageState extends State<RegPage> {
                           onPressed: () {
                             if (_emailController.text.isNotEmpty &&
                                 _passwordController.text ==
-                                    _confirmPasswordController.text) {
+                                    _confirmPasswordController.text &&
+                                _adressController.text.isNotEmpty &&
+                                _companyNameController.text.isNotEmpty &&
+                                _innController.text.isNotEmpty &&
+                                _ogrnController.text.isNotEmpty &&
+                                _ownerNameController.text.isNotEmpty &&
+                                _phoneController.text.isNotEmpty) {
                               Navigator.pushNamed(
                                   context, '/supplier_workplace_page');
                             }
@@ -205,11 +187,64 @@ class _RegPageState extends State<RegPage> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 20,
+                      )
                     ],
                   ),
                 ]),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class RegFieldWidget extends StatefulWidget {
+  const RegFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.title,
+      required this.inputType});
+  final TextEditingController controller;
+  final String title;
+  final TextInputType inputType;
+
+  @override
+  State<RegFieldWidget> createState() => _RegFieldWidgetState();
+}
+
+class _RegFieldWidgetState extends State<RegFieldWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: widget.controller,
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[300],
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Colors.white)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(15))),
+            keyboardType: widget.inputType,
+          ),
+        ],
       ),
     );
   }
