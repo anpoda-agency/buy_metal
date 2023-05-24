@@ -1,51 +1,74 @@
-class UserModel {
-  final String id;
-  final String login;
-  final String password;
-  final String companyName;
-  final bool isSupplier;
-  final bool isBuyer;
-  final String companyAderss;
-  final String email;
-  final String phone;
-  final String managerName;
+import 'package:json_annotation/json_annotation.dart';
 
-  const UserModel({
-    this.id = '',
-    this.login = '',
-    this.password = '',
-    this.companyName = '',
-    this.isSupplier = false,
-    this.isBuyer = false,
-    this.companyAderss = '',
-    this.email = '',
-    this.phone = '',
-    this.managerName = '',
-  });
+part 'user_model.g.dart';
+
+@JsonSerializable()
+class UserModel {
+  @JsonKey(name: 'id')
+  final String id;
+  @JsonKey(name: 'login')
+  final String login;
+  @JsonKey(name: 'password')
+  final String password;
+  @JsonKey(name: 'company_name')
+  final String companyName;
+  @JsonKey(name: 'type')
+  final String type;
+  @JsonKey(name: 'company_adress')
+  final String companyAdress;
+  @JsonKey(name: 'email')
+  final String email;
+  @JsonKey(name: 'phone')
+  final String phone;
+  @JsonKey(name: 'user_fio')
+  final String userFIO;
+  @JsonKey(name: 'inn')
+  final String inn;
+  @JsonKey(name: 'post')
+  final String post;
+
+  const UserModel(
+      {this.id = '',
+      this.login = '',
+      this.password = '',
+      this.companyName = '',
+      this.type = '',
+      this.companyAdress = '',
+      this.email = '',
+      this.phone = '',
+      this.userFIO = '',
+      this.inn = '',
+      this.post = ''});
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   UserModel copyWith({
     String? id,
     String? login,
     String? password,
     String? companyName,
-    bool? isSupplier,
-    bool? isBuyer,
-    String? companyAderss,
+    String? type,
+    String? companyAdress,
     String? email,
     String? phone,
-    String? managerName,
+    String? userFIO,
+    String? inn,
+    String? post,
   }) {
     return UserModel(
       id: id ?? this.id,
       login: login ?? this.login,
       password: password ?? this.password,
       companyName: companyName ?? this.companyName,
-      isSupplier: isSupplier ?? this.isSupplier,
-      isBuyer: isBuyer ?? this.isBuyer,
-      companyAderss: companyAderss ?? this.companyAderss,
+      type: type ?? this.type,
+      companyAdress: companyAdress ?? this.companyAdress,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      managerName: managerName ?? this.managerName,
+      userFIO: userFIO ?? this.userFIO,
+      inn: inn ?? this.inn,
+      post: post ?? this.post,
     );
   }
 }

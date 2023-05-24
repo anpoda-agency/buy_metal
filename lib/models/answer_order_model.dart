@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'order_model.g.dart';
+part 'answer_order_model.g.dart';
 
 @JsonSerializable()
-class OrderModel {
+class AnswerOrderModel {
   @JsonKey(name: 'form_rental')
   final String formRental;
   @JsonKey(name: 'type')
@@ -22,12 +22,24 @@ class OrderModel {
   final String gostMaterial;
   @JsonKey(name: 'requirement')
   final String requirement;
-  @JsonKey(name: 'data_create')
-  final String dataCreate;
+  @JsonKey(name: 'data_answer')
+  final String dataAnswer;
   @JsonKey(name: 'id')
   final String id;
+  @JsonKey(name: 'price_tonne')
+  final String priceTonne;
+  @JsonKey(name: 'sum')
+  final String sum;
+  @JsonKey(name: 'availible')
+  final String availible;
+  @JsonKey(name: 'availability')
+  final String availability;
+  @JsonKey(name: 'date_arrive')
+  final String dateArrive;
+  @JsonKey(name: 'concidence')
+  final String concidence;
 
-  const OrderModel(
+  const AnswerOrderModel(
       {this.formRental = '',
       this.type = '',
       this.sizeRental = '',
@@ -37,14 +49,20 @@ class OrderModel {
       this.paramsMaterial = '',
       this.gostMaterial = '',
       this.requirement = '',
-      this.dataCreate = '',
-      this.id = ''});
+      this.priceTonne = '',
+      this.id = '',
+      this.availability = '',
+      this.availible = '',
+      this.concidence = '',
+      this.dataAnswer = '',
+      this.dateArrive = '',
+      this.sum = ''});
 
-  factory OrderModel.fromJson(Map<String, dynamic> json) =>
-      _$OrderModelFromJson(json);
-  Map<String, dynamic> toJson() => _$OrderModelToJson(this);
+  factory AnswerOrderModel.fromJson(Map<String, dynamic> json) =>
+      _$AnswerOrderModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AnswerOrderModelToJson(this);
 
-  OrderModel copyWith({
+  AnswerOrderModel copyWith({
     String? formRental,
     String? type,
     String? sizeRental,
@@ -54,10 +72,16 @@ class OrderModel {
     String? paramsMaterial,
     String? gostMaterial,
     String? requirement,
-    String? dataCreate,
+    String? dataAnswer,
     String? id,
+    String? priceTonne,
+    String? sum,
+    String? availible,
+    String? availability,
+    String? dateArrive,
+    String? concidence,
   }) {
-    return OrderModel(
+    return AnswerOrderModel(
       formRental: formRental ?? this.formRental,
       type: type ?? this.type,
       sizeRental: sizeRental ?? this.sizeRental,
@@ -67,8 +91,14 @@ class OrderModel {
       paramsMaterial: paramsMaterial ?? this.paramsMaterial,
       gostMaterial: gostMaterial ?? this.gostMaterial,
       requirement: requirement ?? this.requirement,
-      dataCreate: dataCreate ?? this.dataCreate,
+      dataAnswer: dataAnswer ?? this.dataAnswer,
       id: id ?? this.id,
+      priceTonne: priceTonne ?? this.priceTonne,
+      sum: sum ?? this.sum,
+      availible: availible ?? this.availible,
+      availability: availability ?? this.availability,
+      dateArrive: dateArrive ?? this.dateArrive,
+      concidence: concidence ?? this.concidence,
     );
   }
 }

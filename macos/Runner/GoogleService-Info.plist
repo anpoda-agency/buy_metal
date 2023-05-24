@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>737095072678-4kq4lt074e7j9aulc6dg6hlgjdspubp9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.737095072678-4kq4lt074e7j9aulc6dg6hlgjdspubp9</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>737095072678-hjv2bctaqo0m6i52epofi6oe9ehu1o23.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDR2_fLEvVCuDbyMQov3R7jNt2koTbaEBE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>737095072678</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.buyMetalApp</string>
+	<key>PROJECT_ID</key>
+	<string>anpoda-metal</string>
+	<key>STORAGE_BUCKET</key>
+	<string>anpoda-metal.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:737095072678:ios:902cc04027f8197b08ed67</string>
+</dict>
+</plist>

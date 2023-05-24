@@ -53,7 +53,7 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(
-                          context, '/supplier_proposals_list_page');
+                          context, '/description_of_supplier_proposal_page');
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

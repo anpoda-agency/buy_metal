@@ -8,92 +8,200 @@ class CreateOrderPage extends StatefulWidget {
 }
 
 class _CreateOrderPageState extends State<CreateOrderPage> {
+  final List<String> typeList = [
+    'Полоса',
+    'Круг',
+    'Квадрат',
+    'Проволока',
+    'Шестигранник',
+    'Швеллер',
+    'Двутавр',
+    'Уголок',
+    'Труба',
+    'Лист',
+    'Арматура'
+  ];
+  late String dropdownValue;
+  final TextEditingController testController = TextEditingController();
+
+  @override
+  void initState() {
+    dropdownValue = typeList.first;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.grey,
-      appBar: AppBar(backgroundColor: Colors.black87,title: const Center(child: Text('Создание заявки'),),),
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: const Text('Создание заявки'),
+        centerTitle: true,
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30),
-            const Text('Выберите прокат', style: TextStyle(fontSize: 30, color: Colors.black),),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width, 
-                //height: 120, 
-                //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
-                child: TextFormField(
-                  //maxLines: 1,
-                  //expands: true,
-                  decoration: InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 30),),
-                  //initialValue: 'Выберите прокат',
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Выберите форму проката *', //обязательное поле
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ],
                 ),
-                ),
-            ),
-            //const Text('AnMetal', style: TextStyle(fontSize: 50, color: Colors.white),),
-            //SizedBox(height: 150,),
-            
-            const SizedBox(height: 50),
-            const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: const Text('Указать требования к параметрам проката (в производной форме):', style: TextStyle(fontSize: 20, color: Colors.black),),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width, 
-                //height: 120, 
-                //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
-                child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 30),),
-                  //initialValue: 'Выберите прокат',
-                ),
-                ),
-            ),
-            
-             const SizedBox(height: 20),
-            const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: const Text('Указать требования к марке материала (в производной форме):', style: TextStyle(fontSize: 20, color: Colors.black),),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Container(
-                width: MediaQuery.of(context).size.width, 
-                //height: 120, 
-                //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
-                child: TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder(), contentPadding: EdgeInsets.symmetric(horizontal: 30),),
-                  //initialValue: 'Выберите прокат',
-                ),
-                ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width, 
-                height: 120, 
-                //decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(15)),
-                child: ElevatedButton(onPressed: () {
-                  //Navigator.pushNamed(context, '/buyer_orders_list_page'); 
-                  },
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
-                            //side: BorderSide(width:8, color: Colors.yellow),
-                    shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButton(
+                        value: dropdownValue,
+                        items: typeList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? val) {
+                          setState(() {
+                            dropdownValue = val ?? '';
+                          });
+                        }),
                   ),
-                child: const Text('Отправить на проработку', style: TextStyle(fontSize: 20),),),),
+                ),
+                const Text(
+                  '* на каждую форму проката должна формироваться новая заявка',
+                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ParamsFieldWidget(
+                  title: 'Классификация/тип профиля',
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'Размер проката, мм *', //обязательное поле
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'Параметры проката',
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'ГОСТ на прокат',
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'Марка материала *', //обязательное
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'Параметры материала',
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'ГОСТ на материал',
+                  controller: testController,
+                  inputType: TextInputType.text,
+                ),
+                ParamsFieldWidget(
+                  title: 'Потребность, т',
+                  controller: testController,
+                  inputType: TextInputType.number,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 65,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //Navigator.pushNamed(context, '/buyer_orders_list_page');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      child: const Text(
+                        'Разместить заявку',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            //SizedBox(height: 150,),
-       
-            //SizedBox(height: 150,),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class ParamsFieldWidget extends StatefulWidget {
+  const ParamsFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.title,
+      required this.inputType});
+  final TextEditingController controller;
+  final String title;
+  final TextInputType inputType;
+
+  @override
+  State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
+}
+
+class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: const TextStyle(fontSize: 20, color: Colors.black),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextField(
+            controller: widget.controller,
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[300],
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Colors.white)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(15))),
+            keyboardType: widget.inputType,
+          ),
+        ],
       ),
     );
   }

@@ -69,6 +69,11 @@ class _RegPageState extends State<RegPage> {
                               });
                             },
                             child: Container(
+                              alignment: Alignment.center,
+                              height: 65,
+                              width: MediaQuery.of(context).size.width * 0.5 -
+                                  16 -
+                                  5,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -78,7 +83,7 @@ class _RegPageState extends State<RegPage> {
                               child: Text(
                                 'Поставщиком',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 22,
                                     color: _selectedType == 0
                                         ? Colors.white
                                         : Colors.black),
@@ -96,6 +101,11 @@ class _RegPageState extends State<RegPage> {
                               });
                             },
                             child: Container(
+                              height: 65,
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.5 -
+                                  16 -
+                                  5,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -105,7 +115,7 @@ class _RegPageState extends State<RegPage> {
                               child: Text(
                                 'Заказчиком',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 22,
                                     color: _selectedType == 1
                                         ? Colors.white
                                         : Colors.black),
@@ -119,7 +129,12 @@ class _RegPageState extends State<RegPage> {
                       ),
                       RegFieldWidget(
                         controller: _ownerNameController,
-                        title: 'ФИО Генерального Директора',
+                        title: 'ФИО Пользователя',
+                        inputType: TextInputType.text,
+                      ),
+                      RegFieldWidget(
+                        controller: _ownerNameController,
+                        title: 'Должность в компании',
                         inputType: TextInputType.text,
                       ),
                       RegFieldWidget(
@@ -129,15 +144,11 @@ class _RegPageState extends State<RegPage> {
                       ),
                       RegFieldWidget(
                           controller: _adressController,
-                          title: 'Фактический адрес',
+                          title: 'Фактический адрес организации',
                           inputType: TextInputType.text),
                       RegFieldWidget(
                           controller: _innController,
                           title: 'ИНН',
-                          inputType: TextInputType.number),
-                      RegFieldWidget(
-                          controller: _ogrnController,
-                          title: 'ОГРН',
                           inputType: TextInputType.number),
                       RegFieldWidget(
                           controller: _phoneController,
@@ -149,11 +160,11 @@ class _RegPageState extends State<RegPage> {
                           inputType: TextInputType.emailAddress),
                       RegFieldWidget(
                           controller: _passwordController,
-                          title: 'Пароль',
+                          title: 'Придумайте пароль',
                           inputType: TextInputType.text),
                       RegFieldWidget(
                           controller: _confirmPasswordController,
-                          title: 'Подтвердите пароль',
+                          title: 'Повторите пароль',
                           inputType: TextInputType.text),
                       const SizedBox(
                         height: 10,
@@ -163,17 +174,22 @@ class _RegPageState extends State<RegPage> {
                         height: 75,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (_emailController.text.isNotEmpty &&
-                                _passwordController.text ==
-                                    _confirmPasswordController.text &&
-                                _adressController.text.isNotEmpty &&
-                                _companyNameController.text.isNotEmpty &&
-                                _innController.text.isNotEmpty &&
-                                _ogrnController.text.isNotEmpty &&
-                                _ownerNameController.text.isNotEmpty &&
-                                _phoneController.text.isNotEmpty) {
+                            if (_selectedType == 0
+                                // _emailController.text.isNotEmpty &&
+                                //   _passwordController.text ==
+                                //       _confirmPasswordController.text &&
+                                //   _adressController.text.isNotEmpty &&
+                                //   _companyNameController.text.isNotEmpty &&
+                                //   _innController.text.isNotEmpty &&
+                                //   _ogrnController.text.isNotEmpty &&
+                                //   _ownerNameController.text.isNotEmpty &&
+                                //   _phoneController.text.isNotEmpty
+                                ) {
+                              Navigator.pushNamed(context,
+                                  '/selected_buyer_list_of_orders_page');
+                            } else {
                               Navigator.pushNamed(
-                                  context, '/supplier_workplace_page');
+                                  context, '/buyer_workplace_page');
                             }
                           },
                           style: ElevatedButton.styleFrom(

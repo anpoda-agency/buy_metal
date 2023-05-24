@@ -13,93 +13,109 @@ class _DescriptionOfBuyerOrderPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: const Center(
-          child: Text('Описание предложения'),
-        ),
+        title: const Text('Описание предложения'),
+        centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              const Text(
-                'ООО "МЕТАЛЛ" г. Москва',
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'СООТВЕТСТВИЕ или АНАЛОГ',
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Сортамент:',
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    'ООО "ЗАКАЗЧИК" г. Москва',
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  Text(
-                    'Лист 2x1250x2500',
-                    style: TextStyle(fontSize: 25, color: Colors.black),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Требования к параметрам проката:',
+                ),
+                const Center(
+                  child: Text(
+                    'от 20.05.2023',
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  Text(
-                    'БТ-ПО ГОСТ 19904-90',
-                    style: TextStyle(fontSize: 25, color: Colors.black),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Требования к марке металла:',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Text(
-                    '08пс-II-Г ГОСТ 16523-97',
-                    style: TextStyle(fontSize: 25, color: Colors.black),
-                  ),
-                  SizedBox(height: 10),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, '/selection_of_create_proposal_page');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      //side: BorderSide(width:8, color: Colors.yellow),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Номенклатура:',
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Text(
+                  'Лист ОЦ 2х1250х2500', //форма проката + классификация/тип профиля + размер
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                const Text(
+                  'Б-ПН-НО ГОСТ 14904-90', //параметры проката + гост на прокат
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                const Text(
+                  '08КП МТ-2 ГОСТ14918-80', //марка материала + параметры материала + ГОСТ на материал
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: const [
+                    Text(
+                      'Потребность в заявке:',
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    child: const Text(
-                      'Сформировать предложение',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30),
+                    SizedBox(
+                      width: 10,
                     ),
+                    Text(
+                      '5.4 т',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ],
+                ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // const Text(
+                //   'Дата поступления на склад поставщика:',
+                //   style: TextStyle(fontSize: 16, color: Colors.grey),
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // const Text(
+                //   '19.02.2024',
+                //   style: TextStyle(fontSize: 20, color: Colors.black),
+                // ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, '/selection_of_create_proposal_page');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                  child: const Text(
+                    'Сформировать предложение',
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
