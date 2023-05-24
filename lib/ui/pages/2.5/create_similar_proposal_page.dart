@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/ui/pages/1.7/create_order_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateSimilarProposalPage extends StatefulWidget {
@@ -10,10 +11,33 @@ class CreateSimilarProposalPage extends StatefulWidget {
 }
 
 class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
-  final TextEditingController testController = TextEditingController();
+  //final TextEditingController testController = TextEditingController();
   int selectedValue = 0;
-  final TextEditingController priceController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
   double price = 0;
+
+  final String _formRolled = 'Лист';
+  final String _requirement = '5.4 т';
+  bool _inStock = false;
+  bool _notStock = false;
+
+  final TextEditingController _typeTextController = TextEditingController();
+  final TextEditingController _sizeRolledTextController =
+      TextEditingController();
+  final TextEditingController _paramsRolledTextController =
+      TextEditingController();
+  final TextEditingController _gostRolledTextController =
+      TextEditingController();
+  final TextEditingController _brandMaterialTextController =
+      TextEditingController();
+  final TextEditingController _paramsMaterialTextController =
+      TextEditingController();
+  final TextEditingController _gostMaterialTextController =
+      TextEditingController();
+  final TextEditingController _dateTextController = TextEditingController();
+
+  final CollectionReference _similarProposal =
+      FirebaseFirestore.instance.collection('similar_proposals');
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +69,16 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
               ),
               const SizedBox(height: 20),
               Row(
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Форма проката:',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
-                    'Лист',
+                    _formRolled,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],
@@ -67,50 +91,50 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
               const SizedBox(height: 10),
               ParamsFieldWidget(
                 title: 'Классификация/тип профиля *',
-                controller: testController,
+                controller: _typeTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'Размер проката, мм *', //обязательное поле
-                controller: testController,
+                controller: _sizeRolledTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'Параметры проката *',
-                controller: testController,
+                controller: _paramsRolledTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'ГОСТ на прокат',
-                controller: testController,
+                controller: _gostRolledTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'Марка материала *', //обязательное
-                controller: testController,
+                controller: _brandMaterialTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'Параметры материала',
-                controller: testController,
+                controller: _paramsMaterialTextController,
                 inputType: TextInputType.text,
               ),
               ParamsFieldWidget(
                 title: 'ГОСТ на материал',
-                controller: testController,
+                controller: _gostMaterialTextController,
                 inputType: TextInputType.text,
               ),
               Row(
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Потребность в заявке:',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
-                    '5.4 т',
+                    _requirement,
                     style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],
@@ -130,7 +154,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextField(
-                      controller: priceController,
+                      controller: _priceController,
                       onChanged: (val) {
                         if (val.isEmpty) {
                           setState(() {
@@ -202,6 +226,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                       onTap: () {
                         setState(() {
                           selectedValue = 1;
+                          _dateTextController.clear();
                         });
                       },
                       child: Container(
@@ -265,18 +290,18 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           height: 10,
                         ),
                         TextField(
-                          controller: priceController,
-                          onChanged: (val) {
-                            if (val.isEmpty) {
-                              setState(() {
-                                price = 0;
-                              });
-                            } else {
-                              setState(() {
-                                price = 5.4 * int.parse(val);
-                              });
-                            }
-                          },
+                          controller: _dateTextController,
+                          // onChanged: (val) {
+                          //   if (val.isEmpty) {
+                          //     setState(() {
+                          //       price = 0;
+                          //     });
+                          //   } else {
+                          //     setState(() {
+                          //       price = 5.4 * int.parse(val);
+                          //     });
+                          //   }
+                          // },
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey[300],
@@ -300,8 +325,36 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   width: MediaQuery.of(context).size.width,
                   height: 65,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       //Navigator.pushNamed(context, '/buyer_orders_list_page');
+
+                      if (selectedValue == 1) {
+                        _inStock = true;
+                        _notStock = false;
+                      } else if (selectedValue == 2) {
+                        _inStock = false;
+                        _notStock = true;
+                      }
+
+                      await _similarProposal.add({
+                        'form_rolled': _formRolled,
+                        "type": _typeTextController.text,
+                        "size_rolled": _sizeRolledTextController.text,
+                        'params_rolled': _paramsRolledTextController.text,
+                        'gost_rolled': _gostRolledTextController.text,
+                        'brand_material': _brandMaterialTextController.text,
+                        'params_material': _paramsMaterialTextController.text,
+                        'gost_material': _gostMaterialTextController.text,
+                        'requirement': _requirement,
+
+                        'price': price,
+                        //.toInt(),
+
+                        'in_stock': _inStock,
+                        'not_stock': _notStock,
+
+                        'date': _dateTextController.text,
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,

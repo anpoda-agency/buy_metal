@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/firebase_options.dart';
 import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
 import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
@@ -20,7 +21,7 @@ import 'repo/main_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
       //     options: const FirebaseOptions(
       //   apiKey: 'AIzaSyBoXWzMysUo_Wtwrq4ojjHnmnoNf_XAGNA',
       //   appId: '1:667451689375:android:2e85ac9c87d1a8b38495aa',
@@ -102,6 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return const HomePage();
   }
 }
+
+
+
+
+
+
 
 // import 'package:flutter/material.dart';
 // import 'package:firebase_core/firebase_core.dart';

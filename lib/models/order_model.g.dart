@@ -7,11 +7,11 @@ part of 'order_model.dart';
 // **************************************************************************
 
 OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
-      formRental: json['form_rental'] as String? ?? '',
+      formRolled: json['form_rental'] as String? ?? '',
       type: json['type'] as String? ?? '',
-      sizeRental: json['size_rental'] as String? ?? '',
-      paramsRental: json['params_rental'] as String? ?? '',
-      gostRental: json['gost_rental'] as String? ?? '',
+      sizeRolled: json['size_rental'] as String? ?? '',
+      paramsRolled: json['params_rental'] as String? ?? '',
+      gostRolled: json['gost_rental'] as String? ?? '',
       brandMaterial: json['brand_material'] as String? ?? '',
       paramsMaterial: json['params_material'] as String? ?? '',
       gostMaterial: json['gost_material'] as String? ?? '',
@@ -22,11 +22,11 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
 
 Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
     <String, dynamic>{
-      'form_rental': instance.formRental,
+      'form_rental': instance.formRolled,
       'type': instance.type,
-      'size_rental': instance.sizeRental,
-      'params_rental': instance.paramsRental,
-      'gost_rental': instance.gostRental,
+      'size_rental': instance.sizeRolled,
+      'params_rental': instance.paramsRolled,
+      'gost_rental': instance.gostRolled,
       'brand_material': instance.brandMaterial,
       'params_material': instance.paramsMaterial,
       'gost_material': instance.gostMaterial,

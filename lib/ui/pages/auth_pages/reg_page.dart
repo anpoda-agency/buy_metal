@@ -1,4 +1,6 @@
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegPage extends StatefulWidget {
@@ -10,6 +12,9 @@ class RegPage extends StatefulWidget {
 
 class _RegPageState extends State<RegPage> {
   int _selectedType = 0;
+  bool supplier = true;
+  bool buyer = false;
+  //bool _selectedType = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -17,10 +22,17 @@ class _RegPageState extends State<RegPage> {
       TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
+  final TextEditingController _postNameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
   final TextEditingController _innController = TextEditingController();
-  final TextEditingController _ogrnController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
+
+  Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
+    String action = 'create';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +41,14 @@ class _RegPageState extends State<RegPage> {
         toolbarHeight: 50,
         elevation: 0,
         backgroundColor: Colors.grey[900],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                    context, '/selected_buyer_list_of_orders_page');
+              },
+              icon: const Icon(Icons.logout_outlined)),
+        ],
       ),
       backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
@@ -133,7 +153,7 @@ class _RegPageState extends State<RegPage> {
                         inputType: TextInputType.text,
                       ),
                       RegFieldWidget(
-                        controller: _ownerNameController,
+                        controller: _postNameController,
                         title: 'Должность в компании',
                         inputType: TextInputType.text,
                       ),
@@ -173,24 +193,51 @@ class _RegPageState extends State<RegPage> {
                         width: MediaQuery.of(context).size.width,
                         height: 75,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_selectedType == 0
-                                // _emailController.text.isNotEmpty &&
-                                //   _passwordController.text ==
-                                //       _confirmPasswordController.text &&
-                                //   _adressController.text.isNotEmpty &&
-                                //   _companyNameController.text.isNotEmpty &&
-                                //   _innController.text.isNotEmpty &&
-                                //   _ogrnController.text.isNotEmpty &&
-                                //   _ownerNameController.text.isNotEmpty &&
-                                //   _phoneController.text.isNotEmpty
-                                ) {
-                              Navigator.pushNamed(context,
-                                  '/selected_buyer_list_of_orders_page');
-                            } else {
-                              Navigator.pushNamed(
-                                  context, '/buyer_workplace_page');
-                            }
+                          onPressed: () async {
+                            FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text)
+                                .then((value) async {
+                              if (_selectedType == 1) {
+                                supplier = false;
+                                buyer = true;
+                              }
+
+                              await _users.add({
+                                "user_fio": _ownerNameController.text,
+                                "post": _postNameController.text,
+                                'company_name': _companyNameController.text,
+                                'company_adress': _adressController.text,
+                                'inn': _innController.text,
+                                'phone': _phoneController.text,
+                                'email': _emailController.text,
+                                'password': _passwordController.text,
+                                'supplier': supplier,
+                                'buyer': buyer,
+                              });
+
+                              //final double? price =
+                              //double.tryParse(_priceController.text);
+
+                              if (_selectedType == 0
+                                  // _emailController.text.isNotEmpty &&
+                                  //   _passwordController.text ==
+                                  //       _confirmPasswordController.text &&
+                                  //   _adressController.text.isNotEmpty &&
+                                  //   _companyNameController.text.isNotEmpty &&
+                                  //   _innController.text.isNotEmpty &&
+                                  //   _ogrnController.text.isNotEmpty &&
+                                  //   _ownerNameController.text.isNotEmpty &&
+                                  //   _phoneController.text.isNotEmpty
+                                  ) {
+                                Navigator.pushNamed(context,
+                                    '/selected_buyer_list_of_orders_page');
+                              } else {
+                                Navigator.pushNamed(
+                                    context, '/buyer_workplace_page');
+                              }
+                            });
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],
@@ -265,3 +312,19 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
     );
   }
 }
+
+// ElevatedButton regButton(BuildContext context, Function onTap) {
+//   return ElevatedButton(
+//     onPressed: () {
+//       onTap();
+//     },
+//     style: ElevatedButton.styleFrom(
+//       primary: Colors.orange[700],
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//     ),
+//     child: const Text(
+//       'Зарегистрироваться',
+//       style: TextStyle(fontSize: 20),
+//     ),
+//   );
+// }
