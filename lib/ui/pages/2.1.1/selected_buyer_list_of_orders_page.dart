@@ -30,7 +30,6 @@ class _SelectedBuyerListOfOrdersPageState
           itemCount: products.length,
           itemBuilder: (BuildContext context, index) {
             return Padding(
-              //padding: const EdgeInsets.all(8.0),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -52,7 +51,8 @@ class _SelectedBuyerListOfOrdersPageState
                         alignment: Alignment.centerLeft,
                         child: Text(
                           products[index],
-                          style: TextStyle(fontSize: 25, color: Colors.white),
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.white),
                         )),
                   ),
                 ),
