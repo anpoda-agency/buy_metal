@@ -13,7 +13,7 @@ class UserModel {
   @JsonKey(name: 'company_name')
   final String companyName;
   @JsonKey(name: 'type')
-  final String type;
+  final bool type;
   @JsonKey(name: 'company_adress')
   final String companyAdress;
   @JsonKey(name: 'email')
@@ -32,7 +32,7 @@ class UserModel {
       this.login = '',
       this.password = '',
       this.companyName = '',
-      this.type = '',
+      this.type = false,
       this.companyAdress = '',
       this.email = '',
       this.phone = '',
@@ -49,7 +49,7 @@ class UserModel {
     String? login,
     String? password,
     String? companyName,
-    String? type,
+    bool? type,
     String? companyAdress,
     String? email,
     String? phone,

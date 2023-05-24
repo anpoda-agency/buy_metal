@@ -4,16 +4,16 @@ part 'order_model.g.dart';
 
 @JsonSerializable()
 class OrderModel {
-  @JsonKey(name: 'form_rental')
-  final String formRental;
+  @JsonKey(name: 'form_rolled')
+  final String formRolled;
   @JsonKey(name: 'type')
   final String type;
-  @JsonKey(name: 'size_rental')
-  final String sizeRental;
-  @JsonKey(name: 'params_rental')
-  final String paramsRental;
-  @JsonKey(name: 'gost_rental')
-  final String gostRental;
+  @JsonKey(name: 'size_rolled')
+  final String sizeRolled;
+  @JsonKey(name: 'params_rolled')
+  final String paramsRolled;
+  @JsonKey(name: 'gost_rolled')
+  final String gostRolled;
   @JsonKey(name: 'brand_material')
   final String brandMaterial;
   @JsonKey(name: 'params_material')
@@ -28,11 +28,11 @@ class OrderModel {
   final String id;
 
   const OrderModel(
-      {this.formRental = '',
+      {this.formRolled = '',
       this.type = '',
-      this.sizeRental = '',
-      this.paramsRental = '',
-      this.gostRental = '',
+      this.sizeRolled = '',
+      this.paramsRolled = '',
+      this.gostRolled = '',
       this.brandMaterial = '',
       this.paramsMaterial = '',
       this.gostMaterial = '',
@@ -45,11 +45,11 @@ class OrderModel {
   Map<String, dynamic> toJson() => _$OrderModelToJson(this);
 
   OrderModel copyWith({
-    String? formRental,
+    String? formRolled,
     String? type,
-    String? sizeRental,
-    String? paramsRental,
-    String? gostRental,
+    String? sizeRolled,
+    String? paramsRolled,
+    String? gostRolled,
     String? brandMaterial,
     String? paramsMaterial,
     String? gostMaterial,
@@ -58,11 +58,11 @@ class OrderModel {
     String? id,
   }) {
     return OrderModel(
-      formRental: formRental ?? this.formRental,
+      formRolled: formRolled ?? this.formRolled,
       type: type ?? this.type,
-      sizeRental: sizeRental ?? this.sizeRental,
-      paramsRental: paramsRental ?? this.paramsRental,
-      gostRental: gostRental ?? this.gostRental,
+      sizeRolled: sizeRolled ?? this.sizeRolled,
+      paramsRolled: paramsRolled ?? this.paramsRolled,
+      gostRolled: gostRolled ?? this.gostRolled,
       brandMaterial: brandMaterial ?? this.brandMaterial,
       paramsMaterial: paramsMaterial ?? this.paramsMaterial,
       gostMaterial: gostMaterial ?? this.gostMaterial,

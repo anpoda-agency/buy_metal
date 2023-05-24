@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateOrderPage extends StatefulWidget {
@@ -22,7 +23,29 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     'Арматура'
   ];
   late String dropdownValue;
-  final TextEditingController testController = TextEditingController();
+  //final TextEditingController testController = TextEditingController();
+  // final TextEditingController _formRolledTextController =
+  //     TextEditingController();
+  final TextEditingController _typeTextController = TextEditingController();
+  final TextEditingController _sizeRolledTextController =
+      TextEditingController();
+  final TextEditingController _paramsRolledTextController =
+      TextEditingController();
+  final TextEditingController _gostRolledTextController =
+      TextEditingController();
+  final TextEditingController _brandMaterialTextController =
+      TextEditingController();
+  final TextEditingController _paramsMaterialTextController =
+      TextEditingController();
+  final TextEditingController _gostMaterialTextController =
+      TextEditingController();
+  final TextEditingController _requirementTextController =
+      TextEditingController();
+  //final TextEditingController dataCreateTextController = TextEditingController();
+  //final TextEditingController idTextController = TextEditingController();
+
+  final CollectionReference _orders =
+      FirebaseFirestore.instance.collection('orders');
 
   @override
   void initState() {
@@ -47,9 +70,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Выберите форму проката *', //обязательное поле
                       style: TextStyle(fontSize: 20, color: Colors.black),
@@ -86,42 +109,42 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                 ),
                 ParamsFieldWidget(
                   title: 'Классификация/тип профиля',
-                  controller: testController,
+                  controller: _typeTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'Размер проката, мм *', //обязательное поле
-                  controller: testController,
+                  controller: _sizeRolledTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'Параметры проката',
-                  controller: testController,
+                  controller: _paramsRolledTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'ГОСТ на прокат',
-                  controller: testController,
+                  controller: _gostRolledTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'Марка материала *', //обязательное
-                  controller: testController,
+                  controller: _brandMaterialTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'Параметры материала',
-                  controller: testController,
+                  controller: _paramsMaterialTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'ГОСТ на материал',
-                  controller: testController,
+                  controller: _gostMaterialTextController,
                   inputType: TextInputType.text,
                 ),
                 ParamsFieldWidget(
                   title: 'Потребность, т',
-                  controller: testController,
+                  controller: _requirementTextController,
                   inputType: TextInputType.number,
                 ),
                 const SizedBox(
@@ -133,8 +156,21 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                     width: MediaQuery.of(context).size.width,
                     height: 65,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         //Navigator.pushNamed(context, '/buyer_orders_list_page');
+                        await _orders.add({
+                          'form_rolled': dropdownValue,
+                          "type": _typeTextController.text,
+                          "size_rolled": _sizeRolledTextController.text,
+                          'params_rolled': _paramsRolledTextController.text,
+                          'gost_rolled': _gostRolledTextController.text,
+                          'brand_material': _brandMaterialTextController.text,
+                          'params_material': _paramsMaterialTextController.text,
+                          'gost_material': _gostMaterialTextController.text,
+                          'requirement': _requirementTextController.text,
+                          //'supplier': supplier,
+                          //'buyer': buyer,
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange,
