@@ -33,7 +33,19 @@ void main() async {
       //   storageBucket: 'anmetal-72487.appspot.com',
       // )
       );
-  runApp(const MyApp());
+  initGetIt().then((value) => runApp(const MyApp()));
+  // runApp(const MyApp());
+}
+
+Future<void> initGetIt() async {
+  GetIt getIt = GetIt.instance;
+  var profile = ProfileRepository();
+  getIt.registerSingleton<ProfileRepository>(profile);
+  User? user =
+      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  if (user != null) {
+    getIt.get<ProfileRepository>().saveUser(id: user.uid);
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -45,25 +57,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   GetIt getIt = GetIt.instance;
-  late bool buyer;
-
-  initGetIt() {
-    var profile = ProfileRepository();
-    getIt.registerSingleton<ProfileRepository>(profile);
-  }
-
-  @override
-  void initState() {
-    initGetIt();
-    User? user =
-        FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
-    if (user != null) {
-      getIt.get<ProfileRepository>().saveUser(id: user.uid);
-    } else {
-      print('fuuuuuuuuuuuuuuuuuuuuuuuuuck');
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
