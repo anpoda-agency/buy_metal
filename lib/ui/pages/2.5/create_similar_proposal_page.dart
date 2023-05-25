@@ -46,6 +46,14 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
         backgroundColor: Colors.black87,
         title: const Text('Описание предложения'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/test_list_proposals_page');
+                //'/selected_buyer_list_of_orders_page');
+              },
+              icon: const Icon(Icons.start)),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

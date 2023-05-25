@@ -30,10 +30,6 @@ class _RegPageState extends State<RegPage> {
   final CollectionReference _users =
       FirebaseFirestore.instance.collection('users');
 
-  Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
-    String action = 'create';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,8 +199,11 @@ class _RegPageState extends State<RegPage> {
                                 supplier = false;
                                 buyer = true;
                               }
-
-                              await _users.add({
+                              User? user = FirebaseAuth.instance.currentUser;
+                              String userId = user?.uid ?? '';
+                              _users.doc(userId).set({
+                                // await _users.add({
+                                "id": user?.uid,
                                 "user_fio": _ownerNameController.text,
                                 "post": _postNameController.text,
                                 'company_name': _companyNameController.text,
@@ -216,6 +215,21 @@ class _RegPageState extends State<RegPage> {
                                 'supplier': supplier,
                                 'buyer': buyer,
                               });
+
+                              // final docData = {
+                              //   "id": user?.uid,
+                              //   "user_fio": _ownerNameController.text,
+                              //   "post": _postNameController.text,
+                              //   'company_name': _companyNameController.text,
+                              //   'company_adress': _adressController.text,
+                              //   'inn': _innController.text,
+                              //   'phone': _phoneController.text,
+                              //   'email': _emailController.text,
+                              //   'password': _passwordController.text,
+                              //   'supplier': supplier,
+                              //   'buyer': buyer,
+                              // };
+                              //_users.doc(user?.uid).set(docData);
 
                               //final double? price =
                               //double.tryParse(_priceController.text);
