@@ -45,6 +45,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   GetIt getIt = GetIt.instance;
+  late bool buyer;
 
   initGetIt() {
     var profile = ProfileRepository();
@@ -57,7 +58,9 @@ class _MyAppState extends State<MyApp> {
     User? user =
         FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
     if (user != null) {
-      context.read<GetIt>().get<ProfileRepository>().saveUser(id: user.uid);
+      getIt.get<ProfileRepository>().saveUser(id: user.uid);
+    } else {
+      print('fuuuuuuuuuuuuuuuuuuuuuuuuuck');
     }
     super.initState();
   }
@@ -111,13 +114,13 @@ class _MyAppState extends State<MyApp> {
           '/create_similar_proposal_page': (context) =>
               const CreateSimilarProposalPage(), //2.5
         },
-        initialRoute:
-            // '/home_page'
-            getIt.get<ProfileRepository>().user.id.isNotEmpty
-                ? getIt.get<ProfileRepository>().user.buyer
-                    ? '/buyer_workplace_page'
-                    : '/selected_buyer_list_of_orders_page'
-                : '/home_page',
+        home: getIt.get<ProfileRepository>().user.id.isNotEmpty
+            ? getIt.get<ProfileRepository>().user.buyer
+                ? const BuyerWorkplacePage()
+                : const SelectedBuyerListOfOrdersPage()
+            : const MyHomePage(
+                title: 'start',
+              ),
       ),
     );
   }

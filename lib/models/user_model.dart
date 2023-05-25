@@ -85,15 +85,14 @@ class UserModel {
     final data = snapshot.data();
     return UserModel(
       id: data?['id'],
-      login: data?['login'],
       password: data?['password'],
-      companyName: data?['companyName'],
+      companyName: data?['company_name'],
       buyer: data?['buyer'],
       supplier: data?['supplier'],
-      companyAdress: data?['companyAdress'],
+      companyAdress: data?['company_adress'],
       email: data?['email'],
       phone: data?['phone'],
-      userFIO: data?['userFIO'],
+      userFIO: data?['user_fio'],
       inn: data?['inn'],
       post: data?['post'],
     );
@@ -102,15 +101,14 @@ class UserModel {
   Map<String, dynamic> toFirestore() {
     return {
       if (id != null) "id": id,
-      if (login != null) "login": login,
       if (password != null) "password": password,
-      if (companyName != null) "companyName": companyName,
+      if (companyName != null) "company_name": companyName,
       if (buyer != null) "buyer": buyer,
       if (supplier != null) "supplier": supplier,
-      if (companyAdress != null) "companyAdress": companyAdress,
+      if (companyAdress != null) "company_adress": companyAdress,
       if (email != null) "email": email,
       if (phone != null) "phone": phone,
-      if (userFIO != null) "userFIO": userFIO,
+      if (userFIO != null) "user_fio": userFIO,
       if (inn != null) "inn": inn,
       if (post != null) "post": post,
     };

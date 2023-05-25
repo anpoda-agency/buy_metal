@@ -14,7 +14,8 @@ class ProfileRepository extends ChangeNotifier {
     final docSnap = await ref.get();
     final userDB = docSnap.data(); // Convert to City object
     user = userDB ?? const UserModel();
-
+    print(userDB?.id);
+    print(user.id);
     // if (user != null) {
     //   print(user);
     // } else {
