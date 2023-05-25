@@ -120,9 +120,12 @@
 //   }
 // }
 
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({
@@ -200,6 +203,10 @@ class _AuthPageState extends State<AuthPage> {
                                     email: _emailTextController.text,
                                     password: _passwordTextController.text)
                                 .then((value) {
+                              context
+                                  .read<GetIt>()
+                                  .get<ProfileRepository>()
+                                  .saveUser(id: value.user!.uid);
                               Navigator.pushNamed(
                                   context, '/buyer_workplace_page');
                             }),

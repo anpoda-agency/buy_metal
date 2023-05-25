@@ -1,4 +1,6 @@
 import 'package:buy_metal_app/firebase_options.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
+import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
 import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
 import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
@@ -13,11 +15,12 @@ import 'package:buy_metal_app/ui/pages/2.3/selection_of_create_proposal_page.dar
 import 'package:buy_metal_app/ui/pages/1.6/supplier_contacts_page.dart';
 import 'package:buy_metal_app/ui/pages/1.3/suppliers_list_page.dart';
 import 'package:buy_metal_app/ui/pages/home_page/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
-import 'repo/main_repository.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,60 +33,88 @@ void main() async {
       //   storageBucket: 'anmetal-72487.appspot.com',
       // )
       );
-  initGetIt();
-  runApp(const MyApp());
+  initGetIt().then((value) => runApp(const MyApp()));
+  // runApp(const MyApp());
 }
 
-initGetIt() {
-  GetIt locator = GetIt.instance;
-  locator.registerSingleton<MainRepository>(MainRepository());
+Future<void> initGetIt() async {
+  GetIt getIt = GetIt.instance;
+  var profile = ProfileRepository();
+  getIt.registerSingleton<ProfileRepository>(profile);
+  User? user =
+      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  if (user != null) {
+    getIt.get<ProfileRepository>().saveUser(id: user.uid);
+  }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  GetIt getIt = GetIt.instance;
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/home_page': (context) => const HomePage(), // new 1.0 start page
+    return MultiProvider(
+      providers: [
+        RepositoryProvider(create: (context) => getIt),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/test_list_proposals_page': (context) =>
+              const TestListProposals(), // тестовая страница для предложений
 
-        '/reg_page': (context) => const RegPage(), // registration
+          '/home_page': (context) => const HomePage(), // new 1.0 start page
 
-        '/auth_page': (context) => const AuthPage(), //1.0 authorization
+          '/reg_page': (context) => const RegPage(), // registration
 
-        '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
+          '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
-        '/buyer_orders_list_page': (context) =>
-            const BuyerOrdersListPage(), // 1.2
+          '/buyer_workplace_page': (context) =>
+              const BuyerWorkplacePage(), //1.1
 
-        '/suppliers_list_page': (context) => const SuppliersListPage(), //1.3
+          '/buyer_orders_list_page': (context) =>
+              const BuyerOrdersListPage(), // 1.2
 
-        '/description_of_supplier_proposal_page': (context) =>
-            const DescriptionOfSupplierProposalPage(), // 1.5
+          '/suppliers_list_page': (context) => const SuppliersListPage(), //1.3
 
-        '/supplier_contacts_page': (context) =>
-            const SupplierContactsPage(), // 1.6
+          '/description_of_supplier_proposal_page': (context) =>
+              const DescriptionOfSupplierProposalPage(), // 1.5
 
-        '/create_order_page': (context) => const CreateOrderPage(), //1.7
+          '/supplier_contacts_page': (context) =>
+              const SupplierContactsPage(), // 1.6
 
-        '/selected_buyer_list_of_orders_page': (context) =>
-            const SelectedBuyerListOfOrdersPage(), // 2.1.1
+          '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
-        '/description_of_buyer_order_page': (context) =>
-            const DescriptionOfBuyerOrderPage(), //2.2
+          '/selected_buyer_list_of_orders_page': (context) =>
+              const SelectedBuyerListOfOrdersPage(), // 2.1.1
 
-        '/selection_of_create_proposal_page': (context) =>
-            const SelectionOfCreateProposalPage(), //2.3
+          '/description_of_buyer_order_page': (context) =>
+              const DescriptionOfBuyerOrderPage(), //2.2
 
-        '/create_compliance_proposal_page': (context) =>
-            const CreateComplianceProposalPage(), //2.4
+          '/selection_of_create_proposal_page': (context) =>
+              const SelectionOfCreateProposalPage(), //2.3
 
-        '/create_similar_proposal_page': (context) =>
-            const CreateSimilarProposalPage(), //2.5
-      },
-      initialRoute: '/home_page',
+          '/create_compliance_proposal_page': (context) =>
+              const CreateComplianceProposalPage(), //2.4
+
+          '/create_similar_proposal_page': (context) =>
+              const CreateSimilarProposalPage(), //2.5
+        },
+        home: getIt.get<ProfileRepository>().user.id.isNotEmpty
+            ? getIt.get<ProfileRepository>().user.buyer
+                ? const BuyerWorkplacePage()
+                : const SelectedBuyerListOfOrdersPage()
+            : const MyHomePage(
+                title: 'start',
+              ),
+      ),
     );
   }
 }
