@@ -27,25 +27,17 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   // final TextEditingController _formRolledTextController =
   //     TextEditingController();
   final TextEditingController _typeTextController = TextEditingController();
-  final TextEditingController _sizeRolledTextController =
-      TextEditingController();
-  final TextEditingController _paramsRolledTextController =
-      TextEditingController();
-  final TextEditingController _gostRolledTextController =
-      TextEditingController();
-  final TextEditingController _brandMaterialTextController =
-      TextEditingController();
-  final TextEditingController _paramsMaterialTextController =
-      TextEditingController();
-  final TextEditingController _gostMaterialTextController =
-      TextEditingController();
-  final TextEditingController _requirementTextController =
-      TextEditingController();
+  final TextEditingController _sizeRolledTextController = TextEditingController();
+  final TextEditingController _paramsRolledTextController = TextEditingController();
+  final TextEditingController _gostRolledTextController = TextEditingController();
+  final TextEditingController _brandMaterialTextController = TextEditingController();
+  final TextEditingController _paramsMaterialTextController = TextEditingController();
+  final TextEditingController _gostMaterialTextController = TextEditingController();
+  final TextEditingController _requirementTextController = TextEditingController();
   //final TextEditingController dataCreateTextController = TextEditingController();
   //final TextEditingController idTextController = TextEditingController();
 
-  final CollectionReference _orders =
-      FirebaseFirestore.instance.collection('orders');
+  final CollectionReference _orders = FirebaseFirestore.instance.collection('orders');
 
   @override
   void initState() {
@@ -70,9 +62,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'Выберите форму проката *', //обязательное поле
                       style: TextStyle(fontSize: 20, color: Colors.black),
@@ -80,14 +72,12 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                   ],
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: DropdownButton(
                         value: dropdownValue,
-                        items: typeList
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: typeList.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -174,8 +164,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: const Text(
                         'Разместить заявку',
@@ -195,10 +184,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
 
 class ParamsFieldWidget extends StatefulWidget {
   const ParamsFieldWidget(
-      {super.key,
-      required this.controller,
-      required this.title,
-      required this.inputType});
+      {super.key, required this.controller, required this.title, required this.inputType});
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;

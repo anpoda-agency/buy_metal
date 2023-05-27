@@ -22,6 +22,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
+GetIt getIt = GetIt.instance;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
@@ -33,18 +35,17 @@ void main() async {
       //   storageBucket: 'anmetal-72487.appspot.com',
       // )
       );
-  initGetIt().then((value) => runApp(const MyApp()));
-  // runApp(const MyApp());
+  initGetIt();
+  runApp(const MyApp());
 }
 
-Future<void> initGetIt() async {
-  GetIt getIt = GetIt.instance;
+void initGetIt() async {
   var profile = ProfileRepository();
   getIt.registerSingleton<ProfileRepository>(profile);
-  User? user =
-      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  print(user?.uid);
   if (user != null) {
-    getIt.get<ProfileRepository>().saveUser(id: user.uid);
+    var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
   }
 }
 
@@ -56,7 +57,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  GetIt getIt = GetIt.instance;
+  bool loading = true;
+  @override
+  void initState() {
+    getIt.get<ProfileRepository>().addListener(() {
+      setState(() {
+        loading = false;
+      });
+    });
+    getIt.get<ProfileRepository>().user.id.isEmpty
+        ? setState(() {
+            loading = false;
+          })
+        : null;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    getIt.get<ProfileRepository>().removeListener(() {});
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +97,16 @@ class _MyAppState extends State<MyApp> {
 
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
-          '/buyer_workplace_page': (context) =>
-              const BuyerWorkplacePage(), //1.1
+          '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
 
-          '/buyer_orders_list_page': (context) =>
-              const BuyerOrdersListPage(), // 1.2
+          '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
 
           '/suppliers_list_page': (context) => const SuppliersListPage(), //1.3
 
           '/description_of_supplier_proposal_page': (context) =>
               const DescriptionOfSupplierProposalPage(), // 1.5
 
-          '/supplier_contacts_page': (context) =>
-              const SupplierContactsPage(), // 1.6
+          '/supplier_contacts_page': (context) => const SupplierContactsPage(), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
@@ -104,16 +122,19 @@ class _MyAppState extends State<MyApp> {
           '/create_compliance_proposal_page': (context) =>
               const CreateComplianceProposalPage(), //2.4
 
-          '/create_similar_proposal_page': (context) =>
-              const CreateSimilarProposalPage(), //2.5
+          '/create_similar_proposal_page': (context) => const CreateSimilarProposalPage(), //2.5
         },
-        home: getIt.get<ProfileRepository>().user.id.isNotEmpty
-            ? getIt.get<ProfileRepository>().user.buyer
-                ? const BuyerWorkplacePage()
-                : const SelectedBuyerListOfOrdersPage()
-            : const MyHomePage(
-                title: 'start',
-              ),
+        home: loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : getIt.get<ProfileRepository>().user.id.isNotEmpty
+                ? getIt.get<ProfileRepository>().user.buyer
+                    ? const BuyerWorkplacePage()
+                    : const SelectedBuyerListOfOrdersPage()
+                : const MyHomePage(
+                    title: 'start',
+                  ),
       ),
     );
   }
@@ -130,7 +151,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    //var repo = GetIt.instance.get<MainRepository>();
     return const HomePage();
   }
 }

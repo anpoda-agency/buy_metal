@@ -1,19 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'answer_order_model.g.dart';
+// part 'answer_order_model.g.dart';
 
 @JsonSerializable()
 class AnswerOrderModel {
-  @JsonKey(name: 'form_rental')
-  final String formRental;
+  @JsonKey(name: 'form_rolled')
+  final String formRolled;
   @JsonKey(name: 'type')
   final String type;
-  @JsonKey(name: 'size_rental')
-  final String sizeRental;
-  @JsonKey(name: 'params_rental')
-  final String paramsRental;
-  @JsonKey(name: 'gost_rental')
-  final String gostRental;
+  @JsonKey(name: 'size_rolled')
+  final String sizeRolled;
+  @JsonKey(name: 'params_rolled')
+  final String paramsRolled;
+  @JsonKey(name: 'gost_rolled')
+  final String gostRolled;
   @JsonKey(name: 'brand_material')
   final String brandMaterial;
   @JsonKey(name: 'params_material')
@@ -22,83 +24,128 @@ class AnswerOrderModel {
   final String gostMaterial;
   @JsonKey(name: 'requirement')
   final String requirement;
-  @JsonKey(name: 'data_answer')
-  final String dataAnswer;
+  @JsonKey(name: 'data_create')
+  final String dataCreate;
   @JsonKey(name: 'id')
   final String id;
-  @JsonKey(name: 'price_tonne')
-  final String priceTonne;
-  @JsonKey(name: 'sum')
-  final String sum;
-  @JsonKey(name: 'availible')
-  final String availible;
-  @JsonKey(name: 'availability')
-  final String availability;
-  @JsonKey(name: 'date_arrive')
-  final String dateArrive;
-  @JsonKey(name: 'concidence')
-  final String concidence;
+  @JsonKey(name: 'date_to_storage')
+  final String dateToStorage;
+  @JsonKey(name: 'on_stock')
+  final bool onStock;
+  @JsonKey(name: 'similar')
+  final bool similar;
+  @JsonKey(name: 'price_per_tonne')
+  final String pricePerTonne;
+  @JsonKey(name: 'price_full')
+  final String priceFull;
+  @JsonKey(name: 'id_supplier')
+  final String idSupplier;
 
   const AnswerOrderModel(
-      {this.formRental = '',
+      {this.formRolled = '',
+      this.dateToStorage = '',
+      this.onStock = false,
+      this.similar = false,
+      this.pricePerTonne = '',
+      this.priceFull = '',
       this.type = '',
-      this.sizeRental = '',
-      this.paramsRental = '',
-      this.gostRental = '',
+      this.sizeRolled = '',
+      this.paramsRolled = '',
+      this.gostRolled = '',
       this.brandMaterial = '',
       this.paramsMaterial = '',
       this.gostMaterial = '',
       this.requirement = '',
-      this.priceTonne = '',
-      this.id = '',
-      this.availability = '',
-      this.availible = '',
-      this.concidence = '',
-      this.dataAnswer = '',
-      this.dateArrive = '',
-      this.sum = ''});
+      this.dataCreate = '',
+      this.idSupplier = '',
+      this.id = ''});
 
-  factory AnswerOrderModel.fromJson(Map<String, dynamic> json) =>
-      _$AnswerOrderModelFromJson(json);
-  Map<String, dynamic> toJson() => _$AnswerOrderModelToJson(this);
+  // factory AnswerOrderModel.fromJson(Map<String, dynamic> json) =>
+  //     _$AnswerOrderModelFromJson(json);
+  // Map<String, dynamic> toJson() => _$AnswerOrderModelToJson(this);
 
-  AnswerOrderModel copyWith({
-    String? formRental,
-    String? type,
-    String? sizeRental,
-    String? paramsRental,
-    String? gostRental,
-    String? brandMaterial,
-    String? paramsMaterial,
-    String? gostMaterial,
-    String? requirement,
-    String? dataAnswer,
-    String? id,
-    String? priceTonne,
-    String? sum,
-    String? availible,
-    String? availability,
-    String? dateArrive,
-    String? concidence,
-  }) {
+  factory AnswerOrderModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
     return AnswerOrderModel(
-      formRental: formRental ?? this.formRental,
-      type: type ?? this.type,
-      sizeRental: sizeRental ?? this.sizeRental,
-      paramsRental: paramsRental ?? this.paramsRental,
-      gostRental: gostRental ?? this.gostRental,
-      brandMaterial: brandMaterial ?? this.brandMaterial,
-      paramsMaterial: paramsMaterial ?? this.paramsMaterial,
-      gostMaterial: gostMaterial ?? this.gostMaterial,
-      requirement: requirement ?? this.requirement,
-      dataAnswer: dataAnswer ?? this.dataAnswer,
-      id: id ?? this.id,
-      priceTonne: priceTonne ?? this.priceTonne,
-      sum: sum ?? this.sum,
-      availible: availible ?? this.availible,
-      availability: availability ?? this.availability,
-      dateArrive: dateArrive ?? this.dateArrive,
-      concidence: concidence ?? this.concidence,
-    );
+        id: data?['id'],
+        brandMaterial: data?['brand_material'],
+        gostMaterial: data?['gost_material'],
+        gostRolled: data?['gost_golled'],
+        paramsMaterial: data?['params_material'],
+        paramsRolled: data?['params_rolled'],
+        requirement: data?['requirement'],
+        sizeRolled: data?['size_rolled'],
+        type: data?['type'],
+        formRolled: data?['form_rolled'],
+        dataCreate: data?['data_create'],
+        dateToStorage: data?['data_to_storage'],
+        onStock: data?['on_stock'],
+        similar: data?['similar'],
+        pricePerTonne: data?['price_per_tonne'],
+        priceFull: data?['price_full'],
+        idSupplier: data?['id_supplier']);
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "id": id,
+      "brand_material": brandMaterial,
+      "gost_material": gostMaterial,
+      "gost_golled": gostRolled,
+      "params_material": paramsMaterial,
+      "params_rolled": paramsRolled,
+      "requirement": requirement,
+      "size_rolled": sizeRolled,
+      "type": type,
+      "form_rolled": formRolled,
+      "data_create": dataCreate,
+      "data_to_storage": dateToStorage,
+      "on_stock": onStock,
+      "similar": similar,
+      "price_per_tonne": pricePerTonne,
+      "price_full": priceFull,
+      "id_supplier": idSupplier
+    };
+  }
+
+  AnswerOrderModel copyWith(
+      {String? formRolled,
+      String? type,
+      String? sizeRolled,
+      String? paramsRolled,
+      String? gostRolled,
+      String? brandMaterial,
+      String? paramsMaterial,
+      String? gostMaterial,
+      String? requirement,
+      String? dataCreate,
+      String? id,
+      String? dateToStorage,
+      bool? onStock,
+      bool? similar,
+      String? pricePerTonne,
+      String? priceFull,
+      String? idSupplier}) {
+    return AnswerOrderModel(
+        formRolled: formRolled ?? this.formRolled,
+        type: type ?? this.type,
+        sizeRolled: sizeRolled ?? this.sizeRolled,
+        paramsRolled: paramsRolled ?? this.paramsRolled,
+        gostRolled: gostRolled ?? this.gostRolled,
+        brandMaterial: brandMaterial ?? this.brandMaterial,
+        paramsMaterial: paramsMaterial ?? this.paramsMaterial,
+        gostMaterial: gostMaterial ?? this.gostMaterial,
+        requirement: requirement ?? this.requirement,
+        dataCreate: dataCreate ?? this.dataCreate,
+        id: id ?? this.id,
+        dateToStorage: dateToStorage ?? this.dateToStorage,
+        onStock: onStock ?? this.onStock,
+        similar: similar ?? this.similar,
+        pricePerTonne: pricePerTonne ?? this.pricePerTonne,
+        priceFull: priceFull ?? this.priceFull,
+        idSupplier: idSupplier ?? this.idSupplier);
   }
 }

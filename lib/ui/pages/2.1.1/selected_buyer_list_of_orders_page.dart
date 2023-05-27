@@ -1,11 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SelectedBuyerListOfOrdersPage extends StatefulWidget {
   const SelectedBuyerListOfOrdersPage({super.key});
 
   @override
-  State<SelectedBuyerListOfOrdersPage> createState() =>
-      _SelectedBuyerListOfOrdersPageState();
+  State<SelectedBuyerListOfOrdersPage> createState() => _SelectedBuyerListOfOrdersPageState();
 }
 
 const List<String> products = <String>[
@@ -15,8 +15,7 @@ const List<String> products = <String>[
   'Шестигранник 16',
 ];
 
-class _SelectedBuyerListOfOrdersPageState
-    extends State<SelectedBuyerListOfOrdersPage> {
+class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +24,15 @@ class _SelectedBuyerListOfOrdersPageState
         backgroundColor: Colors.black87,
         title: const Text('Заявки заказчиков'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacementNamed(context, '/home_page');
+                });
+              },
+              icon: const Icon(Icons.logout_outlined)),
+        ],
       ),
       body: ListView.builder(
           itemCount: products.length,
@@ -42,8 +50,7 @@ class _SelectedBuyerListOfOrdersPageState
 
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, '/description_of_buyer_order_page');
+                    Navigator.pushNamed(context, '/description_of_buyer_order_page');
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
@@ -51,8 +58,7 @@ class _SelectedBuyerListOfOrdersPageState
                         alignment: Alignment.centerLeft,
                         child: Text(
                           products[index],
-                          style: const TextStyle(
-                              fontSize: 25, color: Colors.white),
+                          style: const TextStyle(fontSize: 25, color: Colors.white),
                         )),
                   ),
                 ),

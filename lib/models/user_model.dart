@@ -29,6 +29,8 @@ class UserModel {
   final bool buyer;
   @JsonKey(name: 'supplier')
   final bool supplier;
+  @JsonKey(name: 'list_orders')
+  final List<String> listOrders;
 
   const UserModel(
       {this.id = '',
@@ -42,40 +44,41 @@ class UserModel {
       this.phone = '',
       this.userFIO = '',
       this.inn = '',
-      this.post = ''});
+      this.post = '',
+      this.listOrders = const []});
 
   // factory UserModel.fromJson(Map<String, dynamic> json) =>
   //     _$UserModelFromJson(json);
   // Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
-  UserModel copyWith({
-    String? id,
-    String? login,
-    String? password,
-    String? companyName,
-    String? companyAdress,
-    String? email,
-    String? phone,
-    String? userFIO,
-    String? inn,
-    String? post,
-    bool? buyer,
-    bool? supplier,
-  }) {
+  UserModel copyWith(
+      {String? id,
+      String? login,
+      String? password,
+      String? companyName,
+      String? companyAdress,
+      String? email,
+      String? phone,
+      String? userFIO,
+      String? inn,
+      String? post,
+      bool? buyer,
+      bool? supplier,
+      List<String>? listOrders}) {
     return UserModel(
-      id: id ?? this.id,
-      login: login ?? this.login,
-      password: password ?? this.password,
-      companyName: companyName ?? this.companyName,
-      buyer: buyer ?? this.buyer,
-      supplier: supplier ?? this.supplier,
-      companyAdress: companyAdress ?? this.companyAdress,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      userFIO: userFIO ?? this.userFIO,
-      inn: inn ?? this.inn,
-      post: post ?? this.post,
-    );
+        id: id ?? this.id,
+        login: login ?? this.login,
+        password: password ?? this.password,
+        companyName: companyName ?? this.companyName,
+        buyer: buyer ?? this.buyer,
+        supplier: supplier ?? this.supplier,
+        companyAdress: companyAdress ?? this.companyAdress,
+        email: email ?? this.email,
+        phone: phone ?? this.phone,
+        userFIO: userFIO ?? this.userFIO,
+        inn: inn ?? this.inn,
+        post: post ?? this.post,
+        listOrders: listOrders ?? this.listOrders);
   }
 
   factory UserModel.fromFirestore(
@@ -85,6 +88,7 @@ class UserModel {
     final data = snapshot.data();
     return UserModel(
       id: data?['id'],
+      listOrders: List.from(data?['list_orders']),
       password: data?['password'],
       companyName: data?['company_name'],
       buyer: data?['buyer'],
@@ -100,17 +104,18 @@ class UserModel {
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (id != null) "id": id,
-      if (password != null) "password": password,
-      if (companyName != null) "company_name": companyName,
-      if (buyer != null) "buyer": buyer,
-      if (supplier != null) "supplier": supplier,
-      if (companyAdress != null) "company_adress": companyAdress,
-      if (email != null) "email": email,
-      if (phone != null) "phone": phone,
-      if (userFIO != null) "user_fio": userFIO,
-      if (inn != null) "inn": inn,
-      if (post != null) "post": post,
+      "id": id,
+      "password": password,
+      "company_name": companyName,
+      "buyer": buyer,
+      "supplier": supplier,
+      "company_adress": companyAdress,
+      "email": email,
+      "phone": phone,
+      "user_fio": userFIO,
+      "inn": inn,
+      "post": post,
+      "list_orders": listOrders
     };
   }
 }
