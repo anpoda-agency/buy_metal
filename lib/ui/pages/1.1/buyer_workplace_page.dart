@@ -81,7 +81,9 @@ class BuyerWorkplacePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/home_page');
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacementNamed(context, '/home_page');
+                });
               },
               icon: const Icon(Icons.logout_outlined)),
         ],
@@ -102,8 +104,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Ваши заявки',
@@ -119,17 +120,11 @@ class BuyerWorkplacePage extends StatelessWidget {
                 height: 120,
                 child: ElevatedButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut().then((value) {
-                      print('Signed out');
-                      Navigator.pushNamed(context, '/create_order_page');
-                    });
-
-                    //Navigator.pushNamed(context, '/create_order_page');
+                    Navigator.pushNamed(context, '/create_order_page');
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Разместить Заявку',

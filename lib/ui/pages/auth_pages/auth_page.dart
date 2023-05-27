@@ -120,6 +120,7 @@
 //   }
 // }
 
+import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -202,13 +203,18 @@ class _AuthPageState extends State<AuthPage> {
                                 .signInWithEmailAndPassword(
                                     email: _emailTextController.text,
                                     password: _passwordTextController.text)
-                                .then((value) {
-                              context
+                                .then((value) async {
+                              var res = await context
                                   .read<GetIt>()
                                   .get<ProfileRepository>()
-                                  .saveUser(id: value.user!.uid);
-                              Navigator.pushNamed(
-                                  context, '/buyer_workplace_page');
+                                  .saveUser(id: value.user!.uid)
+                                  .whenComplete(() {
+                                getIt.get<ProfileRepository>().user.buyer
+                                    ? Navigator.pushReplacementNamed(
+                                        context, '/buyer_workplace_page')
+                                    : Navigator.pushReplacementNamed(
+                                        context, '/selected_buyer_list_of_orders_page');
+                              });
                             }),
                           )),
                     ],
@@ -242,9 +248,7 @@ TextField authTextField(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(15))),
-    keyboardType: isPasswordType
-        ? TextInputType.visiblePassword
-        : TextInputType.emailAddress,
+    keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
   );
 }
 
