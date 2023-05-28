@@ -1,15 +1,31 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionOfSupplierProposalPage extends StatefulWidget {
-  const DescriptionOfSupplierProposalPage({super.key});
+  const DescriptionOfSupplierProposalPage({super.key, required this.args});
+  final Object? args;
 
   @override
   State<DescriptionOfSupplierProposalPage> createState() =>
       _DescriptionOfSupplierProposalPageState();
 }
 
-class _DescriptionOfSupplierProposalPageState
-    extends State<DescriptionOfSupplierProposalPage> {
+class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplierProposalPage> {
+  OrderModel orderModel = const OrderModel();
+  UserModel userModel = const UserModel();
+
+  @override
+  void initState() {
+    String id = widget.args != null ? widget.args as String : '';
+    getIt.get<ProfileRepository>().getCurrentOrder(idOrder: id).then((value) => setState(() {
+          orderModel = value ?? const OrderModel();
+        }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,8 +190,7 @@ class _DescriptionOfSupplierProposalPageState
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Связаться',

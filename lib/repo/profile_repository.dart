@@ -45,35 +45,96 @@ class ProfileRepository extends ChangeNotifier {
     var res = await db.collection("proposals").add(request.toFirestore());
     await db.collection("proposals").doc(res.id).update({"id": res.id});
 
-    List<AnswerOrderModel> listProposalsModels = user.listProposalsModels;
-    listProposalsModels.add(request.copyWith(id: res.id));
+    final ref = db.collection("proposals").doc(res.id).withConverter(
+          fromFirestore: AnswerOrderModel.fromFirestore,
+          toFirestore: (AnswerOrderModel proposal, _) => proposal.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final proposalDB = docSnap.data();
 
+    if (proposalDB != null) {
+      await addProposalToUser(request: proposalDB);
+      await addProposalToOrder(request: proposalDB);
+    }
+  }
+
+  Future<void> addProposalToOrder({required AnswerOrderModel request}) async {
+    var db = FirebaseFirestore.instance;
+    final ref = db.collection("orders").doc(request.idOrder).withConverter(
+          fromFirestore: OrderModel.fromFirestore,
+          toFirestore: (OrderModel supplier, _) => supplier.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final orderDB = docSnap.data();
+
+    List<AnswerOrderModel> listProposalsModels = [];
+    if (orderDB != null && orderDB.listProposalsModels.isNotEmpty) {
+      listProposalsModels.addAll(orderDB.listProposalsModels);
+    }
+    listProposalsModels.add(request);
     List listProposalsModelsForFirestore = [];
     for (var i in listProposalsModels) {
       listProposalsModelsForFirestore.add(i.toFirestore());
     }
 
     await db
+        .collection("orders")
+        .doc(request.idOrder)
+        .update({"list_proposals_models": listProposalsModelsForFirestore});
+  }
+
+  Future<void> addProposalToUser({required AnswerOrderModel request}) async {
+    List<AnswerOrderModel> listProposalsModels = user.listProposalsModels;
+    listProposalsModels.add(request);
+
+    List listProposalsModelsForFirestore = [];
+    for (var i in listProposalsModels) {
+      listProposalsModelsForFirestore.add(i.toFirestore());
+    }
+
+    var db = FirebaseFirestore.instance;
+    await db
         .collection("users")
         .doc(user.id)
         .update({"list_proposals_models": listProposalsModelsForFirestore});
-
     await saveUser(id: user.id);
+    notifyListeners();
+  }
 
-    final ref = db.collection("orders").doc(request.idOrder).withConverter(
+  Future<OrderModel?> getCurrentOrder({required String idOrder}) async {
+    var db = FirebaseFirestore.instance;
+    final ref = db.collection("orders").doc(idOrder).withConverter(
+          fromFirestore: OrderModel.fromFirestore,
+          toFirestore: (OrderModel supplier, _) => supplier.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final orderDB = docSnap.data();
+    return orderDB ?? const OrderModel();
+  }
+
+  Future<List<UserModel>> getUserForCurrentOrder({required OrderModel order}) async {
+    List<UserModel> resultListUsersModels = [];
+    var db = FirebaseFirestore.instance;
+    final ref = db.collection('users').withConverter(
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (UserModel user, _) => user.toFirestore(),
         );
     final docSnap = await ref.get();
-    final orderDB = docSnap.data();
-    List<AnswerOrderModel> listAnswersForOrder = orderDB?.listProposalsModels ?? [];
-    listAnswersForOrder.add(request);
-    await db
-        .collection("orders")
-        .doc(request.idOrder)
-        .update({"list_proposals_models": listAnswersForOrder});
-
-    notifyListeners();
+    final listUserModels = docSnap.docs;
+    for (var answers in order.listProposalsModels) {
+      for (var user in listUserModels) {
+        if (user.id == answers.idSupplier) {
+          final ref = db.collection("users").doc(user.id).withConverter(
+                fromFirestore: UserModel.fromFirestore,
+                toFirestore: (UserModel user, _) => user.toFirestore(),
+              );
+          final docSnap = await ref.get();
+          final userDB = docSnap.data();
+          resultListUsersModels.add(userDB!);
+        }
+      }
+    }
+    return resultListUsersModels;
   }
 
   Future<List<OrderModel>> getAllOrders() async {
@@ -104,9 +165,9 @@ class ProfileRepository extends ChangeNotifier {
     return resultListOrderModels;
   }
 
-  Future<UserModel> getUserInfo({required String buyerId}) async {
+  Future<UserModel> getUserInfo({required String userId}) async {
     var db = FirebaseFirestore.instance;
-    final ref = db.collection("users").doc(buyerId).withConverter(
+    final ref = db.collection("users").doc(userId).withConverter(
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (UserModel user, _) => user.toFirestore(),
         );

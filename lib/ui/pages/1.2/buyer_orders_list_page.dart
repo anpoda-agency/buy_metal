@@ -1,6 +1,7 @@
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
+import 'package:buy_metal_app/ui/pages/1.3/suppliers_list_page.dart';
 import 'package:flutter/material.dart';
 
 class BuyerOrdersListPage extends StatefulWidget {
@@ -56,8 +57,12 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                             borderRadius: BorderRadius.circular(5)),
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, '/suppliers_list_page',
-                                arguments: listOrdersModels[index]);
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => SuppliersListPage(
+                                        args: listOrdersModels[index].id,
+                                      )),
+                            );
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),

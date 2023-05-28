@@ -22,7 +22,7 @@ class _DescriptionOfBuyerOrderPageState extends State<DescriptionOfBuyerOrderPag
     orderModel = widget.args != null ? widget.args as OrderModel : const OrderModel();
     getIt
         .get<ProfileRepository>()
-        .getUserInfo(buyerId: orderModel.buyerId)
+        .getUserInfo(userId: orderModel.buyerId)
         .then((value) => setState(() {
               userInfo = value;
             }));

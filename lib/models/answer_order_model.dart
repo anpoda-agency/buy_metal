@@ -128,6 +128,7 @@ class AnswerOrderModel {
       double? requirement,
       String? dataCreate,
       String? id,
+      String? idOrder,
       String? dateToStorage,
       bool? onStock,
       bool? similar,
@@ -135,6 +136,7 @@ class AnswerOrderModel {
       double? priceFull,
       String? idSupplier}) {
     return AnswerOrderModel(
+        idOrder: idOrder ?? this.idOrder,
         formRolled: formRolled ?? this.formRolled,
         type: type ?? this.type,
         sizeRolled: sizeRolled ?? this.sizeRolled,

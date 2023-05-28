@@ -1,5 +1,8 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/answer_order_model.dart';
 import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 
 class CreateComplianceProposalPage extends StatefulWidget {
@@ -14,6 +17,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
   late UserModel userModel;
   late OrderModel orderModel;
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController dateToStorageController = TextEditingController();
   double price = 0;
   int selectedValue = 0;
 
@@ -39,9 +43,33 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
             width: MediaQuery.of(context).size.width,
             height: 60,
             child: ElevatedButton(
-              onPressed: () {
-                // Navigator.pushNamed(
-                //     context, '/selection_of_create_proposal_page');
+              onPressed: () async {
+                String dateCreate =
+                    '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
+                await getIt
+                    .get<ProfileRepository>()
+                    .createProposal(
+                        request: AnswerOrderModel(
+                      idOrder: orderModel.id,
+                      brandMaterial: orderModel.brandMaterial,
+                      gostMaterial: orderModel.gostMaterial,
+                      gostRolled: orderModel.gostRolled,
+                      paramsMaterial: orderModel.paramsMaterial,
+                      paramsRolled: orderModel.paramsRolled,
+                      requirement: orderModel.requirement,
+                      sizeRolled: orderModel.sizeRolled,
+                      type: orderModel.type,
+                      formRolled: orderModel.formRolled,
+                      dataCreate: dateCreate,
+                      dateToStorage: dateToStorageController.text,
+                      onStock: selectedValue == 1 ? true : false,
+                      similar: false,
+                      pricePerTonne: double.parse(priceController.text),
+                      priceFull: price,
+                      idSupplier: getIt.get<ProfileRepository>().user.id,
+                    ))
+                    .whenComplete(
+                        () => Navigator.pushReplacementNamed(context, '/success_proposal_page'));
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.orange,
@@ -135,7 +163,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                               });
                             } else {
                               setState(() {
-                                price = 5.4 * int.parse(val);
+                                price = orderModel.requirement * double.parse(val);
                               });
                             }
                           },
@@ -249,18 +277,8 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                               height: 10,
                             ),
                             TextField(
-                              controller: priceController,
-                              onChanged: (val) {
-                                if (val.isEmpty) {
-                                  setState(() {
-                                    price = 0;
-                                  });
-                                } else {
-                                  setState(() {
-                                    price = 5.4 * int.parse(val);
-                                  });
-                                }
-                              },
+                              controller: dateToStorageController,
+                              onChanged: (val) {},
                               decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.grey[300],

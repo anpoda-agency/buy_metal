@@ -1,5 +1,8 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/answer_order_model.dart';
 import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/ui/pages/1.7/create_order_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +170,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           });
                         } else {
                           setState(() {
-                            price = 5.4 * int.parse(val);
+                            price = orderModel.requirement * double.parse(val);
                           });
                         }
                       },
@@ -283,17 +286,6 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         ),
                         TextField(
                           controller: _dateTextController,
-                          // onChanged: (val) {
-                          //   if (val.isEmpty) {
-                          //     setState(() {
-                          //       price = 0;
-                          //     });
-                          //   } else {
-                          //     setState(() {
-                          //       price = 5.4 * int.parse(val);
-                          //     });
-                          //   }
-                          // },
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey[300],
@@ -326,26 +318,32 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         _inStock = false;
                         _notStock = true;
                       }
-
-                      await _similarProposal.add({
-                        'form_rolled': orderModel.formRolled,
-                        "type": _typeTextController.text,
-                        "size_rolled": _sizeRolledTextController.text,
-                        'params_rolled': _paramsRolledTextController.text,
-                        'gost_rolled': _gostRolledTextController.text,
-                        'brand_material': _brandMaterialTextController.text,
-                        'params_material': _paramsMaterialTextController.text,
-                        'gost_material': _gostMaterialTextController.text,
-                        'requirement': _requirement,
-
-                        'price': price,
-                        //.toInt(),
-
-                        'in_stock': _inStock,
-                        'not_stock': _notStock,
-
-                        'date': _dateTextController.text,
-                      });
+                      String dateCreate =
+                          '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
+                      await getIt
+                          .get<ProfileRepository>()
+                          .createProposal(
+                              request: AnswerOrderModel(
+                            idOrder: orderModel.id,
+                            brandMaterial: orderModel.brandMaterial,
+                            gostMaterial: orderModel.gostMaterial,
+                            gostRolled: orderModel.gostRolled,
+                            paramsMaterial: orderModel.paramsMaterial,
+                            paramsRolled: orderModel.paramsRolled,
+                            requirement: orderModel.requirement,
+                            sizeRolled: orderModel.sizeRolled,
+                            type: orderModel.type,
+                            formRolled: orderModel.formRolled,
+                            dataCreate: dateCreate,
+                            dateToStorage: _dateTextController.text,
+                            onStock: selectedValue == 1 ? true : false,
+                            similar: false,
+                            pricePerTonne: double.parse(_priceController.text),
+                            priceFull: price,
+                            idSupplier: getIt.get<ProfileRepository>().user.id,
+                          ))
+                          .whenComplete(() =>
+                              Navigator.pushReplacementNamed(context, '/success_proposal_page'));
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,

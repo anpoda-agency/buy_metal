@@ -3,6 +3,7 @@ import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
 import 'package:buy_metal_app/ui/pages/1.8/success_order_page.dart';
+import 'package:buy_metal_app/ui/pages/2.6/success_proposal_page.dart';
 import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
 import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
@@ -109,8 +110,9 @@ class _MyAppState extends State<MyApp> {
                 args: args,
               ), //1.3
 
-          '/description_of_supplier_proposal_page': (context) =>
-              const DescriptionOfSupplierProposalPage(), // 1.5
+          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(
+                args: args,
+              ), // 1.5
 
           '/supplier_contacts_page': (context) => const SupplierContactsPage(), // 1.6
 
@@ -135,6 +137,8 @@ class _MyAppState extends State<MyApp> {
           '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
                 args: args,
               ), //2.5
+
+          '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
         },
         home: loading
             ? const Center(

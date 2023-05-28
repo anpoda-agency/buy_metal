@@ -1,3 +1,7 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 
 class SuppliersListPage extends StatefulWidget {
@@ -9,11 +13,21 @@ class SuppliersListPage extends StatefulWidget {
 }
 
 class _SuppliersListPageState extends State<SuppliersListPage> {
-  late List<String> listSuppliers;
+  OrderModel orderModel = const OrderModel();
+  List<UserModel> listUsers = [];
 
   @override
   void initState() {
-    listSuppliers = widget.args != null ? widget.args as List<String> : [];
+    String id = widget.args != null ? widget.args as String : '';
+    getIt.get<ProfileRepository>().getCurrentOrder(idOrder: id).then((value) => setState(() {
+          orderModel = value ?? const OrderModel();
+        }));
+    getIt
+        .get<ProfileRepository>()
+        .getUserForCurrentOrder(order: orderModel)
+        .then((value) => setState(() {
+              listUsers = value;
+            }));
     super.initState();
   }
 
@@ -26,9 +40,9 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
         title: const Text('Перечень поставщиков'),
         centerTitle: true,
       ),
-      body: listSuppliers.isNotEmpty
+      body: orderModel.listProposalsModels.isNotEmpty
           ? ListView.builder(
-              itemCount: listSuppliers.length,
+              itemCount: orderModel.listProposalsModels.length,
               itemBuilder: (BuildContext context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -54,7 +68,7 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                listSuppliers[index],
+                                orderModel.listProposalsModels[index].dataCreate,
                                 style: const TextStyle(fontSize: 20, color: Colors.white),
                               ),
                             ),
