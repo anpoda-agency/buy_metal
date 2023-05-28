@@ -1,3 +1,6 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -147,20 +150,25 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                     height: 65,
                     child: ElevatedButton(
                       onPressed: () async {
-                        //Navigator.pushNamed(context, '/buyer_orders_list_page');
-                        await _orders.add({
-                          'form_rolled': dropdownValue,
-                          "type": _typeTextController.text,
-                          "size_rolled": _sizeRolledTextController.text,
-                          'params_rolled': _paramsRolledTextController.text,
-                          'gost_rolled': _gostRolledTextController.text,
-                          'brand_material': _brandMaterialTextController.text,
-                          'params_material': _paramsMaterialTextController.text,
-                          'gost_material': _gostMaterialTextController.text,
-                          'requirement': _requirementTextController.text,
-                          //'supplier': supplier,
-                          //'buyer': buyer,
-                        });
+                        String dateCreate =
+                            '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
+                        await getIt
+                            .get<ProfileRepository>()
+                            .createOrder(
+                                request: OrderModel(
+                              formRolled: dropdownValue,
+                              type: _typeTextController.text,
+                              sizeRolled: _sizeRolledTextController.text,
+                              paramsRolled: _paramsRolledTextController.text,
+                              gostRolled: _gostRolledTextController.text,
+                              brandMaterial: _brandMaterialTextController.text,
+                              paramsMaterial: _paramsMaterialTextController.text,
+                              gostMaterial: _gostMaterialTextController.text,
+                              requirement: _requirementTextController.text,
+                              dataCreate: dateCreate,
+                            ))
+                            .whenComplete(() =>
+                                Navigator.pushReplacementNamed(context, '/success_order_page'));
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange,

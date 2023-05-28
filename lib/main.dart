@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/firebase_options.dart';
+import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
+import 'package:buy_metal_app/ui/pages/1.8/success_order_page.dart';
 import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
 import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
@@ -43,7 +45,6 @@ void initGetIt() async {
   var profile = ProfileRepository();
   getIt.registerSingleton<ProfileRepository>(profile);
   User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
-  print(user?.uid);
   if (user != null) {
     var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
   }
@@ -58,6 +59,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool loading = true;
+
   @override
   void initState() {
     getIt.get<ProfileRepository>().addListener(() {
@@ -81,6 +83,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+
     return MultiProvider(
       providers: [
         RepositoryProvider(create: (context) => getIt),
@@ -101,7 +105,9 @@ class _MyAppState extends State<MyApp> {
 
           '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
 
-          '/suppliers_list_page': (context) => const SuppliersListPage(), //1.3
+          '/suppliers_list_page': (context) => SuppliersListPage(
+                args: args,
+              ), //1.3
 
           '/description_of_supplier_proposal_page': (context) =>
               const DescriptionOfSupplierProposalPage(), // 1.5
@@ -109,6 +115,8 @@ class _MyAppState extends State<MyApp> {
           '/supplier_contacts_page': (context) => const SupplierContactsPage(), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
+
+          '/success_order_page': (context) => const SuccessOrderPage(), //1.8
 
           '/selected_buyer_list_of_orders_page': (context) =>
               const SelectedBuyerListOfOrdersPage(), // 2.1.1

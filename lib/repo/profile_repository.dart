@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,29 @@ class ProfileRepository extends ChangeNotifier {
           toFirestore: (UserModel user, _) => user.toFirestore(),
         );
     final docSnap = await ref.get();
-    print("doc id: ${docSnap.id}");
-    final userDB = docSnap.data(); // Convert to City object
+    final userDB = docSnap.data();
     user = userDB ?? const UserModel();
+    notifyListeners();
+  }
+
+  Future<void> createOrder({required OrderModel request}) async {
+    var db = FirebaseFirestore.instance;
+    var res = await db.collection("orders").add(request.toFirestore());
+    await db.collection("orders").doc(res.id).update({"id": res.id});
+
+    List<OrderModel> listOrdersModels = user.listOrdersModels;
+    listOrdersModels.add(request.copyWith(id: res.id));
+
+    List listOrdersModelsForFirestore = [];
+    for (var i in listOrdersModels) {
+      listOrdersModelsForFirestore.add(i.toFirestore());
+    }
+
+    await db
+        .collection("users")
+        .doc(user.id)
+        .update({"list_orders_models": listOrdersModelsForFirestore});
+    await saveUser(id: user.id);
     notifyListeners();
   }
 }

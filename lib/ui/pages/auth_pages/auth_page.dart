@@ -210,10 +210,12 @@ class _AuthPageState extends State<AuthPage> {
                                   .saveUser(id: value.user!.uid)
                                   .whenComplete(() {
                                 getIt.get<ProfileRepository>().user.buyer
-                                    ? Navigator.pushReplacementNamed(
-                                        context, '/buyer_workplace_page')
-                                    : Navigator.pushReplacementNamed(
-                                        context, '/selected_buyer_list_of_orders_page');
+                                    ? Navigator.pushNamedAndRemoveUntil(context,
+                                        '/buyer_workplace_page', (Route<dynamic> route) => false)
+                                    : Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/selected_buyer_list_of_orders_page',
+                                        (Route<dynamic> route) => false);
                               });
                             }),
                           )),

@@ -107,7 +107,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
-                    'Ваши заявки',
+                    'Мои заявки',
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -127,7 +127,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
-                    'Разместить Заявку',
+                    'Разместить заявку',
                     style: TextStyle(fontSize: 20),
                   ),
                 ),

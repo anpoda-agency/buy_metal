@@ -213,10 +213,13 @@ class _RegPageState extends State<RegPage> {
                                   //   _ownerNameController.text.isNotEmpty &&
                                   //   _phoneController.text.isNotEmpty
                                   ) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/selected_buyer_list_of_orders_page');
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/selected_buyer_list_of_orders_page',
+                                    (Route<dynamic> route) => false);
                               } else {
-                                Navigator.pushReplacementNamed(context, '/buyer_workplace_page');
+                                Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page',
+                                    (Route<dynamic> route) => false);
                               }
                             });
                           },
