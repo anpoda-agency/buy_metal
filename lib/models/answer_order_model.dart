@@ -23,7 +23,7 @@ class AnswerOrderModel {
   @JsonKey(name: 'gost_material')
   final String gostMaterial;
   @JsonKey(name: 'requirement')
-  final String requirement;
+  final double requirement;
   @JsonKey(name: 'data_create')
   final String dataCreate;
   @JsonKey(name: 'id')
@@ -35,9 +35,9 @@ class AnswerOrderModel {
   @JsonKey(name: 'similar')
   final bool similar;
   @JsonKey(name: 'price_per_tonne')
-  final String pricePerTonne;
+  final double pricePerTonne;
   @JsonKey(name: 'price_full')
-  final String priceFull;
+  final double priceFull;
   @JsonKey(name: 'id_supplier')
   final String idSupplier;
   @JsonKey(name: 'id_order')
@@ -48,8 +48,8 @@ class AnswerOrderModel {
       this.dateToStorage = '',
       this.onStock = false,
       this.similar = false,
-      this.pricePerTonne = '',
-      this.priceFull = '',
+      this.pricePerTonne = 0,
+      this.priceFull = 0,
       this.type = '',
       this.sizeRolled = '',
       this.paramsRolled = '',
@@ -57,7 +57,7 @@ class AnswerOrderModel {
       this.brandMaterial = '',
       this.paramsMaterial = '',
       this.gostMaterial = '',
-      this.requirement = '',
+      this.requirement = 0,
       this.dataCreate = '',
       this.idSupplier = '',
       this.idOrder = '',
@@ -125,14 +125,14 @@ class AnswerOrderModel {
       String? brandMaterial,
       String? paramsMaterial,
       String? gostMaterial,
-      String? requirement,
+      double? requirement,
       String? dataCreate,
       String? id,
       String? dateToStorage,
       bool? onStock,
       bool? similar,
-      String? pricePerTonne,
-      String? priceFull,
+      double? pricePerTonne,
+      double? priceFull,
       String? idSupplier}) {
     return AnswerOrderModel(
         formRolled: formRolled ?? this.formRolled,

@@ -23,7 +23,7 @@ class OrderModel {
   @JsonKey(name: 'gost_material')
   final String gostMaterial;
   @JsonKey(name: 'requirement')
-  final String requirement;
+  final double requirement;
   @JsonKey(name: 'data_create')
   final String dataCreate;
   @JsonKey(name: 'id')
@@ -42,7 +42,7 @@ class OrderModel {
       this.brandMaterial = '',
       this.paramsMaterial = '',
       this.gostMaterial = '',
-      this.requirement = '',
+      this.requirement = 0,
       this.dataCreate = '',
       this.buyerId = '',
       this.listProposalsModels = const [],
@@ -61,7 +61,7 @@ class OrderModel {
     String? brandMaterial,
     String? paramsMaterial,
     String? gostMaterial,
-    String? requirement,
+    double? requirement,
     String? dataCreate,
     String? id,
     String? buyerId,

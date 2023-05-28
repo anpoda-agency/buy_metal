@@ -24,7 +24,7 @@ class UserModel {
   @JsonKey(name: 'user_fio')
   final String userFIO;
   @JsonKey(name: 'inn')
-  final String inn;
+  final int inn;
   @JsonKey(name: 'post')
   final String post;
   @JsonKey(name: 'buyer')
@@ -47,7 +47,7 @@ class UserModel {
     this.email = '',
     this.phone = '',
     this.userFIO = '',
-    this.inn = '',
+    this.inn = 0,
     this.post = '',
     this.listOrdersModels = const [],
     this.listProposalsModels = const [],
@@ -65,7 +65,7 @@ class UserModel {
     String? email,
     String? phone,
     String? userFIO,
-    String? inn,
+    int? inn,
     String? post,
     bool? buyer,
     bool? supplier,

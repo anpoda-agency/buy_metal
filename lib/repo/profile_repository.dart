@@ -57,7 +57,22 @@ class ProfileRepository extends ChangeNotifier {
         .collection("users")
         .doc(user.id)
         .update({"list_proposals_models": listProposalsModelsForFirestore});
+
     await saveUser(id: user.id);
+
+    final ref = db.collection("orders").doc(request.idOrder).withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel user, _) => user.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final orderDB = docSnap.data();
+    List<AnswerOrderModel> listAnswersForOrder = orderDB?.listProposalsModels ?? [];
+    listAnswersForOrder.add(request);
+    await db
+        .collection("orders")
+        .doc(request.idOrder)
+        .update({"list_proposals_models": listAnswersForOrder});
+
     notifyListeners();
   }
 

@@ -165,7 +165,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               brandMaterial: _brandMaterialTextController.text,
                               paramsMaterial: _paramsMaterialTextController.text,
                               gostMaterial: _gostMaterialTextController.text,
-                              requirement: _requirementTextController.text,
+                              requirement: double.parse(_requirementTextController.text),
                               dataCreate: dateCreate,
                             ))
                             .whenComplete(() =>
