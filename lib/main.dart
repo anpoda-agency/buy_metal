@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
                 args: args,
               ), // 1.5
 
-          '/supplier_contacts_page': (context) => const SupplierContactsPage(), // 1.6
+          '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 

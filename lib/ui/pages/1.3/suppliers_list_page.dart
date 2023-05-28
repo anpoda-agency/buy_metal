@@ -56,7 +56,6 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
                         borderRadius: BorderRadius.circular(5)),
                     child: InkWell(
                       onTap: () {
-                        // Navigator.pushNamed(context, '/description_of_supplier_proposal_page');
                         Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => DescriptionOfSupplierProposalPage(

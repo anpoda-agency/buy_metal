@@ -1,13 +1,22 @@
+import 'package:buy_metal_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class SupplierContactsPage extends StatefulWidget {
-  const SupplierContactsPage({super.key});
+  const SupplierContactsPage({super.key, required this.args});
+  final Object? args;
 
   @override
   State<SupplierContactsPage> createState() => _SupplierContactsPageState();
 }
 
 class _SupplierContactsPageState extends State<SupplierContactsPage> {
+  late UserModel userModel;
+  @override
+  void initState() {
+    userModel = widget.args != null ? widget.args as UserModel : const UserModel();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,219 +31,127 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 20),
-                Center(
+              children: [
+                const SizedBox(height: 20),
+                const Center(
                   child: Text(
                     'Поставщик',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Наименование организации',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  'ООО "Металл"', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.companyName,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Адрес',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  'САРАТОВСКАЯ ОБЛ.,Г ВОЛЬСК,УЛ ЦЕМЕНТНИКОВ, Д 286', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.companyAdress,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'ИНН',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  '7707083893 ', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.inn.toString(),
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 20),
-                Center(
+              children: [
+                const SizedBox(height: 20),
+                const Center(
                   child: Text(
                     'Контакты',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'ФИО',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  'Иванов Иван Иванович', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.userFIO,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Должность',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  'Менеджер', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.post,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Номер телефона',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  '+79277777777', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.phone,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   'Электронная почта',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
-                  'test@mail.ru ', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  userModel.email,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ],
             ),
           ],
         ),
       ),
-      // Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 10),
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 30),
-      //       const Text(
-      //         'РЕКВИЗИТЫ',
-      //         style: TextStyle(fontSize: 40, color: Colors.black),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       Align(
-      //         alignment: Alignment.bottomLeft,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: const [
-      //             Text(
-      //               'Полное наименование организации:',
-      //               style: TextStyle(fontSize: 20, color: Colors.black),
-      //             ),
-      //             SelectableText(
-      //               'Общество с ограниченной ответственностью "МЕТАЛЛ"',
-      //               style: TextStyle(fontSize: 15, color: Colors.black),
-      //             ),
-      //             SizedBox(height: 5),
-      //             Text(
-      //               'ЮРИДИЧЕСКИЙ АДРЕС:',
-      //               style: TextStyle(fontSize: 20, color: Colors.black),
-      //             ),
-      //             SelectableText(
-      //               '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
-      //               style: TextStyle(fontSize: 15, color: Colors.black),
-      //             ),
-      //             SizedBox(height: 5),
-      //             Text(
-      //               'Почтовый адрес:',
-      //               style: TextStyle(fontSize: 20, color: Colors.black),
-      //             ),
-      //             SelectableText(
-      //               '123456, г. Москва, ул. Подвойского, д. 14, стр. 7',
-      //               style: TextStyle(fontSize: 15, color: Colors.black),
-      //             ),
-      //             SizedBox(height: 10),
-      //           ],
-      //         ),
-      //       ),
-      //       const SelectableText(''),
-      //       const SizedBox(height: 100),
-      //       const Text(
-      //         'КОНТАКТЫ',
-      //         style: TextStyle(fontSize: 40, color: Colors.black),
-      //       ),
-      //       const SizedBox(
-      //         height: 10,
-      //       ),
-      //       Align(
-      //         alignment: Alignment.bottomLeft,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           mainAxisAlignment: MainAxisAlignment.start,
-      //           children: const [
-      //             Text(
-      //               'Электронная почта:',
-      //               style: TextStyle(fontSize: 20, color: Colors.black),
-      //             ),
-      //             SelectableText(
-      //               'info@metall.ru',
-      //               style: TextStyle(fontSize: 15, color: Colors.black),
-      //             ),
-      //             SizedBox(height: 5),
-      //             Text(
-      //               'Телефон:',
-      //               style: TextStyle(fontSize: 20, color: Colors.black),
-      //             ),
-      //             SelectableText(
-      //               '+749512345678',
-      //               style: TextStyle(fontSize: 15, color: Colors.black),
-      //             ),
-      //             SizedBox(height: 5),
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
