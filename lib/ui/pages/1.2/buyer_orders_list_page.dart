@@ -22,7 +22,7 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
@@ -39,41 +39,78 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: ListView.builder(
-            itemCount: listOrdersModels.length,
-            itemBuilder: (BuildContext context, index) {
-              return Padding(
-                //padding: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Colors.orange,
-                      border: Border.all(width: 3),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/suppliers_list_page',
-                          arguments: listOrdersModels[index]);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          listOrdersModels[index].dataCreate,
-                          style: const TextStyle(fontSize: 25, color: Colors.white),
+      body: listOrdersModels.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: ListView.builder(
+                  itemCount: listOrdersModels.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            border: Border.all(width: 3),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/suppliers_list_page',
+                                arguments: listOrdersModels[index]);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                listOrdersModels[index].dataCreate,
+                                style: const TextStyle(fontSize: 25, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox.shrink(),
+                  const Text(
+                    'Список заявок пуст',
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 65,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/create_order_page');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange[700],
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        ),
+                        child: const Text(
+                          'Создать заявку',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }),
-      ),
+                ],
+              ),
+            ),
     );
   }
 }

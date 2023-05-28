@@ -73,7 +73,7 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
                 children: [
                   const SizedBox.shrink(),
                   const Text(
-                    'Поставщики пока не ответили \nна данную заявку...',
+                    'Поставщики пока не ответили \nна данную заявку',
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),

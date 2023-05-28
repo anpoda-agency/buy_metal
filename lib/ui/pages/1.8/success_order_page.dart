@@ -50,7 +50,7 @@ class SuccessOrderPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(
-                      'Продолжить',
+                      'Вернуться в Мои заявки',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 20),
                     ),

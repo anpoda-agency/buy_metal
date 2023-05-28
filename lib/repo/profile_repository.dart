@@ -38,4 +38,31 @@ class ProfileRepository extends ChangeNotifier {
     await saveUser(id: user.id);
     notifyListeners();
   }
+
+  Future<List<OrderModel>> getAllOrders() async {
+    List<OrderModel> resultListOrderModels = [];
+    var db = FirebaseFirestore.instance;
+    final ref = db.collection('orders').withConverter(
+          fromFirestore: OrderModel.fromFirestore,
+          toFirestore: (OrderModel order, _) => order.toFirestore(),
+        );
+    final docSnap = await ref.get();
+    final listOrderModels = docSnap.docs;
+    for (var element in listOrderModels) {
+      resultListOrderModels.add(OrderModel(
+          listIdAnswers: List.from(element['list_id_answers']),
+          id: element['id'],
+          brandMaterial: element['brand_material'],
+          gostMaterial: element['gost_material'],
+          gostRolled: element['gost_rolled'],
+          paramsMaterial: element['params_material'],
+          paramsRolled: element['params_rolled'],
+          requirement: element['requirement'],
+          sizeRolled: element['size_rolled'],
+          type: element['type'],
+          formRolled: element['form_rolled'],
+          dataCreate: element['data_create']));
+    }
+    return resultListOrderModels;
+  }
 }

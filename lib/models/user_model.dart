@@ -96,7 +96,7 @@ class UserModel {
           id: element['id'],
           brandMaterial: element['brand_material'],
           gostMaterial: element['gost_material'],
-          gostRolled: element['gost_golled'],
+          gostRolled: element['gost_rolled'],
           paramsMaterial: element['params_material'],
           paramsRolled: element['params_rolled'],
           requirement: element['requirement'],
