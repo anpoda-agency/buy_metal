@@ -21,13 +21,13 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
     String id = widget.args != null ? widget.args as String : '';
     getIt.get<ProfileRepository>().getCurrentOrder(idOrder: id).then((value) => setState(() {
           orderModel = value ?? const OrderModel();
+          getIt
+              .get<ProfileRepository>()
+              .getUserForCurrentOrder(order: orderModel)
+              .then((value) => setState(() {
+                    listUsers = value;
+                  }));
         }));
-    getIt
-        .get<ProfileRepository>()
-        .getUserForCurrentOrder(order: orderModel)
-        .then((value) => setState(() {
-              listUsers = value;
-            }));
     super.initState();
   }
 
@@ -65,11 +65,29 @@ class _SuppliersListPageState extends State<SuppliersListPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            listUsers.isNotEmpty
+                                ? Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      listUsers[index].companyName,
+                                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            listUsers.isNotEmpty
+                                ? Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      listUsers[index].companyAdress,
+                                      style: const TextStyle(fontSize: 10, color: Colors.white),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 orderModel.listProposalsModels[index].dataCreate,
-                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                style: const TextStyle(fontSize: 10, color: Colors.white),
                               ),
                             ),
                           ],

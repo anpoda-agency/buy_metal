@@ -124,13 +124,8 @@ class ProfileRepository extends ChangeNotifier {
     for (var answers in order.listProposalsModels) {
       for (var user in listUserModels) {
         if (user.id == answers.idSupplier) {
-          final ref = db.collection("users").doc(user.id).withConverter(
-                fromFirestore: UserModel.fromFirestore,
-                toFirestore: (UserModel user, _) => user.toFirestore(),
-              );
-          final docSnap = await ref.get();
-          final userDB = docSnap.data();
-          resultListUsersModels.add(userDB!);
+          var res = await getUserInfo(userId: user.id);
+          resultListUsersModels.add(res);
         }
       }
     }
@@ -147,8 +142,32 @@ class ProfileRepository extends ChangeNotifier {
     final docSnap = await ref.get();
     final listOrderModels = docSnap.docs;
     for (var element in listOrderModels) {
+      List<AnswerOrderModel> proposals = [];
+      List<dynamic> proposalsMap = element['list_proposals_models'];
+      for (var i in proposalsMap) {
+        proposals.add(AnswerOrderModel(
+            id: i['id'],
+            idOrder: i['id_order'],
+            brandMaterial: i['brand_material'],
+            gostMaterial: i['gost_material'],
+            gostRolled: i['gost_golled'],
+            paramsMaterial: i['params_material'],
+            paramsRolled: i['params_rolled'],
+            requirement: i['requirement'],
+            sizeRolled: i['size_rolled'],
+            type: i['type'],
+            formRolled: i['form_rolled'],
+            dataCreate: i['data_create'],
+            dateToStorage: i['data_to_storage'],
+            onStock: i['on_stock'],
+            similar: i['similar'],
+            pricePerTonne: i['price_per_tonne'],
+            priceFull: i['price_full'],
+            idSupplier: i['id_supplier']));
+      }
+
       resultListOrderModels.add(OrderModel(
-          listProposalsModels: List.from(element['list_proposals_models']),
+          listProposalsModels: proposals,
           id: element['id'],
           brandMaterial: element['brand_material'],
           gostMaterial: element['gost_material'],
