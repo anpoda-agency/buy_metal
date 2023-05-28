@@ -1,7 +1,5 @@
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/answer_order_model.dart';
 import 'package:buy_metal_app/models/user_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionOfSupplierProposalPage extends StatefulWidget {
@@ -14,15 +12,14 @@ class DescriptionOfSupplierProposalPage extends StatefulWidget {
 }
 
 class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplierProposalPage> {
-  OrderModel orderModel = const OrderModel();
+  AnswerOrderModel answerModel = const AnswerOrderModel();
   UserModel userModel = const UserModel();
 
   @override
   void initState() {
-    String id = widget.args != null ? widget.args as String : '';
-    getIt.get<ProfileRepository>().getCurrentOrder(idOrder: id).then((value) => setState(() {
-          orderModel = value ?? const OrderModel();
-        }));
+    Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
+    answerModel = map['answer_model'];
+    userModel = map['user_model'];
     super.initState();
   }
 
@@ -43,31 +40,31 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Center(
+                Center(
                   child: Text(
-                    'ООО "МЕТАЛЛ" г. Москва',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    '${userModel.companyName} ${userModel.companyAdress}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    'от 20.05.2023',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'от ${answerModel.dataCreate}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
                 const SizedBox(height: 20),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Соответствие заявке:',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      'Соответствует', //аналог
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      answerModel.similar ? 'Аналог' : 'Соответствует', //аналог
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -81,31 +78,31 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'Лист ОЦ 2х1250х2500', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${answerModel.formRolled} ${answerModel.type} ${answerModel.sizeRolled}', //форма проката + классификация/тип профиля + размер
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                const Text(
-                  'Б-ПН-НО ГОСТ 14904-90', //параметры проката + гост на прокат
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${answerModel.paramsRolled} ${answerModel.gostRolled}', //параметры проката + гост на прокат
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                const Text(
-                  '08КП МТ-2 ГОСТ14918-80', //марка материала + параметры материала + ГОСТ на материал
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${answerModel.brandMaterial} ${answerModel.paramsMaterial} ${answerModel.gostMaterial}', //марка материала + параметры материала + ГОСТ на материал
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Цена за тонну (с НДС):',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '84 000 RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      '${answerModel.pricePerTonne} RUB',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -113,17 +110,17 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                   height: 10,
                 ),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Потребность в заявке:',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '5.4 т',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      '${answerModel.requirement} т',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -131,17 +128,17 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                   height: 10,
                 ),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Сумма (с НДС):',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '453 600 RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      '${answerModel.priceFull} RUB',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -149,34 +146,41 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                   height: 10,
                 ),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Наличие:',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      'Дa',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      answerModel.onStock ? 'Дa' : 'Нет',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // const Text(
-                //   'Дата поступления на склад поставщика:',
-                //   style: TextStyle(fontSize: 16, color: Colors.grey),
-                // ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                // const Text(
-                //   '19.02.2024',
-                //   style: TextStyle(fontSize: 20, color: Colors.black),
-                // ),
+                answerModel.dateToStorage.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Дата поступления на склад поставщика:',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '19.02.2024',
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
             Padding(

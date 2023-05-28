@@ -35,9 +35,9 @@ class AnswerOrderModel {
   @JsonKey(name: 'similar')
   final bool similar;
   @JsonKey(name: 'price_per_tonne')
-  final double pricePerTonne;
+  final num pricePerTonne;
   @JsonKey(name: 'price_full')
-  final double priceFull;
+  final num priceFull;
   @JsonKey(name: 'id_supplier')
   final String idSupplier;
   @JsonKey(name: 'id_order')
@@ -132,8 +132,8 @@ class AnswerOrderModel {
       String? dateToStorage,
       bool? onStock,
       bool? similar,
-      double? pricePerTonne,
-      double? priceFull,
+      num? pricePerTonne,
+      num? priceFull,
       String? idSupplier}) {
     return AnswerOrderModel(
         idOrder: idOrder ?? this.idOrder,
