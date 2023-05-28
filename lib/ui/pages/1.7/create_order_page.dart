@@ -156,6 +156,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                             .get<ProfileRepository>()
                             .createOrder(
                                 request: OrderModel(
+                              buyerId: getIt.get<ProfileRepository>().user.id,
                               formRolled: dropdownValue,
                               type: _typeTextController.text,
                               sizeRolled: _sizeRolledTextController.text,

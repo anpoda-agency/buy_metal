@@ -1,18 +1,29 @@
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class CreateComplianceProposalPage extends StatefulWidget {
-  const CreateComplianceProposalPage({super.key});
+  const CreateComplianceProposalPage({super.key, required this.args});
+  final Object? args;
 
   @override
-  State<CreateComplianceProposalPage> createState() =>
-      _CreateComplianceProposalPageState();
+  State<CreateComplianceProposalPage> createState() => _CreateComplianceProposalPageState();
 }
 
-class _CreateComplianceProposalPageState
-    extends State<CreateComplianceProposalPage> {
+class _CreateComplianceProposalPageState extends State<CreateComplianceProposalPage> {
+  late UserModel userModel;
+  late OrderModel orderModel;
   final TextEditingController priceController = TextEditingController();
   double price = 0;
   int selectedValue = 0;
+
+  @override
+  void initState() {
+    Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
+    orderModel = map['order_model'];
+    userModel = map['user_model'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +45,7 @@ class _CreateComplianceProposalPageState
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.orange,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               ),
               child: const Text(
                 'Сформировать предложение',
@@ -52,16 +62,16 @@ class _CreateComplianceProposalPageState
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(height: 20),
-                  const Center(
+                  Center(
                     child: Text(
-                      'ООО "ЗАКАЗЧИК" г. Москва',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      '${userModel.companyName} ${userModel.companyAdress}',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Text(
-                      'от 20.05.2023',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      'от ${orderModel.dataCreate}',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -72,33 +82,33 @@ class _CreateComplianceProposalPageState
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    'Лист ОЦ 2х1250х2500', //форма проката + классификация/тип профиля + размер
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  Text(
+                    '${orderModel.formRolled} ${orderModel.type} ${orderModel.sizeRolled}', //форма проката + классификация/тип профиля + размер
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  const Text(
-                    'Б-ПН-НО ГОСТ 14904-90', //параметры проката + гост на прокат
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  Text(
+                    '${orderModel.paramsRolled} ${orderModel.gostRolled}', //параметры проката + гост на прокат
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  const Text(
-                    '08КП МТ-2 ГОСТ14918-80', //марка материала + параметры материала + ГОСТ на материал
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  Text(
+                    '${orderModel.brandMaterial} ${orderModel.paramsMaterial} ${orderModel.gostMaterial}', //марка материала + параметры материала + ГОСТ на материал
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Row(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Потребность в заявке:',
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        '5.4 т',
-                        style: TextStyle(fontSize: 20, color: Colors.black),
+                        '${orderModel.requirement} т',
+                        style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
                     ],
                   ),
@@ -134,8 +144,7 @@ class _CreateComplianceProposalPageState
                               fillColor: Colors.grey[300],
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
+                                  borderSide: const BorderSide(color: Colors.white)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                     color: Colors.white,
@@ -147,8 +156,7 @@ class _CreateComplianceProposalPageState
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text('RUB',
-                          style: TextStyle(fontSize: 20, color: Colors.black))
+                      const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                     ],
                   ),
                   const SizedBox(
@@ -165,14 +173,12 @@ class _CreateComplianceProposalPageState
                       ),
                       Text(
                         price.toInt().toString(),
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.black),
+                        style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      const Text('RUB',
-                          style: TextStyle(fontSize: 20, color: Colors.black))
+                      const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                     ],
                   ),
                   const SizedBox(
@@ -193,20 +199,15 @@ class _CreateComplianceProposalPageState
                             });
                           },
                           child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: selectedValue == 1
-                                      ? Colors.orange
-                                      : Colors.grey),
+                                  color: selectedValue == 1 ? Colors.orange : Colors.grey),
                               child: Text(
                                 'Да',
                                 style: TextStyle(
                                     fontSize: 20,
-                                    color: selectedValue == 1
-                                        ? Colors.white
-                                        : Colors.black),
+                                    color: selectedValue == 1 ? Colors.white : Colors.black),
                               )),
                         ),
                       ),
@@ -219,20 +220,15 @@ class _CreateComplianceProposalPageState
                             });
                           },
                           child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: selectedValue == 2
-                                      ? Colors.orange
-                                      : Colors.grey),
+                                  color: selectedValue == 2 ? Colors.orange : Colors.grey),
                               child: Text(
                                 'Нет',
                                 style: TextStyle(
                                     fontSize: 20,
-                                    color: selectedValue == 2
-                                        ? Colors.white
-                                        : Colors.black),
+                                    color: selectedValue == 2 ? Colors.white : Colors.black),
                               )),
                         ),
                       ),
@@ -247,8 +243,7 @@ class _CreateComplianceProposalPageState
                             ),
                             const Text(
                               'Дата поступления\nна склад поставщика:',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: TextStyle(fontSize: 20, color: Colors.black),
                             ),
                             const SizedBox(
                               height: 10,
@@ -271,8 +266,7 @@ class _CreateComplianceProposalPageState
                                   fillColor: Colors.grey[300],
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          color: Colors.white)),
+                                      borderSide: const BorderSide(color: Colors.white)),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                         color: Colors.white,
@@ -328,16 +322,13 @@ class _AvailableWidgetState extends State<AvailableWidget> {
                     });
                   },
                   child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: e ? Colors.orange : Colors.grey),
                       child: Text(
                         listNames[listBool.indexOf(e)],
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: e ? Colors.white : Colors.black),
+                        style: TextStyle(fontSize: 20, color: e ? Colors.white : Colors.black),
                       )),
                 ),
               ))

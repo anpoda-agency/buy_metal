@@ -1,15 +1,34 @@
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
+import 'package:buy_metal_app/ui/pages/2.3/selection_of_create_proposal_page.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionOfBuyerOrderPage extends StatefulWidget {
-  const DescriptionOfBuyerOrderPage({super.key});
+  const DescriptionOfBuyerOrderPage({super.key, required this.args});
+  final Object? args;
 
   @override
-  State<DescriptionOfBuyerOrderPage> createState() =>
-      _DescriptionOfBuyerOrderPageState();
+  State<DescriptionOfBuyerOrderPage> createState() => _DescriptionOfBuyerOrderPageState();
 }
 
-class _DescriptionOfBuyerOrderPageState
-    extends State<DescriptionOfBuyerOrderPage> {
+class _DescriptionOfBuyerOrderPageState extends State<DescriptionOfBuyerOrderPage> {
+  late OrderModel orderModel;
+  UserModel userInfo = const UserModel();
+
+  @override
+  void initState() {
+    orderModel = widget.args != null ? widget.args as OrderModel : const OrderModel();
+    getIt
+        .get<ProfileRepository>()
+        .getUserInfo(buyerId: orderModel.buyerId)
+        .then((value) => setState(() {
+              userInfo = value;
+            }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,16 +46,16 @@ class _DescriptionOfBuyerOrderPageState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Center(
+                Center(
                   child: Text(
-                    'ООО "ЗАКАЗЧИК" г. Москва',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    '${userInfo.companyName} ${userInfo.companyAdress}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
-                const Center(
+                Center(
                   child: Text(
-                    'от 20.05.2023',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'от ${orderModel.dataCreate}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -47,50 +66,36 @@ class _DescriptionOfBuyerOrderPageState
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'Лист ОЦ 2х1250х2500', //форма проката + классификация/тип профиля + размер
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${orderModel.formRolled} ${orderModel.type} ${orderModel.sizeRolled}', //форма проката + классификация/тип профиля + размер
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                const Text(
-                  'Б-ПН-НО ГОСТ 14904-90', //параметры проката + гост на прокат
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${orderModel.paramsRolled} ${orderModel.gostRolled}', //параметры проката + гост на прокат
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                const Text(
-                  '08КП МТ-2 ГОСТ14918-80', //марка материала + параметры материала + ГОСТ на материал
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(
+                  '${orderModel.brandMaterial} ${orderModel.paramsMaterial} ${orderModel.gostMaterial}', //марка материала + параметры материала + ГОСТ на материал
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Row(
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Потребность в заявке:',
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      '5.4 т',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      '${orderModel.requirement} т',
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // const Text(
-                //   'Дата поступления на склад поставщика:',
-                //   style: TextStyle(fontSize: 16, color: Colors.grey),
-                // ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                // const Text(
-                //   '19.02.2024',
-                //   style: TextStyle(fontSize: 20, color: Colors.black),
-                // ),
               ],
             ),
             Padding(
@@ -100,13 +105,17 @@ class _DescriptionOfBuyerOrderPageState
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, '/selection_of_create_proposal_page');
+                    // Navigator.pushNamed(context, '/selection_of_create_proposal_page');
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => SelectionOfCreateProposalPage(
+                                args: {'order_model': orderModel, 'user_model': userInfo},
+                              )),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Сформировать предложение',

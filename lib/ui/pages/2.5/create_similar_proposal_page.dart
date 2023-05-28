@@ -1,43 +1,48 @@
+import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/models/user_model.dart';
 import 'package:buy_metal_app/ui/pages/1.7/create_order_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateSimilarProposalPage extends StatefulWidget {
-  const CreateSimilarProposalPage({super.key});
+  const CreateSimilarProposalPage({super.key, required this.args});
+  final Object? args;
 
   @override
-  State<CreateSimilarProposalPage> createState() =>
-      _CreateSimilarProposalPageState();
+  State<CreateSimilarProposalPage> createState() => _CreateSimilarProposalPageState();
 }
 
 class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
+  late UserModel userModel;
+  late OrderModel orderModel;
   //final TextEditingController testController = TextEditingController();
   int selectedValue = 0;
   final TextEditingController _priceController = TextEditingController();
   double price = 0;
 
-  final String _formRolled = 'Лист';
   final String _requirement = '5.4 т';
   bool _inStock = false;
   bool _notStock = false;
 
   final TextEditingController _typeTextController = TextEditingController();
-  final TextEditingController _sizeRolledTextController =
-      TextEditingController();
-  final TextEditingController _paramsRolledTextController =
-      TextEditingController();
-  final TextEditingController _gostRolledTextController =
-      TextEditingController();
-  final TextEditingController _brandMaterialTextController =
-      TextEditingController();
-  final TextEditingController _paramsMaterialTextController =
-      TextEditingController();
-  final TextEditingController _gostMaterialTextController =
-      TextEditingController();
+  final TextEditingController _sizeRolledTextController = TextEditingController();
+  final TextEditingController _paramsRolledTextController = TextEditingController();
+  final TextEditingController _gostRolledTextController = TextEditingController();
+  final TextEditingController _brandMaterialTextController = TextEditingController();
+  final TextEditingController _paramsMaterialTextController = TextEditingController();
+  final TextEditingController _gostMaterialTextController = TextEditingController();
   final TextEditingController _dateTextController = TextEditingController();
 
   final CollectionReference _similarProposal =
       FirebaseFirestore.instance.collection('similar_proposals');
+
+  @override
+  void initState() {
+    Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
+    orderModel = map['order_model'];
+    userModel = map['user_model'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +51,6 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
         backgroundColor: Colors.black87,
         title: const Text('Описание предложения'),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/test_list_proposals_page');
-                //'/selected_buyer_list_of_orders_page');
-              },
-              icon: const Icon(Icons.start)),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,16 +60,16 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
-                  'ООО "ЗАКАЗЧИК" г. Москва',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  '${userModel.companyName} ${userModel.companyAdress}',
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
-              const Center(
+              Center(
                 child: Text(
-                  'от 20.05.2023',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  'от ${orderModel.dataCreate}',
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 20),
@@ -86,8 +83,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                     width: 10,
                   ),
                   Text(
-                    _formRolled,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    orderModel.formRolled,
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],
               ),
@@ -143,7 +140,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   ),
                   Text(
                     _requirement,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],
               ),
@@ -179,8 +176,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           fillColor: Colors.grey[300],
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(color: Colors.white)),
+                              borderSide: const BorderSide(color: Colors.white)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Colors.white,
@@ -192,8 +188,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text('RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black))
+                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                 ],
               ),
               const SizedBox(
@@ -215,8 +210,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Text('RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black))
+                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                 ],
               ),
               const SizedBox(
@@ -238,20 +232,15 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         });
                       },
                       child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 1
-                                  ? Colors.orange
-                                  : Colors.grey),
+                              color: selectedValue == 1 ? Colors.orange : Colors.grey),
                           child: Text(
                             'Да',
                             style: TextStyle(
                                 fontSize: 20,
-                                color: selectedValue == 1
-                                    ? Colors.white
-                                    : Colors.black),
+                                color: selectedValue == 1 ? Colors.white : Colors.black),
                           )),
                     ),
                   ),
@@ -264,20 +253,15 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         });
                       },
                       child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 2
-                                  ? Colors.orange
-                                  : Colors.grey),
+                              color: selectedValue == 2 ? Colors.orange : Colors.grey),
                           child: Text(
                             'Нет',
                             style: TextStyle(
                                 fontSize: 20,
-                                color: selectedValue == 2
-                                    ? Colors.white
-                                    : Colors.black),
+                                color: selectedValue == 2 ? Colors.white : Colors.black),
                           )),
                     ),
                   ),
@@ -315,8 +299,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                               fillColor: Colors.grey[300],
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
+                                  borderSide: const BorderSide(color: Colors.white)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                     color: Colors.white,
@@ -345,7 +328,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                       }
 
                       await _similarProposal.add({
-                        'form_rolled': _formRolled,
+                        'form_rolled': orderModel.formRolled,
                         "type": _typeTextController.text,
                         "size_rolled": _sizeRolledTextController.text,
                         'params_rolled': _paramsRolledTextController.text,
@@ -366,8 +349,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(
                       'Разместить заявку',
@@ -423,16 +405,13 @@ class _NDSWidgetState extends State<NDSWidget> {
                     });
                   },
                   child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: e ? Colors.orange : Colors.grey),
                       child: Text(
                         listNames[listBool.indexOf(e)],
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: e ? Colors.white : Colors.black),
+                        style: TextStyle(fontSize: 20, color: e ? Colors.white : Colors.black),
                       )),
                 ),
               ))
@@ -478,16 +457,13 @@ class _AvailableWidgetState extends State<AvailableWidget> {
                     });
                   },
                   child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: e ? Colors.orange : Colors.grey),
                       child: Text(
                         listNames[listBool.indexOf(e)],
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: e ? Colors.white : Colors.black),
+                        style: TextStyle(fontSize: 20, color: e ? Colors.white : Colors.black),
                       )),
                 ),
               ))

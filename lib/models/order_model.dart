@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/models/answer_order_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -27,8 +28,10 @@ class OrderModel {
   final String dataCreate;
   @JsonKey(name: 'id')
   final String id;
-  @JsonKey(name: 'list_id_answers')
-  final List<String> listIdAnswers;
+  @JsonKey(name: 'buyer_id')
+  final String buyerId;
+  @JsonKey(name: 'list_proposals_models')
+  final List<AnswerOrderModel> listProposalsModels;
 
   const OrderModel(
       {this.formRolled = '',
@@ -41,7 +44,8 @@ class OrderModel {
       this.gostMaterial = '',
       this.requirement = '',
       this.dataCreate = '',
-      this.listIdAnswers = const [],
+      this.buyerId = '',
+      this.listProposalsModels = const [],
       this.id = ''});
 
   // factory OrderModel.fromJson(Map<String, dynamic> json) =>
@@ -60,9 +64,11 @@ class OrderModel {
     String? requirement,
     String? dataCreate,
     String? id,
-    List<String>? listIdAnswers,
+    String? buyerId,
+    List<AnswerOrderModel>? listProposalsModels,
   }) {
     return OrderModel(
+        buyerId: buyerId ?? this.buyerId,
         formRolled: formRolled ?? this.formRolled,
         type: type ?? this.type,
         sizeRolled: sizeRolled ?? this.sizeRolled,
@@ -74,7 +80,7 @@ class OrderModel {
         requirement: requirement ?? this.requirement,
         dataCreate: dataCreate ?? this.dataCreate,
         id: id ?? this.id,
-        listIdAnswers: listIdAnswers ?? this.listIdAnswers);
+        listProposalsModels: listProposalsModels ?? this.listProposalsModels);
   }
 
   factory OrderModel.fromFirestore(
@@ -82,9 +88,35 @@ class OrderModel {
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
+
+    List<AnswerOrderModel> proposals = [];
+    List<dynamic> proposalsMap = data?['list_proposals_models'];
+    for (var element in proposalsMap) {
+      proposals.add(AnswerOrderModel(
+          id: element['id'],
+          idOrder: element['id_order'],
+          brandMaterial: element['brand_material'],
+          gostMaterial: element['gost_material'],
+          gostRolled: element['gost_golled'],
+          paramsMaterial: element['params_material'],
+          paramsRolled: element['params_rolled'],
+          requirement: element['requirement'],
+          sizeRolled: element['size_rolled'],
+          type: element['type'],
+          formRolled: element['form_rolled'],
+          dataCreate: element['data_create'],
+          dateToStorage: element['data_to_storage'],
+          onStock: element['on_stock'],
+          similar: element['similar'],
+          pricePerTonne: element['price_per_tonne'],
+          priceFull: element['price_full'],
+          idSupplier: element['id_supplier']));
+    }
+
     return OrderModel(
-        listIdAnswers: data?['list_id_answers'],
+        listProposalsModels: proposals,
         id: data?['id'],
+        buyerId: data?['buyer_id'],
         brandMaterial: data?['brand_material'],
         gostMaterial: data?['gost_material'],
         gostRolled: data?['gost_rolled'],
@@ -100,7 +132,7 @@ class OrderModel {
   Map<String, dynamic> toFirestore() {
     return {
       "id": id,
-      "list_id_answers": listIdAnswers,
+      "list_proposals_models": listProposalsModels,
       "brand_material": brandMaterial,
       "gost_material": gostMaterial,
       "gost_rolled": gostRolled,
@@ -109,6 +141,7 @@ class OrderModel {
       "requirement": requirement,
       "size_rolled": sizeRolled,
       "type": type,
+      "buyer_id": buyerId,
       "form_rolled": formRolled,
       "data_create": dataCreate
     };

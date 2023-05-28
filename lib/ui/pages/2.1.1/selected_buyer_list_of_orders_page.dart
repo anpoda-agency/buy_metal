@@ -1,6 +1,7 @@
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
+import 'package:buy_metal_app/ui/pages/2.2/description_of_buyer_order_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +20,14 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
     getIt.get<ProfileRepository>().getAllOrders().then((value) => setState(() {
           listOrders = value;
         }));
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black87,
           title: const Text('Заявки заказчиков'),
@@ -65,8 +67,15 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                         borderRadius: BorderRadius.circular(5)),
                     child: InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/description_of_buyer_order_page',
-                            arguments: listOrders[index]);
+                        print(listOrders.elementAt(index).id);
+                        // Navigator.pushNamed(context, '/description_of_buyer_order_page',
+                        //     arguments: listOrders.elementAt(index));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => DescriptionOfBuyerOrderPage(
+                                    args: listOrders.elementAt(index),
+                                  )),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),

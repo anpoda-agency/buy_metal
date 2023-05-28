@@ -40,6 +40,8 @@ class AnswerOrderModel {
   final String priceFull;
   @JsonKey(name: 'id_supplier')
   final String idSupplier;
+  @JsonKey(name: 'id_order')
+  final String idOrder;
 
   const AnswerOrderModel(
       {this.formRolled = '',
@@ -58,6 +60,7 @@ class AnswerOrderModel {
       this.requirement = '',
       this.dataCreate = '',
       this.idSupplier = '',
+      this.idOrder = '',
       this.id = ''});
 
   // factory AnswerOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +74,7 @@ class AnswerOrderModel {
     final data = snapshot.data();
     return AnswerOrderModel(
         id: data?['id'],
+        idOrder: data?['id_order'],
         brandMaterial: data?['brand_material'],
         gostMaterial: data?['gost_material'],
         gostRolled: data?['gost_golled'],
@@ -92,6 +96,7 @@ class AnswerOrderModel {
   Map<String, dynamic> toFirestore() {
     return {
       "id": id,
+      "id_order": idOrder,
       "brand_material": brandMaterial,
       "gost_material": gostMaterial,
       "gost_golled": gostRolled,

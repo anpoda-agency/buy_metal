@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments;
+    final Object? args = ModalRoute.of(context)?.settings.arguments;
 
     return MultiProvider(
       providers: [
@@ -122,15 +122,19 @@ class _MyAppState extends State<MyApp> {
               const SelectedBuyerListOfOrdersPage(), // 2.1.1
 
           '/description_of_buyer_order_page': (context) =>
-              const DescriptionOfBuyerOrderPage(), //2.2
+              DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) =>
-              const SelectionOfCreateProposalPage(), //2.3
+          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(
+                args: args,
+              ), //2.3
 
-          '/create_compliance_proposal_page': (context) =>
-              const CreateComplianceProposalPage(), //2.4
+          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(
+                args: args,
+              ), //2.4
 
-          '/create_similar_proposal_page': (context) => const CreateSimilarProposalPage(), //2.5
+          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
+                args: args,
+              ), //2.5
         },
         home: loading
             ? const Center(

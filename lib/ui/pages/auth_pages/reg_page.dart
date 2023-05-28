@@ -14,7 +14,6 @@ class _RegPageState extends State<RegPage> {
   int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
-  //bool _selectedType = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -35,18 +34,10 @@ class _RegPageState extends State<RegPage> {
         toolbarHeight: 50,
         elevation: 0,
         backgroundColor: Colors.grey[900],
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/selected_buyer_list_of_orders_page');
-              },
-              icon: const Icon(Icons.logout_outlined)),
-        ],
       ),
       backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
         child: SizedBox(
-          // height: MediaQuery.of(context).size.height * 0.85,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
