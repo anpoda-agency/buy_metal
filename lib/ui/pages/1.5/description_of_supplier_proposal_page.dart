@@ -138,7 +138,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                       width: 10,
                     ),
                     Text(
-                      '${answerModel.priceFull} RUB',
+                      '${answerModel.priceFull.floorToDouble()} RUB',
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
@@ -164,20 +164,20 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                 answerModel.dateToStorage.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          SizedBox(
+                        children: [
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text(
+                          const Text(
                             'Дата поступления на склад поставщика:',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
-                            '19.02.2024',
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                            answerModel.dateToStorage,
+                            style: const TextStyle(fontSize: 20, color: Colors.black),
                           ),
                         ],
                       )

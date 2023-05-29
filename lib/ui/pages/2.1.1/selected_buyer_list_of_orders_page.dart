@@ -57,6 +57,80 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
               itemCount: listOrders.length,
               itemBuilder: (BuildContext context, index) {
                 return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Colors.black54,
+                          Colors.grey.shade400,
+                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                        color: Colors.grey[500],
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => DescriptionOfBuyerOrderPage(
+                                    args: listOrders.elementAt(index),
+                                  )),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  listOrders[index].formRolled,
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  listOrders[index].type,
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  listOrders[index].sizeRolled,
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  listOrders[index].dataCreate,
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+                return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -67,9 +141,6 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                         borderRadius: BorderRadius.circular(5)),
                     child: InkWell(
                       onTap: () {
-                        print(listOrders.elementAt(index).id);
-                        // Navigator.pushNamed(context, '/description_of_buyer_order_page',
-                        //     arguments: listOrders.elementAt(index));
                         Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => DescriptionOfBuyerOrderPage(
@@ -94,3 +165,10 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
         ));
   }
 }
+
+// Navigator.of(context).push(
+//                           MaterialPageRoute(
+//                               builder: (context) => DescriptionOfBuyerOrderPage(
+//                                     args: listOrders.elementAt(index),
+//                                   )),
+//                         );

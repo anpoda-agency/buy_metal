@@ -47,13 +47,24 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                   itemCount: listOrdersModels.length,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.orange,
-                            border: Border.all(width: 3),
+                            gradient: LinearGradient(colors: [
+                              Colors.black54,
+                              Colors.grey.shade400,
+                            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            color: Colors.grey[500],
+                            border: Border.all(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(5)),
                         child: InkWell(
                           onTap: () {
@@ -65,13 +76,91 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                listOrdersModels[index].dataCreate,
-                                style: const TextStyle(fontSize: 25, color: Colors.white),
-                              ),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      listOrdersModels[index].formRolled,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      listOrdersModels[index].type,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      listOrdersModels[index].sizeRolled,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      listOrdersModels[index].paramsRolled,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      listOrdersModels[index].gostRolled,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      listOrdersModels[index].brandMaterial,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      listOrdersModels[index].paramsMaterial,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      listOrdersModels[index].gostMaterial,
+                                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      listOrdersModels[index].dataCreate,
+                                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
