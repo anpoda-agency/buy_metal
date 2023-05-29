@@ -25,15 +25,6 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.filter_list,
-              size: 30,
-            ),
-          ),
-        ],
         backgroundColor: Colors.black87,
         title: const Text(
           'Мои заявки',
