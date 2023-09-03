@@ -1,4 +1,4 @@
-import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

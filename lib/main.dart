@@ -1,5 +1,5 @@
 import 'package:buy_metal_app/firebase_options.dart';
-import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
 import 'package:buy_metal_app/ui/pages/1.8/success_order_page.dart';

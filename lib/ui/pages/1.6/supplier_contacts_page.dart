@@ -1,4 +1,4 @@
-import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class SupplierContactsPage extends StatefulWidget {

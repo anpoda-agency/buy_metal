@@ -1,7 +1,7 @@
 import 'dart:js_interop';
 
 import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/ui/pages/profile_pages/profile_edit_page.dart';

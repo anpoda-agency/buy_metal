@@ -1,5 +1,5 @@
 import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/models/order_model.dart';
+import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
