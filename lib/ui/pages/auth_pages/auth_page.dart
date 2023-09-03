@@ -25,6 +25,19 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context, '/buyer_workplace_page',
+                  //arguments: state.pageState.request.source
+                );
+              },
+              icon: const Icon(
+                Icons.launch,
+                color: Colors.red,
+              )),
+        ],
       ),
       backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
@@ -81,8 +94,10 @@ class _AuthPageState extends State<AuthPage> {
                                   .saveUser(id: value.user!.uid)
                                   .whenComplete(() {
                                 getIt.get<ProfileRepository>().user.buyer
-                                    ? Navigator.pushNamedAndRemoveUntil(context,
-                                        '/buyer_workplace_page', (Route<dynamic> route) => false)
+                                    ? Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/buyer_workplace_page',
+                                        (Route<dynamic> route) => false)
                                     : Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         '/selected_buyer_list_of_orders_page',
@@ -120,7 +135,9 @@ TextField authTextField(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(15))),
-    keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
+    keyboardType: isPasswordType
+        ? TextInputType.visiblePassword
+        : TextInputType.emailAddress,
   );
 }
 

@@ -17,7 +17,8 @@ class _RegPageState extends State<RegPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _postNameController = TextEditingController();
@@ -25,7 +26,8 @@ class _RegPageState extends State<RegPage> {
   final TextEditingController _innController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
-  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +77,22 @@ class _RegPageState extends State<RegPage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 65,
-                              width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                              width: MediaQuery.of(context).size.width * 0.5 -
+                                  16 -
+                                  5,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: _selectedType == 0 ? Colors.orange[700] : Colors.grey),
+                                  color: _selectedType == 0
+                                      ? Colors.orange[700]
+                                      : Colors.grey),
                               child: Text(
                                 'Поставщиком',
                                 style: TextStyle(
                                     fontSize: 22,
-                                    color: _selectedType == 0 ? Colors.white : Colors.black),
+                                    color: _selectedType == 0
+                                        ? Colors.white
+                                        : Colors.black),
                               ),
                             ),
                           ),
@@ -101,16 +109,22 @@ class _RegPageState extends State<RegPage> {
                             child: Container(
                               height: 65,
                               alignment: Alignment.center,
-                              width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                              width: MediaQuery.of(context).size.width * 0.5 -
+                                  16 -
+                                  5,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: _selectedType == 1 ? Colors.orange[700] : Colors.grey),
+                                  color: _selectedType == 1
+                                      ? Colors.orange[700]
+                                      : Colors.grey),
                               child: Text(
                                 'Заказчиком',
                                 style: TextStyle(
                                     fontSize: 22,
-                                    color: _selectedType == 1 ? Colors.white : Colors.black),
+                                    color: _selectedType == 1
+                                        ? Colors.white
+                                        : Colors.black),
                               ),
                             ),
                           ),
@@ -172,8 +186,15 @@ class _RegPageState extends State<RegPage> {
                                     password: _passwordController.text)
                                 .then((value) async {
                               if (_selectedType == 1) {
-                                supplier = false;
-                                buyer = true;
+                                setState(() {
+                                  supplier = false;
+                                  buyer = true;
+                                });
+                              } else {
+                                setState(() {
+                                  supplier = true;
+                                  buyer = false;
+                                });
                               }
                               User? user = FirebaseAuth.instance.currentUser;
                               String userId = user?.uid ?? '';
@@ -209,14 +230,17 @@ class _RegPageState extends State<RegPage> {
                                     '/selected_buyer_list_of_orders_page',
                                     (Route<dynamic> route) => false);
                               } else {
-                                Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page',
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/buyer_workplace_page',
                                     (Route<dynamic> route) => false);
                               }
                             });
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
                           ),
                           child: const Text(
                             'Зарегистрироваться',
@@ -239,7 +263,10 @@ class _RegPageState extends State<RegPage> {
 
 class RegFieldWidget extends StatefulWidget {
   const RegFieldWidget(
-      {super.key, required this.controller, required this.title, required this.inputType});
+      {super.key,
+      required this.controller,
+      required this.title,
+      required this.inputType});
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;

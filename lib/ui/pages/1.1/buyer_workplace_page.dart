@@ -81,11 +81,21 @@ class BuyerWorkplacePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
+                Navigator.pushNamed(
+                  context, '/profile_page',
+                  //arguments: state.pageState.request.source
+                );
+              },
+              icon: const Icon(
+                Icons.account_box,
+              )),
+          /* IconButton(
+              onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pushReplacementNamed(context, '/home_page');
                 });
               },
-              icon: const Icon(Icons.logout_outlined)),
+              icon: const Icon(Icons.logout_outlined)), */
         ],
       ),
       backgroundColor: Colors.grey[900],
@@ -104,7 +114,8 @@ class BuyerWorkplacePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Мои заявки',
@@ -124,7 +135,8 @@ class BuyerWorkplacePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Разместить заявку',
