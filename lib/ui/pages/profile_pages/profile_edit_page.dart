@@ -1,16 +1,23 @@
+import 'package:buy_metal_app/models/user_model.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegPage extends StatefulWidget {
-  const RegPage({super.key});
+class ProfileEditPage extends StatefulWidget {
+  const ProfileEditPage({
+    required this.args,
+    super.key,
+  });
+  final Object? args;
 
   @override
-  State<RegPage> createState() => _RegPageState();
+  State<ProfileEditPage> createState() => _ProfileEditPageState();
 }
 
-class _RegPageState extends State<RegPage> {
+class _ProfileEditPageState extends State<ProfileEditPage> {
+  late UserModel userModel;
+
   int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
@@ -30,12 +37,40 @@ class _RegPageState extends State<RegPage> {
       FirebaseFirestore.instance.collection('users');
 
   @override
+  void initState() {
+    //getIt.get<ProfileRepository>().user;
+    userModel = //getIt.get<ProfileRepository>().user;
+        widget.args != null ? widget.args as UserModel : const UserModel();
+    super.initState();
+    print(userModel.toFirestore());
+    _emailController.text = userModel.email;
+    _companyNameController.text = userModel.companyName;
+    _ownerNameController.text = userModel.userFIO;
+    _postNameController.text = userModel.post;
+    _adressController.text = userModel.companyAdress;
+    _innController.text = userModel.inn;
+    _phoneController.text = userModel.phone;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50,
-        elevation: 0,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.black87,
+        title: const Text('Редактирование профиля'),
+        centerTitle: true,
+        /* actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context, '/profile_edit_page',
+                  //arguments: state.pageState.request.source
+                );
+              },
+              icon: const Icon(
+                Icons.edit_note,
+              )),
+        ], */
       ),
       backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
@@ -47,18 +82,12 @@ class _RegPageState extends State<RegPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 30,
-                  ),
-                  const Center(
-                    child: LabelWidget(title: 'Регистрация'),
-                  ),
-                  const SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      /* const Text(
                         'Вы являетесь:',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
@@ -129,7 +158,7 @@ class _RegPageState extends State<RegPage> {
                             ),
                           ),
                         ],
-                      ),
+                      ), */
                       const SizedBox(
                         height: 20,
                       ),
@@ -164,14 +193,14 @@ class _RegPageState extends State<RegPage> {
                           controller: _emailController,
                           title: 'Эл. почта',
                           inputType: TextInputType.emailAddress),
-                      RegFieldWidget(
+                      /*  RegFieldWidget(
                           controller: _passwordController,
                           title: 'Придумайте пароль',
                           inputType: TextInputType.text),
                       RegFieldWidget(
                           controller: _confirmPasswordController,
                           title: 'Повторите пароль',
-                          inputType: TextInputType.text),
+                          inputType: TextInputType.text), */
                       const SizedBox(
                         height: 10,
                       ),
@@ -180,41 +209,34 @@ class _RegPageState extends State<RegPage> {
                         height: 75,
                         child: ElevatedButton(
                           onPressed: () async {
-                            FirebaseAuth.instance
+                            /* FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((value) async {
+                                    password: _passwordController.text) */
+                            /*  .then((value) async {
                               if (_selectedType == 1) {
-                                setState(() {
-                                  supplier = false;
-                                  buyer = true;
-                                });
-                              } else {
-                                setState(() {
-                                  supplier = true;
-                                  buyer = false;
-                                });
-                              }
-                              User? user = FirebaseAuth.instance.currentUser;
-                              String userId = user?.uid ?? '';
-                              List<String> listOrders = [];
-                              _users.doc(userId).set({
-                                "id": user?.uid,
-                                "user_fio": _ownerNameController.text,
-                                "post": _postNameController.text,
-                                'company_name': _companyNameController.text,
-                                'company_adress': _adressController.text,
-                                'inn': _innController.text,
-                                'phone': _phoneController.text,
-                                'email': _emailController.text,
-                                'password': _passwordController.text,
-                                'supplier': supplier,
-                                'buyer': buyer,
-                                'list_orders': listOrders
-                              });
+                                supplier = false;
+                                buyer = true;
+                              } */
+                            User? user = FirebaseAuth.instance.currentUser;
+                            String userId = user?.uid ?? '';
+                            List<String> listOrders = [];
+                            _users.doc(userId).update({
+                              //"id": user?.uid,
+                              "user_fio": _ownerNameController.text,
+                              "post": _postNameController.text,
+                              'company_name': _companyNameController.text,
+                              'company_adress': _adressController.text,
+                              'inn': _innController.text,
+                              'phone': _phoneController.text,
+                              'email': _emailController.text,
+                              //'password': _passwordController.text,
+                              //'supplier': supplier,
+                              //'buyer': buyer,
+                              //'list_orders': listOrders
+                            }).whenComplete(() => Navigator.pop(context));
 
-                              if (_selectedType == 0
+                            /* if (_selectedType == 0
                                   // _emailController.text.isNotEmpty &&
                                   //   _passwordController.text ==
                                   //       _confirmPasswordController.text &&
@@ -234,8 +256,8 @@ class _RegPageState extends State<RegPage> {
                                     context,
                                     '/buyer_workplace_page',
                                     (Route<dynamic> route) => false);
-                              }
-                            });
+                              } */
+                            //}
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],
@@ -243,7 +265,7 @@ class _RegPageState extends State<RegPage> {
                                 borderRadius: BorderRadius.circular(15)),
                           ),
                           child: const Text(
-                            'Зарегистрироваться',
+                            'Сохранить изменения',
                             style: TextStyle(fontSize: 20),
                           ),
                         ),

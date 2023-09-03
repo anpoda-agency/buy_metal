@@ -1,16 +1,29 @@
+import 'dart:js_interop';
+
+import 'package:buy_metal_app/main.dart';
+import 'package:buy_metal_app/models/user_model.dart';
+import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/ui/core_widgets/label_widget.dart';
+import 'package:buy_metal_app/ui/pages/profile_pages/profile_edit_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegPage extends StatefulWidget {
-  const RegPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({
+    required this.args,
+    super.key,
+  });
+  final Object? args;
 
   @override
-  State<RegPage> createState() => _RegPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _RegPageState extends State<RegPage> {
+class _ProfilePageState extends State<ProfilePage> {
+  late UserModel userModel;
+  late String profileType = '';
+
   int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
@@ -30,14 +43,46 @@ class _RegPageState extends State<RegPage> {
       FirebaseFirestore.instance.collection('users');
 
   @override
+  void initState() {
+    //getIt.get<ProfileRepository>().user;
+    userModel = getIt.get<ProfileRepository>().user;
+
+    //widget.args != null ? widget.args as UserModel : const UserModel();
+    super.initState();
+    print(userModel.toFirestore());
+    if (userModel.buyer) {
+      profileType = 'Заказчик';
+    }
+    if (userModel.supplier) {
+      profileType = 'Поставщик';
+    }
+
+    // калл который нулл выбрасывает
+    /* ProfileRepository? userInstance;
+    userInstance!.getUserInfo(userId: userModel.id); */
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50,
-        elevation: 0,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.black87,
+        title: const Text('Ваш Профиль'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context, '/profile_edit_page',
+                  //arguments: state.pageState.request.source
+                );
+              },
+              icon: const Icon(
+                Icons.edit_note,
+              )),
+        ],
       ),
-      backgroundColor: Colors.grey[900],
+      //backgroundColor: Colors.grey[900],
       body: SingleChildScrollView(
         child: SizedBox(
           child: Padding(
@@ -47,131 +92,39 @@ class _RegPageState extends State<RegPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 30,
-                  ),
-                  const Center(
-                    child: LabelWidget(title: 'Регистрация'),
-                  ),
-                  const SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Вы являетесь:',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      _ProfileInfoDisplayField(
+                        fieldName: 'Вы являетесь:',
+                        userInfo: profileType,
+                        //userModel.userFIO.toString(),
+                        //userInfo: 'Попов Данила',
                       ),
-                      const SizedBox(
-                        height: 10,
+                      _ProfileInfoDisplayField(
+                        fieldName: 'ФИО Пользователя:',
+                        userInfo: userModel.userFIO.toString(),
+                        //userInfo: 'Попов Данила',
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                            borderRadius: BorderRadius.circular(15),
-                            onTap: () {
-                              setState(() {
-                                _selectedType = 0;
-                              });
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 65,
-                              width: MediaQuery.of(context).size.width * 0.5 -
-                                  16 -
-                                  5,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: _selectedType == 0
-                                      ? Colors.orange[700]
-                                      : Colors.grey),
-                              child: Text(
-                                'Поставщиком',
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    color: _selectedType == 0
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(15),
-                            onTap: () {
-                              setState(() {
-                                _selectedType = 1;
-                              });
-                            },
-                            child: Container(
-                              height: 65,
-                              alignment: Alignment.center,
-                              width: MediaQuery.of(context).size.width * 0.5 -
-                                  16 -
-                                  5,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: _selectedType == 1
-                                      ? Colors.orange[700]
-                                      : Colors.grey),
-                              child: Text(
-                                'Заказчиком',
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    color: _selectedType == 1
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
+                      _ProfileInfoDisplayField(
+                          fieldName: 'Должность в компании:',
+                          userInfo: userModel.post),
+                      _ProfileInfoDisplayField(
+                          fieldName: 'Наименование организации:',
+                          userInfo: userModel.companyName),
+                      _ProfileInfoDisplayField(
+                          fieldName: 'Фактический адрес организации:',
+                          userInfo: userModel.companyAdress),
+                      _ProfileInfoDisplayField(
+                        fieldName: 'ИНН:',
+                        userInfo: userModel.inn.toString(),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RegFieldWidget(
-                        controller: _ownerNameController,
-                        title: 'ФИО Пользователя',
-                        inputType: TextInputType.text,
-                      ),
-                      RegFieldWidget(
-                        controller: _postNameController,
-                        title: 'Должность в компании',
-                        inputType: TextInputType.text,
-                      ),
-                      RegFieldWidget(
-                        controller: _companyNameController,
-                        title: 'Наименование организации',
-                        inputType: TextInputType.text,
-                      ),
-                      RegFieldWidget(
-                          controller: _adressController,
-                          title: 'Фактический адрес организации',
-                          inputType: TextInputType.text),
-                      RegFieldWidget(
-                          controller: _innController,
-                          title: 'ИНН',
-                          inputType: TextInputType.number),
-                      RegFieldWidget(
-                          controller: _phoneController,
-                          title: 'Телефон',
-                          inputType: TextInputType.phone),
-                      RegFieldWidget(
-                          controller: _emailController,
-                          title: 'Эл. почта',
-                          inputType: TextInputType.emailAddress),
-                      RegFieldWidget(
-                          controller: _passwordController,
-                          title: 'Придумайте пароль',
-                          inputType: TextInputType.text),
-                      RegFieldWidget(
-                          controller: _confirmPasswordController,
-                          title: 'Повторите пароль',
-                          inputType: TextInputType.text),
+                      _ProfileInfoDisplayField(
+                          fieldName: 'Телефон:', userInfo: userModel.phone),
+                      _ProfileInfoDisplayField(
+                          fieldName: 'Эл. почта:', userInfo: userModel.email),
                       const SizedBox(
                         height: 10,
                       ),
@@ -179,22 +132,27 @@ class _RegPageState extends State<RegPage> {
                         width: MediaQuery.of(context).size.width,
                         height: 75,
                         child: ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileEditPage(
+                                        args: userModel,
+                                      )),
+                            );
+                            /* .then((value) {
+                              setState(() {});
+                            }); */
+                          },
+                          //Navigator.push(context,MaterialPageRoute(builder: (context) => Page2())).then((value) { setState(() {});
+                          /* () async {
                             FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: _emailController.text,
                                     password: _passwordController.text)
                                 .then((value) async {
                               if (_selectedType == 1) {
-                                setState(() {
-                                  supplier = false;
-                                  buyer = true;
-                                });
-                              } else {
-                                setState(() {
-                                  supplier = true;
-                                  buyer = false;
-                                });
+                                supplier = false;
+                                buyer = true;
                               }
                               User? user = FirebaseAuth.instance.currentUser;
                               String userId = user?.uid ?? '';
@@ -236,6 +194,30 @@ class _RegPageState extends State<RegPage> {
                                     (Route<dynamic> route) => false);
                               }
                             });
+                          }, */
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange[700],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                          ),
+                          child: const Text(
+                            'Редактировать',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 75,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            FirebaseAuth.instance.signOut().then((value) {
+                              Navigator.pushReplacementNamed(
+                                  context, '/home_page');
+                            });
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],
@@ -243,14 +225,14 @@ class _RegPageState extends State<RegPage> {
                                 borderRadius: BorderRadius.circular(15)),
                           ),
                           child: const Text(
-                            'Зарегистрироваться',
+                            'Выйти из аккаунта',
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
                       ),
                       const SizedBox(
                         height: 20,
-                      )
+                      ),
                     ],
                   ),
                 ]),
@@ -304,6 +286,41 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                     ),
                     borderRadius: BorderRadius.circular(15))),
             keyboardType: widget.inputType,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileInfoDisplayField extends StatelessWidget {
+  const _ProfileInfoDisplayField({
+    required this.fieldName,
+    required this.userInfo,
+    super.key,
+  });
+
+  final String fieldName;
+  final String userInfo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            fieldName,
+            style: const TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            userInfo,
+            style: const TextStyle(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
           ),
         ],
       ),

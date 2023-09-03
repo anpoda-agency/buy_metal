@@ -10,10 +10,11 @@ class SupplierContactsPage extends StatefulWidget {
 }
 
 class _SupplierContactsPageState extends State<SupplierContactsPage> {
-  late UserModel userModel;
+  UserModel userModel = const UserModel();
   @override
   void initState() {
-    userModel = widget.args != null ? widget.args as UserModel : const UserModel();
+    userModel =
+        widget.args != null ? widget.args as UserModel : const UserModel();
     super.initState();
   }
 
@@ -36,8 +37,10 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                 const Center(
                   child: Text(
                     'Поставщик',
-                    style:
-                        TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -89,8 +92,10 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                 const Center(
                   child: Text(
                     'Контакты',
-                    style:
-                        TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(height: 20),

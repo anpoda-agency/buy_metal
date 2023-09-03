@@ -18,6 +18,8 @@ import 'package:buy_metal_app/ui/pages/2.3/selection_of_create_proposal_page.dar
 import 'package:buy_metal_app/ui/pages/1.6/supplier_contacts_page.dart';
 import 'package:buy_metal_app/ui/pages/1.3/suppliers_list_page.dart';
 import 'package:buy_metal_app/ui/pages/home_page/home_page.dart';
+import 'package:buy_metal_app/ui/pages/profile_pages/profile_edit_page.dart';
+import 'package:buy_metal_app/ui/pages/profile_pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,8 @@ void main() async {
 void initGetIt() async {
   var profile = ProfileRepository();
   getIt.registerSingleton<ProfileRepository>(profile);
-  User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  User? user =
+      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
   if (user != null) {
     var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
   }
@@ -102,19 +105,31 @@ class _MyAppState extends State<MyApp> {
 
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
-          '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
+          '/profile_page': (context) => ProfilePage(
+                args: args,
+              ),
 
-          '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
+          '/profile_edit_page': (context) => ProfileEditPage(
+                args: args,
+              ),
+
+          '/buyer_workplace_page': (context) =>
+              const BuyerWorkplacePage(), //1.1
+
+          '/buyer_orders_list_page': (context) =>
+              const BuyerOrdersListPage(), // 1.2
 
           '/suppliers_list_page': (context) => SuppliersListPage(
                 args: args,
               ), //1.3
 
-          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(
+          '/description_of_supplier_proposal_page': (context) =>
+              DescriptionOfSupplierProposalPage(
                 args: args,
               ), // 1.5
 
-          '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
+          '/supplier_contacts_page': (context) =>
+              SupplierContactsPage(args: args), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
@@ -126,19 +141,23 @@ class _MyAppState extends State<MyApp> {
           '/description_of_buyer_order_page': (context) =>
               DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(
+          '/selection_of_create_proposal_page': (context) =>
+              SelectionOfCreateProposalPage(
                 args: args,
               ), //2.3
 
-          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(
+          '/create_compliance_proposal_page': (context) =>
+              CreateComplianceProposalPage(
                 args: args,
               ), //2.4
 
-          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
+          '/create_similar_proposal_page': (context) =>
+              CreateSimilarProposalPage(
                 args: args,
               ), //2.5
 
-          '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
+          '/success_proposal_page': (context) =>
+              const SuccessProposalPage(), //2.6
         },
         home: loading
             ? const Center(

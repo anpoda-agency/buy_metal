@@ -24,7 +24,7 @@ class ProfileRepository extends ChangeNotifier {
     var res = await db.collection("orders").add(request.toFirestore());
     await db.collection("orders").doc(res.id).update({"id": res.id});
 
-    List<OrderModel> listOrdersModels = user.listOrdersModels;
+    List<OrderModel> listOrdersModels = user.listOrdersModels ?? [];
     listOrdersModels.add(request.copyWith(id: res.id));
 
     List listOrdersModelsForFirestore = [];
@@ -84,7 +84,7 @@ class ProfileRepository extends ChangeNotifier {
   }
 
   Future<void> addProposalToUser({required AnswerOrderModel request}) async {
-    List<AnswerOrderModel> listProposalsModels = user.listProposalsModels;
+    List<AnswerOrderModel> listProposalsModels = user.listProposalsModels ?? [];
     listProposalsModels.add(request);
 
     List listProposalsModelsForFirestore = [];
@@ -112,7 +112,8 @@ class ProfileRepository extends ChangeNotifier {
     return orderDB ?? const OrderModel();
   }
 
-  Future<List<UserModel>> getUserForCurrentOrder({required OrderModel order}) async {
+  Future<List<UserModel>> getUserForCurrentOrder(
+      {required OrderModel order}) async {
     List<UserModel> resultListUsersModels = [];
     var db = FirebaseFirestore.instance;
     final ref = db.collection('users').withConverter(

@@ -24,7 +24,7 @@ class UserModel {
   @JsonKey(name: 'user_fio')
   final String userFIO;
   @JsonKey(name: 'inn')
-  final int inn;
+  final String inn;
   @JsonKey(name: 'post')
   final String post;
   @JsonKey(name: 'buyer')
@@ -32,9 +32,9 @@ class UserModel {
   @JsonKey(name: 'supplier')
   final bool supplier;
   @JsonKey(name: 'list_orders_models')
-  final List<OrderModel> listOrdersModels;
+  final List<OrderModel>? listOrdersModels;
   @JsonKey(name: 'list_proposals_models')
-  final List<AnswerOrderModel> listProposalsModels;
+  final List<AnswerOrderModel>? listProposalsModels;
 
   const UserModel({
     this.id = '',
@@ -47,10 +47,10 @@ class UserModel {
     this.email = '',
     this.phone = '',
     this.userFIO = '',
-    this.inn = 0,
+    this.inn = '',
     this.post = '',
-    this.listOrdersModels = const [],
-    this.listProposalsModels = const [],
+    this.listOrdersModels,
+    this.listProposalsModels,
   });
 
   // factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
@@ -65,7 +65,7 @@ class UserModel {
     String? email,
     String? phone,
     String? userFIO,
-    int? inn,
+    String? inn,
     String? post,
     bool? buyer,
     bool? supplier,
