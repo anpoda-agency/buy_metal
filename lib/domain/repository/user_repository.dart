@@ -19,7 +19,8 @@ class UserRepository {
   final UserApi userApi;
 
   UserRepository({required this.userApi});
-
+  // Попов сказал разберется с респонсом
+/* 
   Future<ServerResponse> userUploadBlockUser({required String path}) async {
     try {
       final response = await userApi.userUploadBlockUser(path: path);
@@ -29,7 +30,7 @@ class UserRepository {
       throw errorMessage;
     }
   }
-
+  */
   Future<UserGetUserPaymentsResponse> userGetUserPayments(
       {required String path}) async {
     try {

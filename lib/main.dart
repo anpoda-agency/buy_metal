@@ -2,24 +2,24 @@ import 'package:buy_metal_app/firebase_options.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
-import 'package:buy_metal_app/ui/pages/1.8/success_order_page.dart';
-import 'package:buy_metal_app/ui/pages/2.6/success_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
-import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
-import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
-import 'package:buy_metal_app/ui/pages/2.4/create_compliance_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/1.7/create_order_page.dart';
-import 'package:buy_metal_app/ui/pages/2.5/create_similar_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/2.2/description_of_buyer_order_page.dart';
-import 'package:buy_metal_app/ui/pages/1.5/description_of_supplier_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/auth_pages/reg_page.dart';
-import 'package:buy_metal_app/ui/pages/2.1.1/selected_buyer_list_of_orders_page.dart';
-import 'package:buy_metal_app/ui/pages/2.3/selection_of_create_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/1.6/supplier_contacts_page.dart';
-import 'package:buy_metal_app/ui/pages/1.3/suppliers_list_page.dart';
-import 'package:buy_metal_app/ui/pages/home_page/home_page.dart';
-import 'package:buy_metal_app/ui/pages/profile_pages/profile_edit_page.dart';
-import 'package:buy_metal_app/ui/pages/profile_pages/profile_page.dart';
+import 'package:buy_metal_app/features/1.8/success_order_page.dart';
+import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
+import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
+import 'package:buy_metal_app/features/1.2/ui/buyer_orders_list_page.dart';
+import 'package:buy_metal_app/features/1.1/ui/buyer_workplace_page.dart';
+import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
+import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
+import 'package:buy_metal_app/features/2.5/ui/create_similar_proposal_page.dart';
+import 'package:buy_metal_app/features/2.2/ui/description_of_buyer_order_page.dart';
+import 'package:buy_metal_app/features/1.5/ui/description_of_supplier_proposal_page.dart';
+import 'package:buy_metal_app/features/registration/ui/reg_page.dart';
+import 'package:buy_metal_app/features/2.1.1/ui/selected_buyer_list_of_orders_page.dart';
+import 'package:buy_metal_app/features/2.3/selection_of_create_proposal_page.dart';
+import 'package:buy_metal_app/features/1.6/ui/supplier_contacts_page.dart';
+import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart';
+import 'package:buy_metal_app/features/start_page/start_page.dart';
+import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
+import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
           '/test_list_proposals_page': (context) =>
               const TestListProposals(), // тестовая страница для предложений
 
-          '/home_page': (context) => const HomePage(), // new 1.0 start page
+          '/home_page': (context) => const StartPage(), // new 1.0 start page
 
           '/reg_page': (context) => const RegPage(), // registration
 
@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
           '/buyer_orders_list_page': (context) =>
               const BuyerOrdersListPage(), // 1.2
 
-          '/suppliers_list_page': (context) => SuppliersListPage(
+          '/suppliers_list_page': (context) => SuppliersProposalsListPage(
                 args: args,
               ), //1.3
 
@@ -186,7 +186,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const HomePage();
+    return const StartPage();
   }
 }
 
