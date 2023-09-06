@@ -1,10 +1,13 @@
+import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'reg_event.dart';
 part 'reg_state.dart';
 
 class RegBloc extends Bloc<RegEvent, RegState> {
+  final AuthRepository authRepository;
   RegBloc({
+    required this.authRepository,
     required PageState pageState,
   }) : super(RegInitial(pageState)) {
     on<RegInit>(regInit);

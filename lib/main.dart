@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/firebase_options.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
@@ -66,6 +67,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    setup();
+
     getIt.get<ProfileRepository>().addListener(() {
       setState(() {
         loading = false;

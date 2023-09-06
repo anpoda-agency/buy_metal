@@ -1,9 +1,11 @@
+import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/bloc/reg_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class RegPage extends StatefulWidget {
   const RegPage({super.key});
@@ -35,6 +37,7 @@ class _RegPageState extends State<RegPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (constext) => RegBloc(
+        authRepository: context.read<GetIt>().get<AuthRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegBloc, RegState>(

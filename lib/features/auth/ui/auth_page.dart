@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/features/auth/bloc/auth_bloc.dart';
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
@@ -24,6 +25,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (constext) => AuthBloc(
+        authRepository: context.read<GetIt>().get<AuthRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<AuthBloc, AuthState>(
