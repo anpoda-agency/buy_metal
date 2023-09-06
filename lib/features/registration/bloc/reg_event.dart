@@ -9,9 +9,9 @@ class RegMsgErr extends RegEvent {
   RegMsgErr(this.msg);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputPosition extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputPosition(this.value);
 }
 
 class RegInputFullName extends RegEvent {
@@ -19,34 +19,34 @@ class RegInputFullName extends RegEvent {
   RegInputFullName(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputCompanyName extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputCompanyName(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputCompanyAddress extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputCompanyAddress(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputTIN extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputTIN(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputPhoneNumber extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputPhoneNumber(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputEmail extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputEmail(this.value);
 }
 
-class RegInputFullName extends RegEvent {
+class RegInputPassword extends RegEvent {
   final String value;
-  RegInputFullName(this.value);
+  RegInputPassword(this.value);
 }
 
 class RegSend extends RegEvent {}
