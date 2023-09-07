@@ -29,10 +29,12 @@ class PageState {
   final AuthUploadRegisterNewUserResponse response;
 
   const PageState({
-    this.request = const AuthUploadRegisterNewUserRequest(),
-    this.response = const AuthUploadRegisterNewUserResponse(),
+    //this.request = const AuthUploadRegisterNewUserRequest(),
+    //this.response = const AuthUploadRegisterNewUserResponse(),
     this.onAwait = false,
     this.errMsg = '',
+    this.request = const AuthUploadRegisterNewUserRequest(),
+    this.response = const AuthUploadRegisterNewUserResponse(),
   });
 
   PageState copyWith({

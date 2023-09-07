@@ -22,7 +22,7 @@ class RegBloc extends Bloc<RegEvent, RegState> {
     on<RegInputPhoneNumber>(regInputPhoneNumber);
     on<RegInputEmail>(regInputEmail);
     on<RegInputPassword>(regInputPassword);
-    on<RegSend>(regSend);
+    on<RegSendReg>(regSendReg);
     add(RegInit());
   }
 
@@ -30,49 +30,49 @@ class RegBloc extends Bloc<RegEvent, RegState> {
     emit(RegUp(state.pageState));
   }
 
-  regInputPosition(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputPosition(RegInputPosition event, emit) async {
+    var model = state.pageState.request.copyWith(position: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputFullName(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputFullName(RegInputFullName event, emit) async {
+    var model = state.pageState.request.copyWith(fullName: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputCompanyName(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputCompanyName(RegInputCompanyName event, emit) async {
+    var model = state.pageState.request.copyWith(companyName: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputCompanyAddress(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputCompanyAddress(RegInputCompanyAddress event, emit) async {
+    var model = state.pageState.request.copyWith(companyAddress: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputTIN(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputTIN(RegInputTIN event, emit) async {
+    var model = state.pageState.request.copyWith(tin: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputPhoneNumber(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputPhoneNumber(RegInputPhoneNumber event, emit) async {
+    var model = state.pageState.request.copyWith(phone: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputEmail(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputEmail(RegInputEmail event, emit) async {
+    var model = state.pageState.request.copyWith(email: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regInputPassword(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regInputPassword(RegInputPassword event, emit) async {
+    var model = state.pageState.request.copyWith(password: event.value);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
-  regSend(ProfileEditInputName event, emit) async {
-    var model = state.pageState.request.copyWith(firstName: event.value);
-    emit(ProfileEditUp(state.pageState.copyWith(request: model)));
+  regSendReg(RegSendReg event, emit) async {
+    var res = await authRepository.authUploadRegisterNewUser(request: state.pageState.request);
+    emit(RegAllowedToPush(state.pageState.copyWith(response: res)));
   }
 
   regMsgErr(RegMsgErr event, emit) async {

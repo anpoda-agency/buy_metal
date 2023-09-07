@@ -15,14 +15,15 @@ class RegPage extends StatefulWidget {
 }
 
 class _RegPageState extends State<RegPage> {
+  late String position;
+
   int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _postNameController = TextEditingController();
@@ -30,8 +31,7 @@ class _RegPageState extends State<RegPage> {
   final TextEditingController _innController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -40,259 +40,269 @@ class _RegPageState extends State<RegPage> {
         authRepository: context.read<GetIt>().get<AuthRepository>(),
         pageState: const PageState(),
       ),
-      child: BlocConsumer<RegBloc, RegState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                toolbarHeight: 50,
-                elevation: 0,
-                backgroundColor: Colors.grey[900],
-              ),
-              backgroundColor: Colors.grey[900],
-              body: SingleChildScrollView(
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: BlocConsumer<RegBloc, RegState>(listener: (context, state) {
+        if (state is RegAllowedToPush) {
+          print('Reg succes for, ${state.pageState.response.user.fullName}');
+        }
+        if (state is RegError) {
+          print(state.pageState.errMsg);
+        }
+      }, builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 50,
+            elevation: 0,
+            backgroundColor: Colors.grey[900],
+          ),
+          backgroundColor: Colors.grey[900],
+          body: SingleChildScrollView(
+            child: SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const Center(
+                        child: LabelWidget(title: 'Регистрация'),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          const Center(
-                            child: LabelWidget(title: 'Регистрация'),
+                          const Text(
+                            'Вы являетесь:',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           const SizedBox(
-                            height: 50,
+                            height: 10,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          // Начало выбор роли
+                          Row(
                             children: [
-                              const Text(
-                                'Вы являетесь:',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(15),
-                                    onTap: () {
-                                      setState(() {
-                                        _selectedType = 0;
-                                      });
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      height: 65,
-                                      width: MediaQuery.of(context).size.width *
-                                              0.5 -
-                                          16 -
-                                          5,
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: _selectedType == 0
-                                              ? Colors.orange[700]
-                                              : Colors.grey),
-                                      child: Text(
-                                        'Поставщиком',
-                                        style: TextStyle(
-                                            fontSize: 22,
-                                            color: _selectedType == 0
-                                                ? Colors.white
-                                                : Colors.black),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(15),
-                                    onTap: () {
-                                      setState(() {
-                                        _selectedType = 1;
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 65,
-                                      alignment: Alignment.center,
-                                      width: MediaQuery.of(context).size.width *
-                                              0.5 -
-                                          16 -
-                                          5,
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: _selectedType == 1
-                                              ? Colors.orange[700]
-                                              : Colors.grey),
-                                      child: Text(
-                                        'Заказчиком',
-                                        style: TextStyle(
-                                            fontSize: 22,
-                                            color: _selectedType == 1
-                                                ? Colors.white
-                                                : Colors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              RegFieldWidget(
-                                controller: _ownerNameController,
-                                title: 'ФИО Пользователя',
-                                inputType: TextInputType.text,
-                              ),
-                              RegFieldWidget(
-                                controller: _postNameController,
-                                title: 'Должность в компании',
-                                inputType: TextInputType.text,
-                              ),
-                              RegFieldWidget(
-                                controller: _companyNameController,
-                                title: 'Наименование организации',
-                                inputType: TextInputType.text,
-                              ),
-                              RegFieldWidget(
-                                  controller: _adressController,
-                                  title: 'Фактический адрес организации',
-                                  inputType: TextInputType.text),
-                              RegFieldWidget(
-                                  controller: _innController,
-                                  title: 'ИНН',
-                                  inputType: TextInputType.number),
-                              RegFieldWidget(
-                                  controller: _phoneController,
-                                  title: 'Телефон',
-                                  inputType: TextInputType.phone),
-                              RegFieldWidget(
-                                  controller: _emailController,
-                                  title: 'Эл. почта',
-                                  inputType: TextInputType.emailAddress),
-                              RegFieldWidget(
-                                  controller: _passwordController,
-                                  title: 'Придумайте пароль',
-                                  inputType: TextInputType.text),
-                              RegFieldWidget(
-                                  controller: _confirmPasswordController,
-                                  title: 'Повторите пароль',
-                                  inputType: TextInputType.text),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 75,
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                            email: _emailController.text,
-                                            password: _passwordController.text)
-                                        .then((value) async {
-                                      if (_selectedType == 1) {
-                                        setState(() {
-                                          supplier = false;
-                                          buyer = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          supplier = true;
-                                          buyer = false;
-                                        });
-                                      }
-                                      User? user =
-                                          FirebaseAuth.instance.currentUser;
-                                      String userId = user?.uid ?? '';
-                                      List<String> listOrders = [];
-                                      _users.doc(userId).set({
-                                        "id": user?.uid,
-                                        "user_fio": _ownerNameController.text,
-                                        "post": _postNameController.text,
-                                        'company_name':
-                                            _companyNameController.text,
-                                        'company_adress':
-                                            _adressController.text,
-                                        'inn': _innController.text,
-                                        'phone': _phoneController.text,
-                                        'email': _emailController.text,
-                                        'password': _passwordController.text,
-                                        'supplier': supplier,
-                                        'buyer': buyer,
-                                        'list_orders': listOrders
-                                      });
-
-                                      if (_selectedType == 0
-                                          // _emailController.text.isNotEmpty &&
-                                          //   _passwordController.text ==
-                                          //       _confirmPasswordController.text &&
-                                          //   _adressController.text.isNotEmpty &&
-                                          //   _companyNameController.text.isNotEmpty &&
-                                          //   _innController.text.isNotEmpty &&
-                                          //   _ogrnController.text.isNotEmpty &&
-                                          //   _ownerNameController.text.isNotEmpty &&
-                                          //   _phoneController.text.isNotEmpty
-                                          ) {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            '/selected_buyer_list_of_orders_page',
-                                            (Route<dynamic> route) => false);
-                                      } else {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            '/buyer_workplace_page',
-                                            (Route<dynamic> route) => false);
-                                      }
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.orange[700],
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                  ),
-                                  child: const Text(
-                                    'Зарегистрироваться',
-                                    style: TextStyle(fontSize: 20),
+                              InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                onTap: () {
+                                  setState(() {
+                                    _selectedType = 0;
+                                    //position = 'SUPPLIER';
+                                    //(position) => context.read<RegBloc>().add(RegInputPosition('SUPPLIER'));
+                                  });
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 65,
+                                  width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: _selectedType == 0 ? Colors.orange[700] : Colors.grey),
+                                  child: Text(
+                                    'Поставщиком',
+                                    style: TextStyle(
+                                        fontSize: 22, color: _selectedType == 0 ? Colors.white : Colors.black),
                                   ),
                                 ),
                               ),
                               const SizedBox(
-                                height: 20,
-                              )
+                                width: 10,
+                              ),
+                              InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                onTap: () {
+                                  setState(() {
+                                    _selectedType = 1;
+                                    //position = 'CUSTOMER';
+                                    //(position) => context.read<RegBloc>().add(RegInputPosition('CUSTOMER'));
+                                  });
+                                },
+                                child: Container(
+                                  height: 65,
+                                  alignment: Alignment.center,
+                                  width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: _selectedType == 1 ? Colors.orange[700] : Colors.grey),
+                                  child: Text(
+                                    'Заказчиком',
+                                    style: TextStyle(
+                                        fontSize: 22, color: _selectedType == 1 ? Colors.white : Colors.black),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ]),
-                  ),
-                ),
+                          // Конец выбора роли
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          RegFieldWidget(
+                            //controller: _ownerNameController,
+                            title: 'POSITION (CUSTOMER or SUPPLIER)',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputPosition(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _ownerNameController,
+                            title: 'ФИО Пользователя',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
+                          ),
+                          /* RegFieldWidget(
+                            controller: _postNameController,
+                            title: 'Должность в компании',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
+                          ), */
+                          RegFieldWidget(
+                            controller: _companyNameController,
+                            title: 'Наименование организации',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputCompanyName(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _adressController,
+                            title: 'Фактический адрес организации',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputCompanyAddress(value)),
+                          ),
+
+                          RegFieldWidget(
+                            controller: _innController,
+                            title: 'ИНН',
+                            inputType: TextInputType.number,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputTIN(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _phoneController,
+                            title: 'Телефон',
+                            inputType: TextInputType.phone,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _emailController,
+                            title: 'Эл. почта',
+                            inputType: TextInputType.emailAddress,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputEmail(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _passwordController,
+                            title: 'Придумайте пароль',
+                            inputType: TextInputType.text,
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputPassword(value)),
+                          ),
+                          RegFieldWidget(
+                            controller: _confirmPasswordController,
+                            title: 'Повторите пароль',
+                            inputType: TextInputType.text,
+                            //onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 75,
+                            child: ElevatedButton(
+                              onPressed: () => context.read<RegBloc>().add(RegSendReg()),
+                              /* 
+                              async {
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: _emailController.text, password: _passwordController.text)
+                                    .then((value) async {
+                                  if (_selectedType == 1) {
+                                    setState(() {
+                                      supplier = false;
+                                      buyer = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      supplier = true;
+                                      buyer = false;
+                                    });
+                                  }
+                                  User? user = FirebaseAuth.instance.currentUser;
+                                  String userId = user?.uid ?? '';
+                                  List<String> listOrders = [];
+                                  _users.doc(userId).set({
+                                    "id": user?.uid,
+                                    "user_fio": _ownerNameController.text,
+                                    //"post": _postNameController.text,
+                                    'company_name': _companyNameController.text,
+                                    'company_adress': _adressController.text,
+                                    'inn': _innController.text,
+                                    'phone': _phoneController.text,
+                                    'email': _emailController.text,
+                                    'password': _passwordController.text,
+                                    'supplier': supplier,
+                                    'buyer': buyer,
+                                    'list_orders': listOrders
+                                  });
+
+                                  if (_selectedType == 0
+                                      // _emailController.text.isNotEmpty &&
+                                      //   _passwordController.text ==
+                                      //       _confirmPasswordController.text &&
+                                      //   _adressController.text.isNotEmpty &&
+                                      //   _companyNameController.text.isNotEmpty &&
+                                      //   _innController.text.isNotEmpty &&
+                                      //   _ogrnController.text.isNotEmpty &&
+                                      //   _ownerNameController.text.isNotEmpty &&
+                                      //   _phoneController.text.isNotEmpty
+                                      ) {
+                                    Navigator.pushNamedAndRemoveUntil(context, '/selected_buyer_list_of_orders_page',
+                                        (Route<dynamic> route) => false);
+                                  } else {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+                                  }
+                                });
+                              },
+                               */
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.orange[700],
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                              ),
+                              child: const Text(
+                                'Зарегистрироваться',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      ),
+                    ]),
               ),
-            );
-          }),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
 
 class RegFieldWidget extends StatefulWidget {
-  const RegFieldWidget(
-      {super.key,
-      required this.controller,
-      required this.title,
-      required this.inputType});
-  final TextEditingController controller;
+  const RegFieldWidget({
+    super.key,
+    this.controller,
+    required this.title,
+    required this.inputType,
+    this.onChanged,
+  });
+  final TextEditingController? controller;
   final String title;
   final TextInputType inputType;
+  final Function(String)? onChanged;
 
   @override
   State<RegFieldWidget> createState() => _RegFieldWidgetState();
@@ -314,13 +324,13 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
             height: 10,
           ),
           TextField(
+            onChanged: widget.onChanged,
             controller: widget.controller,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.white)),
+                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.white,

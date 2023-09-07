@@ -28,72 +28,86 @@ class _AuthPageState extends State<AuthPage> {
         authRepository: context.read<GetIt>().get<AuthRepository>(),
         pageState: const PageState(),
       ),
-      child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.grey[900],
-                elevation: 0,
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context, '/buyer_workplace_page',
-                          //arguments: state.pageState.request.source
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.launch,
-                        color: Colors.red,
-                      )),
-                ],
-              ),
-              backgroundColor: Colors.grey[900],
-              body: SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.85,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
+        if (state is AuthAllowedToPush) {
+          print('Login succes for, ${state.pageState.response.user.fullName}');
+        }
+        if (state is AuthError) {
+          print(state.pageState.errMsg);
+        }
+      }, builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.grey[900],
+            elevation: 0,
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context, '/buyer_workplace_page',
+                      //arguments: state.pageState.request.source
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.launch,
+                    color: Colors.red,
+                  )),
+            ],
+          ),
+          backgroundColor: Colors.grey[900],
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.85,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox.shrink(),
+                      const Center(
+                        child: LabelWidget(title: 'Авторизация'),
+                      ),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox.shrink(),
-                          const Center(
-                            child: LabelWidget(title: 'Авторизация'),
+                          const Text(
+                            'Эл. почта',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Эл. почта',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              authTextField(false, _emailTextController),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text(
-                                'Пароль',
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              authTextField(true, _passwordTextController),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 75,
-                                  child: authButton(
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          authTextField(
+                            false,
+                            _emailTextController,
+                            (value) => context.read<AuthBloc>().add(AuthInputEmail(value)),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                            'Пароль',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          authTextField(
+                            true,
+                            _passwordTextController,
+                            (value) => context.read<AuthBloc>().add(AuthInputPassword(value)),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 75,
+                              child: authButton(
+                                context,
+                                () => context.read<AuthBloc>().add(AuthSendLogin()),
+                                /* 
                                     context,
                                     () => FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
@@ -121,15 +135,16 @@ class _AuthPageState extends State<AuthPage> {
                                                     false);
                                       });
                                     }),
-                                  )),
-                            ],
-                          ),
-                        ]),
-                  ),
-                ),
+                                    */
+                              )),
+                        ],
+                      ),
+                    ]),
               ),
-            );
-          }),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -137,8 +152,10 @@ class _AuthPageState extends State<AuthPage> {
 TextField authTextField(
   bool isPasswordType,
   TextEditingController controller,
+  Function(String) onChanged,
 ) {
   return TextField(
+    onChanged: onChanged,
     controller: controller,
     obscureText: isPasswordType,
     enableSuggestions: !isPasswordType,
@@ -147,16 +164,13 @@ TextField authTextField(
         filled: true,
         fillColor: Colors.grey[300],
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.white)),
+            borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
         focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(15))),
-    keyboardType: isPasswordType
-        ? TextInputType.visiblePassword
-        : TextInputType.emailAddress,
+    keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
   );
 }
 

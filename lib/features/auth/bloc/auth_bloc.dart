@@ -1,3 +1,5 @@
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_request.dart';
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,11 +14,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }) : super(AuthInitial(pageState)) {
     on<AuthInit>(authInit);
     on<AuthMsgErr>(authMsgErr);
+    on<AuthInputEmail>(authInputEmail);
+    on<AuthInputPassword>(authInputPassword);
+    on<AuthSendLogin>(authSendLogin);
     add(AuthInit());
   }
 
   authInit(AuthInit event, emit) async {
     emit(AuthUp(state.pageState));
+  }
+
+  authInputEmail(AuthInputEmail event, emit) async {
+    var model = state.pageState.request.copyWith(email: event.value);
+    emit(AuthUp(state.pageState.copyWith(request: model)));
+  }
+
+  authInputPassword(AuthInputPassword event, emit) async {
+    var model = state.pageState.request.copyWith(password: event.value);
+    emit(AuthUp(state.pageState.copyWith(request: model)));
+  }
+
+  authSendLogin(AuthSendLogin event, emit) async {
+    var res = await authRepository.authUploadLogin(request: state.pageState.request);
+    emit(AuthAllowedToPush(state.pageState.copyWith(response: res)));
   }
 
   authMsgErr(AuthMsgErr event, emit) async {
