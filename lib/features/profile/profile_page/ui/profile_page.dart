@@ -228,9 +228,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  FirebaseAuth.instance.signOut().then((value) {
-                                    Navigator.pushReplacementNamed(context, '/home_page');
-                                  });
+                                  context.read<ProfileBloc>().add(ProfileLogOut());
+                                  Navigator.pushReplacementNamed(context, '/home_page');
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.orange[700],

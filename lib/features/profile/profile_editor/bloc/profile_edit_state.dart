@@ -17,6 +17,10 @@ class ProfileEditError extends ProfileEditState {
   const ProfileEditError(PageState pageState) : super(pageState);
 }
 
+class ProfileEditAllowedToPush extends ProfileEditState {
+  const ProfileEditAllowedToPush(PageState pageState) : super(pageState);
+}
+
 class PageState {
   final bool onAwait;
   final String errMsg;
