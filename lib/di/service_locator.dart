@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/data/network/api/auth_api.dart';
+import 'package:buy_metal_app/data/network/api/user_api.dart';
 import 'package:buy_metal_app/data/network/dio_client.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -22,4 +24,7 @@ Future<void> setup() async {
 
   getIt.registerSingleton(AuthApi(dioClient: getIt<DioClient>()));
   getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()));
+
+  getIt.registerSingleton(UserApi(dioClient: getIt<DioClient>()));
+  getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>()));
 }

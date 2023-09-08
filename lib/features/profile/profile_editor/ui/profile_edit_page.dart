@@ -24,8 +24,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _postNameController = TextEditingController();
@@ -33,8 +32,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   final TextEditingController _innController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -167,11 +165,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                         title: 'ФИО Пользователя',
                         inputType: TextInputType.text,
                       ),
-                      RegFieldWidget(
+                      /* RegFieldWidget(
                         controller: _postNameController,
                         title: 'Должность в компании',
                         inputType: TextInputType.text,
-                      ),
+                      ), */
                       RegFieldWidget(
                         controller: _companyNameController,
                         title: 'Наименование организации',
@@ -181,18 +179,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           controller: _adressController,
                           title: 'Фактический адрес организации',
                           inputType: TextInputType.text),
+                      RegFieldWidget(controller: _innController, title: 'ИНН', inputType: TextInputType.number),
+                      RegFieldWidget(controller: _phoneController, title: 'Телефон', inputType: TextInputType.phone),
                       RegFieldWidget(
-                          controller: _innController,
-                          title: 'ИНН',
-                          inputType: TextInputType.number),
-                      RegFieldWidget(
-                          controller: _phoneController,
-                          title: 'Телефон',
-                          inputType: TextInputType.phone),
-                      RegFieldWidget(
-                          controller: _emailController,
-                          title: 'Эл. почта',
-                          inputType: TextInputType.emailAddress),
+                          controller: _emailController, title: 'Эл. почта', inputType: TextInputType.emailAddress),
                       /*  RegFieldWidget(
                           controller: _passwordController,
                           title: 'Придумайте пароль',
@@ -261,8 +251,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange[700],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                           ),
                           child: const Text(
                             'Сохранить изменения',
@@ -284,11 +273,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 }
 
 class RegFieldWidget extends StatefulWidget {
-  const RegFieldWidget(
-      {super.key,
-      required this.controller,
-      required this.title,
-      required this.inputType});
+  const RegFieldWidget({super.key, required this.controller, required this.title, required this.inputType});
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
@@ -318,8 +303,7 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: Colors.white)),
+                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.white,

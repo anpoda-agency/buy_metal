@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/core/constants.dart';
 import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/firebase_options.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
@@ -48,8 +49,7 @@ void main() async {
 void initGetIt() async {
   var profile = ProfileRepository();
   getIt.registerSingleton<ProfileRepository>(profile);
-  User? user =
-      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
+  User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
   if (user != null) {
     var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
   }
@@ -99,8 +99,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/test_list_proposals_page': (context) =>
-              const TestListProposals(), // тестовая страница для предложений
+          '/test_list_proposals_page': (context) => const TestListProposals(), // тестовая страница для предложений
 
           '/home_page': (context) => const StartPage(), // new 1.0 start page
 
@@ -116,51 +115,41 @@ class _MyAppState extends State<MyApp> {
                 args: args,
               ),
 
-          '/buyer_workplace_page': (context) =>
-              const BuyerWorkplacePage(), //1.1
+          '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
 
-          '/buyer_orders_list_page': (context) =>
-              const BuyerOrdersListPage(), // 1.2
+          '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
 
           '/suppliers_list_page': (context) => SuppliersProposalsListPage(
                 args: args,
               ), //1.3
 
-          '/description_of_supplier_proposal_page': (context) =>
-              DescriptionOfSupplierProposalPage(
+          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(
                 args: args,
               ), // 1.5
 
-          '/supplier_contacts_page': (context) =>
-              SupplierContactsPage(args: args), // 1.6
+          '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
           '/success_order_page': (context) => const SuccessOrderPage(), //1.8
 
-          '/selected_buyer_list_of_orders_page': (context) =>
-              const SelectedBuyerListOfOrdersPage(), // 2.1.1
+          '/selected_buyer_list_of_orders_page': (context) => const SelectedBuyerListOfOrdersPage(), // 2.1.1
 
-          '/description_of_buyer_order_page': (context) =>
-              DescriptionOfBuyerOrderPage(args: args), //2.2
+          '/description_of_buyer_order_page': (context) => DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) =>
-              SelectionOfCreateProposalPage(
+          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(
                 args: args,
               ), //2.3
 
-          '/create_compliance_proposal_page': (context) =>
-              CreateComplianceProposalPage(
+          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(
                 args: args,
               ), //2.4
 
-          '/create_similar_proposal_page': (context) =>
-              CreateSimilarProposalPage(
+          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
                 args: args,
               ), //2.5
 
-          '/success_proposal_page': (context) =>
-              const SuccessProposalPage(), //2.6
+          '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
         },
         home: loading
             ? const Center(
@@ -193,9 +182,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+// потом разберусь как кэши сделать
+/* 
+Future<bool> init(
+  StreamController<GlobalEvents> gs,
+) async {
+  bool isAuth = await setup();
 
+  var url = Uri.tryParse(AppConstants.baseUrl);
 
+  if (url == null) {
+    throw 'AppConstants.serverUrl error';
+  }
 
+  return isAuth;
+}
+
+ */
 
 
 

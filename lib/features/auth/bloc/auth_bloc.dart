@@ -1,6 +1,7 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_request.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_event.dart';
@@ -8,8 +9,10 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
+  final UserRepository userRepository;
   AuthBloc({
     required this.authRepository,
+    required this.userRepository,
     required PageState pageState,
   }) : super(AuthInitial(pageState)) {
     on<AuthInit>(authInit);
@@ -36,6 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   authSendLogin(AuthSendLogin event, emit) async {
     var res = await authRepository.authUploadLogin(request: state.pageState.request);
+    await userRepository.setUserData(user: res, token: res.refreshToken);
+    authRepository.changeAuthStatus(val: true);
     emit(AuthAllowedToPush(state.pageState.copyWith(response: res)));
   }
 

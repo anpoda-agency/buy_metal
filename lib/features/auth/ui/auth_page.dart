@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/auth/bloc/auth_bloc.dart';
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
@@ -26,11 +27,18 @@ class _AuthPageState extends State<AuthPage> {
     return BlocProvider(
       create: (constext) => AuthBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
+        userRepository: context.read<GetIt>().get<UserRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
         if (state is AuthAllowedToPush) {
           print('Login succes for, ${state.pageState.response.user.fullName}');
+          if (state.pageState.response.user.position == 'SUPPLIER') {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+          }
         }
         if (state is AuthError) {
           print(state.pageState.errMsg);

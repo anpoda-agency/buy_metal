@@ -9,20 +9,19 @@ class SelectedBuyerListOfOrdersPage extends StatefulWidget {
   const SelectedBuyerListOfOrdersPage({super.key});
 
   @override
-  State<SelectedBuyerListOfOrdersPage> createState() =>
-      _SelectedBuyerListOfOrdersPageState();
+  State<SelectedBuyerListOfOrdersPage> createState() => _SelectedBuyerListOfOrdersPageState();
 }
 
-class _SelectedBuyerListOfOrdersPageState
-    extends State<SelectedBuyerListOfOrdersPage> {
+class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrdersPage> {
   List<OrderModel> listOrders = [];
 
   @override
   void initState() {
+    /* 
     getIt.get<ProfileRepository>().getAllOrders().then((value) => setState(() {
           listOrders = value;
         }));
-
+ */
     super.initState();
   }
 
@@ -46,12 +45,9 @@ class _SelectedBuyerListOfOrdersPageState
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            getIt
-                .get<ProfileRepository>()
-                .getAllOrders()
-                .then((value) => setState(() {
-                      listOrders = value;
-                    }));
+            getIt.get<ProfileRepository>().getAllOrders().then((value) => setState(() {
+                  listOrders = value;
+                }));
           },
           backgroundColor: Colors.orange[700],
           child: const Icon(Icons.replay_outlined),
@@ -62,18 +58,14 @@ class _SelectedBuyerListOfOrdersPageState
               itemCount: listOrders.length,
               itemBuilder: (BuildContext context, index) {
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [
-                              Colors.black54,
-                              Colors.grey.shade400,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                        gradient: LinearGradient(colors: [
+                          Colors.black54,
+                          Colors.grey.shade400,
+                        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.5),
@@ -95,8 +87,7 @@ class _SelectedBuyerListOfOrdersPageState
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -104,24 +95,21 @@ class _SelectedBuyerListOfOrdersPageState
                               children: [
                                 Text(
                                   listOrders[index].formRolled,
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                                 const SizedBox(
                                   width: 5,
                                 ),
                                 Text(
                                   listOrders[index].type,
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                                 const SizedBox(
                                   height: 15,
                                 ),
                                 Text(
                                   listOrders[index].sizeRolled,
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -133,8 +121,7 @@ class _SelectedBuyerListOfOrdersPageState
                               children: [
                                 Text(
                                   listOrders[index].dataCreate,
-                                  style: const TextStyle(
-                                      fontSize: 20, color: Colors.white),
+                                  style: const TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -144,6 +131,8 @@ class _SelectedBuyerListOfOrdersPageState
                     ),
                   ),
                 );
+
+                /*  
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -177,6 +166,7 @@ class _SelectedBuyerListOfOrdersPageState
                     ),
                   ),
                 );
+ */
               }),
         ));
   }

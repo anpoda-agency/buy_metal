@@ -17,14 +17,28 @@ import 'package:buy_metal_app/data/network/api/application_response_api.dart';
 import 'package:buy_metal_app/data/network/api/auth_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AuthRepository {
+class AuthRepository extends ChangeNotifier {
   final AuthApi authApi;
 
   AuthRepository({required this.authApi});
 
-  Future<AuthUploadLoginResponse> authUploadLogin(
-      {required AuthUploadLoginRequest request}) async {
+  bool _isAuth = false;
+  bool get isAuth => _isAuth;
+
+  void changeAuthStatus({bool? val}) {
+    if (val != null) {
+      _isAuth = val;
+    } else {
+      _isAuth = !_isAuth;
+    }
+    notifyListeners();
+  }
+
+  Future<AuthUploadLoginResponse> authUploadLogin({required AuthUploadLoginRequest request}) async {
     try {
       final response = await authApi.authUploadLogin(request: request);
       return AuthUploadLoginResponse.fromJson(response.data);
@@ -34,8 +48,7 @@ class AuthRepository {
     }
   }
 
-  Future<AuthUploadRefreshTokenResponse> authUploadRefreshToken(
-      {required String path}) async {
+  Future<AuthUploadRefreshTokenResponse> authUploadRefreshToken({required String path}) async {
     try {
       final response = await authApi.authUploadRefreshToken(path: path);
       return AuthUploadRefreshTokenResponse.fromJson(response.data);
@@ -48,8 +61,7 @@ class AuthRepository {
   Future<AuthUploadRegisterNewUserResponse> authUploadRegisterNewUser(
       {required AuthUploadRegisterNewUserRequest request}) async {
     try {
-      final response =
-          await authApi.authUploadRegisterNewUser(request: request);
+      final response = await authApi.authUploadRegisterNewUser(request: request);
       return AuthUploadRegisterNewUserResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();

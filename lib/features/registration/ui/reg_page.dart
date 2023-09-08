@@ -17,7 +17,7 @@ class RegPage extends StatefulWidget {
 class _RegPageState extends State<RegPage> {
   late String position;
 
-  int _selectedType = 0;
+  int _selectedType = 2;
   bool supplier = true;
   bool buyer = false;
 
@@ -88,6 +88,9 @@ class _RegPageState extends State<RegPage> {
                               InkWell(
                                 borderRadius: BorderRadius.circular(15),
                                 onTap: () {
+                                  position = 'SUPPLIER';
+                                  //(position) => context.read<RegBloc>().add(RegInputPosition('SUPPLIER'));
+                                  context.read<RegBloc>().add(RegInputPosition(position));
                                   setState(() {
                                     _selectedType = 0;
                                     //position = 'SUPPLIER';
@@ -115,6 +118,9 @@ class _RegPageState extends State<RegPage> {
                               InkWell(
                                 borderRadius: BorderRadius.circular(15),
                                 onTap: () {
+                                  position = 'CUSTOMER';
+                                  //(position) => context.read<RegBloc>().add(RegInputPosition('CUSTOMER'));
+                                  context.read<RegBloc>().add(RegInputPosition(position));
                                   setState(() {
                                     _selectedType = 1;
                                     //position = 'CUSTOMER';
@@ -142,12 +148,12 @@ class _RegPageState extends State<RegPage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          RegFieldWidget(
+                          /* RegFieldWidget(
                             //controller: _ownerNameController,
                             title: 'POSITION (CUSTOMER or SUPPLIER)',
                             inputType: TextInputType.text,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputPosition(value)),
-                          ),
+                          ), */
                           RegFieldWidget(
                             controller: _ownerNameController,
                             title: 'ФИО Пользователя',
@@ -210,7 +216,38 @@ class _RegPageState extends State<RegPage> {
                             width: MediaQuery.of(context).size.width,
                             height: 75,
                             child: ElevatedButton(
-                              onPressed: () => context.read<RegBloc>().add(RegSendReg()),
+                              onPressed: () {
+                                if (_selectedType == 0 || _selectedType == 1) {
+                                  if (_passwordController.text == '') {
+                                    const ErrorDialog(
+                                      dialogTittle: 'Отсутствует пароль',
+                                      dialogText: 'Вы забыли придумать пароль. Пожалуйста, введите пароль',
+                                    ).showMyDialog(context);
+                                  } else {
+                                    if (_passwordController.text != _confirmPasswordController.text) {
+                                      const ErrorDialog(
+                                        dialogTittle: 'Пароли не совпадают',
+                                        dialogText:
+                                            'Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз',
+                                      ).showMyDialog(context);
+                                    } else {
+                                      context.read<RegBloc>().add(RegSendReg());
+                                      if (_selectedType == 0) {
+                                        Navigator.pushNamedAndRemoveUntil(context,
+                                            '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
+                                      } else {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+                                      }
+                                    }
+                                  }
+                                } else {
+                                  const ErrorDialog(
+                                    dialogTittle: 'Не выбран тип аккаунта',
+                                    dialogText: 'Сделайте выбор в поле \n"Вы являетесь"',
+                                  ).showMyDialog(context);
+                                }
+                              },
                               /* 
                               async {
                                 FirebaseAuth.instance
@@ -359,3 +396,40 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
 //     ),
 //   );
 // }
+
+class ErrorDialog {
+  const ErrorDialog({required this.dialogTittle, required this.dialogText});
+
+  final String dialogTittle;
+  final String dialogText;
+
+  Future<void> showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(dialogTittle),
+          //const Text('Пароли не совпадают'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(dialogText),
+                //Text('Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз'),
+                //Text('Проверьте, чтобы пароли совпадали'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
