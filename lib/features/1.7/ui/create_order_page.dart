@@ -102,6 +102,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                 onChanged: (String? val) {
                                   setState(() {
                                     dropdownValue = val ?? '';
+                                    context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(dropdownValue));
                                   });
                                 }),
                           ),
@@ -117,41 +118,54 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                           title: 'Классификация/тип профиля',
                           controller: _typeTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) => context.read<CreateOrderBloc>().add(CreateOrderInputRolledType(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'Размер проката, мм *', //обязательное поле
                           controller: _sizeRolledTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) => context.read<CreateOrderBloc>().add(CreateOrderInputRolledSize(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'Параметры проката',
                           controller: _paramsRolledTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) =>
+                              context.read<CreateOrderBloc>().add(CreateOrderInputRolledParams(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'ГОСТ на прокат',
                           controller: _gostRolledTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) => context.read<CreateOrderBloc>().add(CreateOrderInputRolledGost(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'Марка материала *', //обязательное
                           controller: _brandMaterialTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) =>
+                              context.read<CreateOrderBloc>().add(CreateOrderInputMaterialBrand(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'Параметры материала',
                           controller: _paramsMaterialTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) =>
+                              context.read<CreateOrderBloc>().add(CreateOrderInputMaterialParams(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'ГОСТ на материал',
                           controller: _gostMaterialTextController,
                           inputType: TextInputType.text,
+                          onChanged: (value) =>
+                              context.read<CreateOrderBloc>().add(CreateOrderInputMaterialGost(value)),
                         ),
                         ParamsFieldWidget(
                           title: 'Потребность, т',
                           controller: _requirementTextController,
                           inputType: TextInputType.number,
+                          onChanged: (value) =>
+                              context.read<CreateOrderBloc>().add(CreateOrderInputAmount(value as int)),
                         ),
                         const SizedBox(
                           height: 10,
@@ -162,7 +176,11 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                             width: MediaQuery.of(context).size.width,
                             height: 65,
                             child: ElevatedButton(
-                              onPressed: () async {
+                              onPressed: () {
+                                context.read<CreateOrderBloc>().add(CreateOrderSend());
+                                Navigator.pushReplacementNamed(context, '/success_order_page');
+
+                                /*
                                 String dateCreate =
                                     '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
                                 await getIt
@@ -181,7 +199,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                       requirement: double.parse(_requirementTextController.text),
                                       dataCreate: dateCreate,
                                     ))
-                                    .whenComplete(() => Navigator.pushReplacementNamed(context, '/success_order_page'));
+                                    */
+
+                                //.whenComplete(() => Navigator.pushReplacementNamed(context, '/success_order_page'));
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.orange,
@@ -346,10 +366,17 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
 }
 
 class ParamsFieldWidget extends StatefulWidget {
-  const ParamsFieldWidget({super.key, required this.controller, required this.title, required this.inputType});
+  const ParamsFieldWidget({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.inputType,
+    required this.onChanged,
+  });
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
+  final Function(String) onChanged;
 
   @override
   State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
@@ -371,6 +398,7 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
             height: 10,
           ),
           TextField(
+            onChanged: widget.onChanged,
             controller: widget.controller,
             decoration: InputDecoration(
                 filled: true,

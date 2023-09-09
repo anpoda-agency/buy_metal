@@ -12,8 +12,7 @@ class CreateSimilarProposalPage extends StatefulWidget {
   final Object? args;
 
   @override
-  State<CreateSimilarProposalPage> createState() =>
-      _CreateSimilarProposalPageState();
+  State<CreateSimilarProposalPage> createState() => _CreateSimilarProposalPageState();
 }
 
 class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
@@ -29,27 +28,19 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   bool _notStock = false;
 
   final TextEditingController _typeTextController = TextEditingController();
-  final TextEditingController _sizeRolledTextController =
-      TextEditingController();
-  final TextEditingController _paramsRolledTextController =
-      TextEditingController();
-  final TextEditingController _gostRolledTextController =
-      TextEditingController();
-  final TextEditingController _brandMaterialTextController =
-      TextEditingController();
-  final TextEditingController _paramsMaterialTextController =
-      TextEditingController();
-  final TextEditingController _gostMaterialTextController =
-      TextEditingController();
+  final TextEditingController _sizeRolledTextController = TextEditingController();
+  final TextEditingController _paramsRolledTextController = TextEditingController();
+  final TextEditingController _gostRolledTextController = TextEditingController();
+  final TextEditingController _brandMaterialTextController = TextEditingController();
+  final TextEditingController _paramsMaterialTextController = TextEditingController();
+  final TextEditingController _gostMaterialTextController = TextEditingController();
   final TextEditingController _dateTextController = TextEditingController();
 
-  final CollectionReference _similarProposal =
-      FirebaseFirestore.instance.collection('similar_proposals');
+  final CollectionReference _similarProposal = FirebaseFirestore.instance.collection('similar_proposals');
 
   @override
   void initState() {
-    Map<String, dynamic> map =
-        widget.args != null ? widget.args as Map<String, dynamic> : {};
+    Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
     orderModel = map['order_model'];
     userModel = map['user_model'];
     super.initState();
@@ -187,8 +178,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           fillColor: Colors.grey[300],
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(color: Colors.white)),
+                              borderSide: const BorderSide(color: Colors.white)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Colors.white,
@@ -200,8 +190,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text('RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black))
+                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                 ],
               ),
               const SizedBox(
@@ -223,8 +212,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Text('RUB',
-                      style: TextStyle(fontSize: 20, color: Colors.black))
+                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                 ],
               ),
               const SizedBox(
@@ -246,20 +234,13 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         });
                       },
                       child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 1
-                                  ? Colors.orange
-                                  : Colors.grey),
+                              color: selectedValue == 1 ? Colors.orange : Colors.grey),
                           child: Text(
                             'Да',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: selectedValue == 1
-                                    ? Colors.white
-                                    : Colors.black),
+                            style: TextStyle(fontSize: 20, color: selectedValue == 1 ? Colors.white : Colors.black),
                           )),
                     ),
                   ),
@@ -272,20 +253,13 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         });
                       },
                       child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 2
-                                  ? Colors.orange
-                                  : Colors.grey),
+                              color: selectedValue == 2 ? Colors.orange : Colors.grey),
                           child: Text(
                             'Нет',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: selectedValue == 2
-                                    ? Colors.white
-                                    : Colors.black),
+                            style: TextStyle(fontSize: 20, color: selectedValue == 2 ? Colors.white : Colors.black),
                           )),
                     ),
                   ),
@@ -312,8 +286,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                               fillColor: Colors.grey[300],
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(color: Colors.white)),
+                                  borderSide: const BorderSide(color: Colors.white)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                     color: Colors.white,
@@ -364,13 +337,11 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                             priceFull: price,
                             idSupplier: getIt.get<ProfileRepository>().user.id,
                           ))
-                          .whenComplete(() => Navigator.pushReplacementNamed(
-                              context, '/success_proposal_page'));
+                          .whenComplete(() => Navigator.pushReplacementNamed(context, '/success_proposal_page'));
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(
                       'Разместить заявку',
@@ -426,16 +397,12 @@ class _NDSWidgetState extends State<NDSWidget> {
                     });
                   },
                   child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: e ? Colors.orange : Colors.grey),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(5), color: e ? Colors.orange : Colors.grey),
                       child: Text(
                         listNames[listBool.indexOf(e)],
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: e ? Colors.white : Colors.black),
+                        style: TextStyle(fontSize: 20, color: e ? Colors.white : Colors.black),
                       )),
                 ),
               ))
@@ -481,20 +448,69 @@ class _AvailableWidgetState extends State<AvailableWidget> {
                     });
                   },
                   child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: e ? Colors.orange : Colors.grey),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(5), color: e ? Colors.orange : Colors.grey),
                       child: Text(
                         listNames[listBool.indexOf(e)],
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: e ? Colors.white : Colors.black),
+                        style: TextStyle(fontSize: 20, color: e ? Colors.white : Colors.black),
                       )),
                 ),
               ))
           .toList(),
+    );
+  }
+}
+
+class ParamsFieldWidget extends StatefulWidget {
+  const ParamsFieldWidget({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.inputType,
+    //required this.onChanged,
+  });
+  final TextEditingController controller;
+  final String title;
+  final TextInputType inputType;
+  //final Function(String) onChanged;
+
+  @override
+  State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
+}
+
+class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: const TextStyle(fontSize: 20, color: Colors.black),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextField(
+            //onChanged: widget.onChanged,
+            controller: widget.controller,
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[300],
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(15))),
+            keyboardType: widget.inputType,
+          ),
+        ],
+      ),
     );
   }
 }
