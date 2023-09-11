@@ -16,6 +16,20 @@ class CreateOrderPage extends StatefulWidget {
   State<CreateOrderPage> createState() => _CreateOrderPageState();
 }
 
+enum TypeListEnum {
+  STRIP,
+  CIRCLE,
+  SQUARE,
+  WIRE,
+  HEXAGON,
+  CHANNEL,
+  I_BEAM,
+  CORNER,
+  PIPE,
+  SHEET,
+  ARMATURE,
+}
+
 class _CreateOrderPageState extends State<CreateOrderPage> {
   final List<String> typeList = [
     'Полоса',
@@ -30,7 +44,22 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     'Лист',
     'Арматура'
   ];
+  final List<String> typeListEnum = [
+    'STRIP',
+    'CIRCLE',
+    'SQUARE',
+    'WIRE',
+    'HEXAGON',
+    'CHANNEL',
+    'I_BEAM',
+    'CORNER',
+    'PIPE',
+    'SHEET',
+    'ARMATURE'
+  ];
+
   late String dropdownValue;
+  bool isChoosedForm = false;
   //final TextEditingController testController = TextEditingController();
   // final TextEditingController _formRolledTextController =
   //     TextEditingController();
@@ -74,12 +103,18 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
             dialogText: 'Не удалось создать заявку, простите =(',
           ).showMyDialog(context);
         }
+        if (state is CreateOrderAllowedToPush) {
+          // ТУТ КОРОЧЕЕ ПЕРЕХОД ДЕЛАЕМ
+          Navigator.pushReplacementNamed(context, '/success_order_page');
+        }
       }, builder: (context, state) {
-        bool isChoosedForm = false;
+        late TypeListEnum formChoosed;
+
         //const String noneChoosedForm = 'Полоса';
         if (isChoosedForm == false) {
-          const String defaultChoosedForm = 'Полоса';
-          context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(defaultChoosedForm));
+          //const String defaultChoosedForm = 'Полоса';
+          TypeListEnum formChoosed = TypeListEnum.STRIP;
+          context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(formChoosed));
         }
         return Scaffold(
           appBar: AppBar(
@@ -119,9 +154,37 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
+                                //TypeListEnum formChoosed;
+                                //TypeListEnum.STRIP;
+                                if (val == typeList[0]) {
+                                  formChoosed = TypeListEnum.STRIP;
+                                } else if (val == typeList[1]) {
+                                  formChoosed = TypeListEnum.CIRCLE;
+                                } else if (val == typeList[2]) {
+                                  formChoosed = TypeListEnum.SQUARE;
+                                } else if (val == typeList[3]) {
+                                  formChoosed = TypeListEnum.WIRE;
+                                } else if (val == typeList[4]) {
+                                  formChoosed = TypeListEnum.HEXAGON;
+                                } else if (val == typeList[5]) {
+                                  formChoosed = TypeListEnum.CHANNEL;
+                                } else if (val == typeList[6]) {
+                                  formChoosed = TypeListEnum.I_BEAM;
+                                } else if (val == typeList[7]) {
+                                  formChoosed = TypeListEnum.CORNER;
+                                } else if (val == typeList[8]) {
+                                  formChoosed = TypeListEnum.PIPE;
+                                } else if (val == typeList[9]) {
+                                  formChoosed = TypeListEnum.SHEET;
+                                } else if (val == typeList[9]) {
+                                  formChoosed = TypeListEnum.ARMATURE;
+                                }
+
+                                //formChoosed = val ?? 'Полоса';
                                 dropdownValue = val ?? 'Полоса';
                                 isChoosedForm = true;
-                                context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(dropdownValue));
+                                //String enumType =
+                                context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(formChoosed));
                               });
                             }),
                       ),
@@ -198,7 +261,6 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                         child: ElevatedButton(
                           onPressed: () {
                             context.read<CreateOrderBloc>().add(CreateOrderSend());
-                            Navigator.pushReplacementNamed(context, '/success_order_page');
 
                             /* try {
                               context.read<CreateOrderBloc>().add(CreateOrderSend());
@@ -484,3 +546,33 @@ class ErrorDialog {
     );
   }
 }
+
+/* String getEnumName(val) {
+  String dropdownValue;
+
+
+  if (val == typeList[0]) {
+    dropdownValue = typeListEnum[0];
+  } else if (val == typeList[1]) {
+    dropdownValue = typeListEnum[1];
+  } else if (val == typeList[2]) {
+    dropdownValue = typeListEnum[2];
+  } else if (val == typeList[3]) {
+    dropdownValue = typeListEnum[3];
+  } else if (val == typeList[4]) {
+    dropdownValue = typeListEnum[4];
+  } else if (val == typeList[5]) {
+    dropdownValue = typeListEnum[5];
+  } else if (val == typeList[6]) {
+    dropdownValue = typeListEnum[6];
+  } else if (val == typeList[7]) {
+    dropdownValue = typeListEnum[7];
+  } else if (val == typeList[8]) {
+    dropdownValue = typeListEnum[8];
+  } else if (val == typeList[9]) {
+    dropdownValue = typeListEnum[9];
+  }
+
+  return dropdownValue;
+
+} */

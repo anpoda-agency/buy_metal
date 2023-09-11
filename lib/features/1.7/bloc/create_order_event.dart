@@ -10,7 +10,7 @@ class CreateOrderMsgErr extends CreateOrderEvent {
 }
 
 class CreateOrderInputRolledForm extends CreateOrderEvent {
-  final String value;
+  final TypeListEnum value;
   CreateOrderInputRolledForm(this.value);
 }
 

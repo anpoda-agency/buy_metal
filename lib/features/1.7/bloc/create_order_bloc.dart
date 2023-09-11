@@ -2,6 +2,7 @@ import 'package:buy_metal_app/data/models/application_models/application_upload_
 import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'create_order_event.dart';
@@ -92,7 +93,7 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
     DateTime now = DateTime.now();
 
     String creationDate =
-        "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+        "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
     //String dateForSed = DateTime.now().toString();
     //"${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}T${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}.${now.microsecond.toString().padLeft(3, '0')}Z";
     //DateTime.now().toString();

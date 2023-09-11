@@ -14,6 +14,7 @@ class DioClient {
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
+    String? accessToken,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
@@ -21,7 +22,7 @@ class DioClient {
       final Response response = await _dio.get(
         url,
         queryParameters: queryParameters,
-        options: options,
+        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
@@ -62,6 +63,7 @@ class DioClient {
     Object? body,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    String? accessToken,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
@@ -71,7 +73,7 @@ class DioClient {
         url,
         data: body,
         queryParameters: queryParameters,
-        options: options,
+        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -87,6 +89,7 @@ class DioClient {
     Object? body,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    String? accessToken,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
@@ -96,7 +99,7 @@ class DioClient {
         url,
         data: body,
         queryParameters: queryParameters,
-        options: options,
+        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -112,6 +115,7 @@ class DioClient {
     Object? body,
     Map<String, dynamic>? queryParameters,
     Options? options,
+    String? accessToken,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
@@ -121,7 +125,7 @@ class DioClient {
         url,
         data: body,
         queryParameters: queryParameters,
-        options: options,
+        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
         cancelToken: cancelToken,
       );
       return response.data;
