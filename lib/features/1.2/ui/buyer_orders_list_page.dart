@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/features/1.2/bloc/buyer_orders_list_bloc.dart';
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
@@ -5,6 +6,7 @@ import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class BuyerOrdersListPage extends StatefulWidget {
   const BuyerOrdersListPage({super.key});
@@ -25,7 +27,10 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BuyerOrdersListBloc(pageState: const PageState()),
+      create: (context) => BuyerOrdersListBloc(
+        applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
+        pageState: const PageState(),
+      ),
       child: BlocConsumer<BuyerOrdersListBloc, BuyerOrdersListState>(
           listener: (context, state) {},
           builder: (context, state) {

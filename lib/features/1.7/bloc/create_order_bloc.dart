@@ -89,13 +89,23 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }
 
   createOrderSend(CreateOrderSend event, emit) async {
-    String creationDate = DateTime.now().toString();
+    DateTime now = DateTime.now();
+
+    String creationDate =
+        "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    //String dateForSed = DateTime.now().toString();
+    //"${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}T${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}.${now.microsecond.toString().padLeft(3, '0')}Z";
+    //DateTime.now().toString();
+
     var userId = userRepository.user?.user.id;
+
+    var token = userRepository.user?.accessToken;
 
     var model = state.pageState.request.copyWith(creationDate: creationDate, userId: userId);
     emit(CreateOrderUp(state.pageState.copyWith(request: model)));
 
-    var res = await applicationRepository.applicationUploadCreateApplication(request: state.pageState.request);
+    var res = await applicationRepository.applicationUploadCreateApplication(
+        request: state.pageState.request, accessToken: token);
     emit(CreateOrderAllowedToPush(state.pageState.copyWith(response: res)));
   }
 

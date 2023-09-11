@@ -13,12 +13,11 @@ class ApplicationRepository {
 
   ApplicationRepository({required this.applicationApi});
 
-  Future<ApplicationUploadCreateApplicationResponse>
-      applicationUploadCreateApplication(
-          {required ApplicationUploadCreateApplicationRequest request}) async {
+  Future<ApplicationUploadCreateApplicationResponse> applicationUploadCreateApplication(
+      {required ApplicationUploadCreateApplicationRequest request, String? accessToken}) async {
     try {
-      final response = await applicationApi.applicationUploadCreateApplication(
-          request: request);
+      final response =
+          await applicationApi.applicationUploadCreateApplication(request: request, accessToken: accessToken);
       return ApplicationUploadCreateApplicationResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -26,24 +25,20 @@ class ApplicationRepository {
     }
   }
 
-  Future<ApplicationGetResponsesByApplicationIdResponse>
-      applicationGetResponsesByApplicationId({required String path}) async {
+  Future<ApplicationGetResponsesByApplicationIdResponse> applicationGetResponsesByApplicationId(
+      {required String path}) async {
     try {
-      final response = await applicationApi
-          .applicationGetResponsesByApplicationId(path: path);
-      return ApplicationGetResponsesByApplicationIdResponse.fromJson(
-          response.data);
+      final response = await applicationApi.applicationGetResponsesByApplicationId(path: path);
+      return ApplicationGetResponsesByApplicationIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
     }
   }
 
-  Future<ApplicationGetCustomerApplicationsResponse>
-      applicationGetCustomerApplications({required String path}) async {
+  Future<ApplicationGetCustomerApplicationsResponse> applicationGetCustomerApplications({required String path}) async {
     try {
-      final response =
-          await applicationApi.applicationGetCustomerApplications(path: path);
+      final response = await applicationApi.applicationGetCustomerApplications(path: path);
       return ApplicationGetCustomerApplicationsResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -54,8 +49,7 @@ class ApplicationRepository {
   Future<ApplicationUploadSearchResponse> applicationUploadSearch(
       {required ApplicationUploadSearchRequest request}) async {
     try {
-      final response =
-          await applicationApi.applicationUploadSearch(request: request);
+      final response = await applicationApi.applicationUploadSearch(request: request);
       return ApplicationUploadSearchResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();

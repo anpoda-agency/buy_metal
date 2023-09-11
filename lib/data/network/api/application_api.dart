@@ -10,11 +10,12 @@ class ApplicationApi {
   ApplicationApi({required this.dioClient});
 
   Future<Response> applicationUploadCreateApplication(
-      {required ApplicationUploadCreateApplicationRequest request}) async {
+      {required ApplicationUploadCreateApplicationRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.applicationUploadCreateApplicationUrl,
+        accessToken: accessToken,
         body: request.toJson(),
       );
       return response;
@@ -23,8 +24,7 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationGetResponsesByApplicationId(
-      {required String path}) async {
+  Future<Response> applicationGetResponsesByApplicationId({required String path}) async {
     // request body empty
     const String endUrl = "/responses";
     try {
@@ -38,8 +38,7 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationGetCustomerApplications(
-      {required String path}) async {
+  Future<Response> applicationGetCustomerApplications({required String path}) async {
     // request body empty
     //const String endUrl = "/responses";
     try {
@@ -53,8 +52,7 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationUploadSearch(
-      {required ApplicationUploadSearchRequest request}) async {
+  Future<Response> applicationUploadSearch({required ApplicationUploadSearchRequest request}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
