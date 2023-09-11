@@ -13,6 +13,11 @@ class ApplicationRepository {
 
   ApplicationRepository({required this.applicationApi});
 
+  ApplicationGetCustomerApplicationsResponse? _application;
+  ApplicationGetCustomerApplicationsResponse? get application {
+    return _application;
+  }
+
   Future<ApplicationUploadCreateApplicationResponse> applicationUploadCreateApplication(
       {required ApplicationUploadCreateApplicationRequest request, String? accessToken}) async {
     try {
