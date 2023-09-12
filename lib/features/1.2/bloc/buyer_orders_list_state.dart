@@ -21,23 +21,27 @@ class BuyerOrdersListError extends BuyerOrdersListState {
 class PageState {
   final bool onAwait;
   final String errMsg;
-  final ApplicationGetCustomerApplicationsResponse response;
+  final ApplicationGetCustomerApplicationsResponse applicationResponse;
+  final List<ApplicationGetCustomerApplicationsResponse> listApplcations;
 
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
-    this.response = const ApplicationGetCustomerApplicationsResponse(),
+    this.applicationResponse = const ApplicationGetCustomerApplicationsResponse(),
+    this.listApplcations = const [],
   });
 
   PageState copyWith({
     bool? onAwait,
     String? errMsg,
-    ApplicationGetCustomerApplicationsResponse? response,
+    ApplicationGetCustomerApplicationsResponse? applicationResponse,
+    List<ApplicationGetCustomerApplicationsResponse>? listApplcations,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
-      response: response ?? this.response,
+      applicationResponse: applicationResponse ?? this.applicationResponse,
+      listApplcations: listApplcations ?? this.listApplcations,
     );
   }
 }

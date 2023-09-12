@@ -9,7 +9,10 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UserRepository userRepository;
   final AuthRepository authRepository;
+
+  //final AuthUploadLoginResponse authModel;
   ProfileBloc({
+    //required this.authModel,
     required this.userRepository,
     required this.authRepository,
     required PageState pageState,
@@ -24,6 +27,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   profileInit(ProfileInit event, emit) async {
     var model = userRepository.user;
 
+    //var modelR = authModel.user;
+
     String positionRu;
 
     if (model?.user.position == "CUSTOMER") {
@@ -37,7 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   profileLogOut(ProfileLogOut event, emit) async {
-    await userRepository.clearUserData();
+    //await userRepository.clearUserData();
     authRepository.changeAuthStatus(val: false);
     emit(ProfileLogOutState(state.pageState.copyWith()));
   }
