@@ -15,8 +15,8 @@ class ApplicationResponseUploadCreateRequest {
   final String creationDate;
   @JsonKey(name: 'deliverDate', fromJson: FromJsonBase.jsonToString)
   final String deliverDate;
-  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToInt)
-  final int fullPrice;
+  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToDouble)
+  final double fullPrice;
   @JsonKey(name: 'inStock', fromJson: FromJsonBase.jsonToBool)
   final bool inStock;
   @JsonKey(name: 'materialBrand', fromJson: FromJsonBase.jsonToString)
@@ -25,10 +25,10 @@ class ApplicationResponseUploadCreateRequest {
   final String materialGost;
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
-  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToInt)
-  final int price;
+  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToDouble)
+  final double price;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -53,7 +53,7 @@ class ApplicationResponseUploadCreateRequest {
     this.materialGost = '',
     this.materialParams = '',
     this.price = 0,
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',
@@ -62,23 +62,21 @@ class ApplicationResponseUploadCreateRequest {
     this.userID = '',
   });
 
-  factory ApplicationResponseUploadCreateRequest.fromJson(
-          Map<String, dynamic> json) =>
+  factory ApplicationResponseUploadCreateRequest.fromJson(Map<String, dynamic> json) =>
       _$ApplicationResponseUploadCreateRequestFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$ApplicationResponseUploadCreateRequestToJson(this);
+  Map<String, dynamic> toJson() => _$ApplicationResponseUploadCreateRequestToJson(this);
 
   ApplicationResponseUploadCreateRequest copyWith({
     int? amount,
     String? applicationId,
     String? creationDate,
     String? deliverDate,
-    int? fullPrice,
+    double? fullPrice,
     bool? inStock,
     String? materialBrand,
     String? materialGost,
     String? materialParams,
-    int? price,
+    double? price,
     String? rolledForm,
     String? rolledGost,
     String? rolledParams,

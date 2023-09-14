@@ -54,11 +54,13 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationUploadSearch({required ApplicationUploadSearchRequest request}) async {
+  Future<Response> applicationUploadSearch(
+      {required ApplicationUploadSearchRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.applicationUploadSearchUrl,
+        accessToken: accessToken,
         body: request.toJson(),
       );
       return response;

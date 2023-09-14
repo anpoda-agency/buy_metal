@@ -59,11 +59,18 @@ class ApplicationRepository {
     }
   }
 
-  Future<ApplicationUploadSearchResponse> applicationUploadSearch(
-      {required ApplicationUploadSearchRequest request}) async {
+  Future<List<ApplicationUploadSearchResponse>> applicationUploadSearch(
+      {required ApplicationUploadSearchRequest request, String? accessToken}) async {
     try {
-      final response = await applicationApi.applicationUploadSearch(request: request);
-      return ApplicationUploadSearchResponse.fromJson(response.data);
+      final response = await applicationApi.applicationUploadSearch(request: request, accessToken: accessToken);
+      if (response.data is List<dynamic>) {
+        List<ApplicationUploadSearchResponse> list = [];
+        for (dynamic item in response.data as List<dynamic>) {
+          list.add(ApplicationUploadSearchResponse.fromJson(item as Map<String, dynamic>));
+        }
+        return list;
+      }
+      return [];
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

@@ -22,7 +22,7 @@ class ApplicationUploadSearchResponse {
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -42,7 +42,7 @@ class ApplicationUploadSearchResponse {
     this.materialBrand = '',
     this.materialGost = '',
     this.materialParams = '',
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',
@@ -52,8 +52,7 @@ class ApplicationUploadSearchResponse {
 
   factory ApplicationUploadSearchResponse.fromJson(Map<String, dynamic> json) =>
       _$ApplicationUploadSearchResponseFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$ApplicationUploadSearchResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ApplicationUploadSearchResponseToJson(this);
 
   ApplicationUploadSearchResponse copyWith({
     int? amount,
@@ -130,8 +129,7 @@ class Customer {
     this.tin = '',
   });
 
-  factory Customer.fromJson(Map<String, dynamic> json) =>
-      _$CustomerFromJson(json);
+  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
   Map<String, dynamic> toJson() => _$CustomerToJson(this);
 
   Customer copyWith({

@@ -11,11 +11,12 @@ class ApplicationResponseApi {
   ApplicationResponseApi({required this.dioClient});
 
   Future<Response> applicationResponseUploadCreate(
-      {required ApplicationResponseUploadCreateRequest request}) async {
+      {required ApplicationResponseUploadCreateRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.applicationResponseUploadCreateUrl,
+        accessToken: accessToken,
         body: request.toJson(),
       );
       return response;
@@ -24,8 +25,7 @@ class ApplicationResponseApi {
     }
   }
 
-  Future<Response> applicationResponseGetSupplierResponses(
-      {required String path}) async {
+  Future<Response> applicationResponseGetSupplierResponses({required String path}) async {
     // request body empty
     //const String endUrl = "/responses";
     try {

@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
@@ -13,8 +14,10 @@ class SelectionOfCreateProposalPage extends StatefulWidget {
 }
 
 class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposalPage> {
+  /* 
   late UserModel userModel;
   late OrderModel orderModel;
+
   @override
   void initState() {
     Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
@@ -22,9 +25,10 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
     userModel = map['user_model'];
     super.initState();
   }
-
+ */
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -56,7 +60,8 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => CreateComplianceProposalPage(
-                                      args: {'order_model': orderModel, 'user_model': userModel},
+                                      args: args,
+                                      //{'order_model': orderModel, 'user_model': userModel},
                                     )),
                           );
                         },
@@ -86,7 +91,8 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => CreateSimilarProposalPage(
-                                      args: {'order_model': orderModel, 'user_model': userModel},
+                                      args: args,
+                                      //{'order_model': orderModel, 'user_model': userModel},
                                     )),
                           );
                         },

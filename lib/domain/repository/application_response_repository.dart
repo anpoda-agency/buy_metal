@@ -17,12 +17,11 @@ class ApplicationResponseRepository {
 
   ApplicationResponseRepository({required this.applicationResponseApi});
 
-  Future<ApplicationResponseUploadCreateResponse>
-      applicationResponseUploadCreate(
-          {required ApplicationResponseUploadCreateRequest request}) async {
+  Future<ApplicationResponseUploadCreateResponse> applicationResponseUploadCreate(
+      {required ApplicationResponseUploadCreateRequest request, String? accessToken}) async {
     try {
-      final response = await applicationResponseApi
-          .applicationResponseUploadCreate(request: request);
+      final response =
+          await applicationResponseApi.applicationResponseUploadCreate(request: request, accessToken: accessToken);
       return ApplicationResponseUploadCreateResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -30,13 +29,11 @@ class ApplicationResponseRepository {
     }
   }
 
-  Future<ApplicationResponseGetSupplierResponsesResponse>
-      applicationResponseGetSupplierResponses({required String path}) async {
+  Future<ApplicationResponseGetSupplierResponsesResponse> applicationResponseGetSupplierResponses(
+      {required String path}) async {
     try {
-      final response = await applicationResponseApi
-          .applicationResponseGetSupplierResponses(path: path);
-      return ApplicationResponseGetSupplierResponsesResponse.fromJson(
-          response.data);
+      final response = await applicationResponseApi.applicationResponseGetSupplierResponses(path: path);
+      return ApplicationResponseGetSupplierResponsesResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
