@@ -1,7 +1,5 @@
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
-import 'package:buy_metal_app/domain/repository/application_repository.dart';
-import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'description_of_buyer_order_event.dart';

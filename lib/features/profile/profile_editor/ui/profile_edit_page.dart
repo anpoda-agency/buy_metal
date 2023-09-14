@@ -1,5 +1,4 @@
 import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +17,13 @@ class ProfileEditPage extends StatefulWidget {
 class _ProfileEditPageState extends State<ProfileEditPage> {
   late UserModel userModel;
 
-  int _selectedType = 0;
+  //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
 
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  //final TextEditingController _passwordController = TextEditingController();
+  //final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   final TextEditingController _postNameController = TextEditingController();
@@ -210,7 +209,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                               } */
                             User? user = FirebaseAuth.instance.currentUser;
                             String userId = user?.uid ?? '';
-                            List<String> listOrders = [];
+                            //List<String> listOrders = [];
                             _users.doc(userId).update({
                               //"id": user?.uid,
                               "user_fio": _ownerNameController.text,

@@ -65,7 +65,6 @@
 //   }
 // }
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BuyerWorkplacePage extends StatelessWidget {
@@ -114,8 +113,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Мои заявки',
@@ -135,8 +133,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Разместить заявку',

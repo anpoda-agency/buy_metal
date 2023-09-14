@@ -1,9 +1,3 @@
-import 'package:buy_metal_app/data/models/application_models/application_get_customer_applications_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_get_find_deal_by_id_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_create_deal_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_create_deal_response.dart';
@@ -11,7 +5,6 @@ import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_request
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_update_order_status_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_update_order_status_response.dart';
-import 'package:buy_metal_app/data/network/api/application_api.dart';
 import 'package:buy_metal_app/data/network/api/deal_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';
 import 'package:dio/dio.dart';
@@ -21,8 +14,7 @@ class DealRepository {
 
   DealRepository({required this.dealApi});
 
-  Future<DealUploadCreateDealResponse> dealUploadCreateDeal(
-      {required DealUploadCreateDealRequest request}) async {
+  Future<DealUploadCreateDealResponse> dealUploadCreateDeal({required DealUploadCreateDealRequest request}) async {
     try {
       final response = await dealApi.dealUploadCreateDeal(request: request);
       return DealUploadCreateDealResponse.fromJson(response.data);
@@ -32,8 +24,7 @@ class DealRepository {
     }
   }
 
-  Future<DealGetFindDealByIdResponse> dealGetFindDealById(
-      {required String path}) async {
+  Future<DealGetFindDealByIdResponse> dealGetFindDealById({required String path}) async {
     try {
       final response = await dealApi.dealGetFindDealById(path: path);
       return DealGetFindDealByIdResponse.fromJson(response.data);
@@ -44,11 +35,9 @@ class DealRepository {
   }
 
   Future<DealUploadUpdateOrderStatusResponse> dealUploadUpdateOrderStatus(
-      {required DealUploadUpdateOrderStatusRequest request,
-      required String path}) async {
+      {required DealUploadUpdateOrderStatusRequest request, required String path}) async {
     try {
-      final response = await dealApi.dealUploadUpdateOrderStatus(
-          request: request, path: path);
+      final response = await dealApi.dealUploadUpdateOrderStatus(request: request, path: path);
       return DealUploadUpdateOrderStatusResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -56,8 +45,7 @@ class DealRepository {
     }
   }
 
-  Future<DealUploadSearchResponse> dealUploadSearch(
-      {required DealUploadSearchRequest request}) async {
+  Future<DealUploadSearchResponse> dealUploadSearch({required DealUploadSearchRequest request}) async {
     try {
       final response = await dealApi.dealUploadSearch(request: request);
       return DealUploadSearchResponse.fromJson(response.data);

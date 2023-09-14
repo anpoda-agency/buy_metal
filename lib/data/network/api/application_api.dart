@@ -1,5 +1,4 @@
 import 'package:buy_metal_app/core/constants.dart';
-import 'package:buy_metal_app/data/models/application_models/application_get_customer_applications_response.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
 import 'package:buy_metal_app/data/network/dio_client.dart';
@@ -25,12 +24,13 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationGetResponsesByApplicationId({required String path}) async {
+  Future<Response> applicationGetResponsesByApplicationId({required String path, String? accessToken}) async {
     // request body empty
     const String endUrl = "/responses";
     try {
       final Response response = await dioClient.get(
         AppConstants.applicationGetResponsesByApplicationIdUrl + path + endUrl,
+        accessToken: accessToken,
         //body: request.toJson(),
       );
       return response;

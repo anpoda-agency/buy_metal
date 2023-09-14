@@ -4,10 +4,7 @@ import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.da
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -29,10 +26,10 @@ class _ProfilePageState extends State<ProfilePage> {
   late UserModel userModel;
   late String profileType = '';
 
-  int _selectedType = 0;
+  //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
-
+  /*
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -44,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _phoneController = TextEditingController();
 
   final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  */
 
   @override
   void initState() {

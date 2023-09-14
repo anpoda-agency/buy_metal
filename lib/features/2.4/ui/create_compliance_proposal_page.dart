@@ -1,13 +1,7 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
-import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/2.4/bloc/create_compliance_proposal_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/answer_order_model.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

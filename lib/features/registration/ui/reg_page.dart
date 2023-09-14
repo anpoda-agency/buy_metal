@@ -1,8 +1,6 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/bloc/reg_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -26,12 +24,12 @@ class _RegPageState extends State<RegPage> {
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
-  final TextEditingController _postNameController = TextEditingController();
+  //final TextEditingController _postNameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
   final TextEditingController _innController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
-  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {

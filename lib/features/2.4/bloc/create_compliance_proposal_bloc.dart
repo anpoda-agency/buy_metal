@@ -1,4 +1,3 @@
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/application_response_models/application_response_upload_create_request.dart';
 import 'package:buy_metal_app/data/models/application_response_models/application_response_upload_create_response.dart';

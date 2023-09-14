@@ -1,4 +1,4 @@
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
+import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
 import 'package:flutter/material.dart';
 
 class SupplierContactsPage extends StatefulWidget {
@@ -10,6 +10,7 @@ class SupplierContactsPage extends StatefulWidget {
 }
 
 class _SupplierContactsPageState extends State<SupplierContactsPage> {
+  /* 
   UserModel userModel = const UserModel();
   @override
   void initState() {
@@ -17,9 +18,10 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
         widget.args != null ? widget.args as UserModel : const UserModel();
     super.initState();
   }
-
+ */
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
@@ -37,10 +39,7 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                 const Center(
                   child: Text(
                     'Поставщик',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -52,7 +51,8 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.companyName,
+                  args.supplier.companyName,
+                  //userModel.companyName,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(
@@ -66,7 +66,8 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.companyAdress,
+                  args.supplier.companyAddress,
+                  //userModel.companyAdress,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(
@@ -80,7 +81,8 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.inn.toString(),
+                  args.supplier.tin.toString(),
+                  //userModel.inn.toString(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ],
@@ -92,10 +94,7 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                 const Center(
                   child: Text(
                     'Контакты',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -107,26 +106,32 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.userFIO,
+                  args.supplier.fullName.toString(),
+                  //userModel.userFIO,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
+                /*
                 const Text(
                   'Должность',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
+                
                 const SizedBox(
                   height: 10,
                 ),
                 SelectableText(
+                  //args.supplier.
                   userModel.post,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
+                
                 const SizedBox(
                   height: 20,
                 ),
+                */
                 const Text(
                   'Номер телефона',
                   style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -135,7 +140,8 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.phone,
+                  args.supplier.phone,
+                  //userModel.phone,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(
@@ -149,7 +155,8 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                   height: 10,
                 ),
                 SelectableText(
-                  userModel.email,
+                  args.supplier.email,
+                  //userModel.email,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ],

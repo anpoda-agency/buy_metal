@@ -4,7 +4,6 @@ import 'package:buy_metal_app/features/2.1.1/bloc/selected_buyer_list_of_orders_
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:buy_metal_app/features/2.2/ui/description_of_buyer_order_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

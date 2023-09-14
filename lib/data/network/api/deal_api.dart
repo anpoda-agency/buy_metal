@@ -1,9 +1,4 @@
 import 'package:buy_metal_app/core/constants.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
-import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_request.dart';
-import 'package:buy_metal_app/data/models/auth_models/auth_upload_refresh_token_response.dart';
-import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_create_deal_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_update_order_status_request.dart';
@@ -15,8 +10,7 @@ class DealApi {
 
   DealApi({required this.dioClient});
 
-  Future<Response> dealUploadCreateDeal(
-      {required DealUploadCreateDealRequest request}) async {
+  Future<Response> dealUploadCreateDeal({required DealUploadCreateDealRequest request}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
@@ -44,8 +38,7 @@ class DealApi {
   }
 
   Future<Response> dealUploadUpdateOrderStatus(
-      {required DealUploadUpdateOrderStatusRequest request,
-      required String path}) async {
+      {required DealUploadUpdateOrderStatusRequest request, required String path}) async {
     // request body empty
     const String endUrl = "/status";
     try {
@@ -59,8 +52,7 @@ class DealApi {
     }
   }
 
-  Future<Response> dealUploadSearch(
-      {required DealUploadSearchRequest request}) async {
+  Future<Response> dealUploadSearch({required DealUploadSearchRequest request}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(

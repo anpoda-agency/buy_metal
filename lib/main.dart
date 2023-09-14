@@ -1,7 +1,5 @@
-import 'package:buy_metal_app/core/constants.dart';
 import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/firebase_options.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
@@ -51,7 +49,8 @@ void initGetIt() async {
   getIt.registerSingleton<ProfileRepository>(profile);
   User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
   if (user != null) {
-    var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
+    //var res =
+    await getIt.get<ProfileRepository>().saveUser(id: user.uid);
   }
 }
 
@@ -199,8 +198,6 @@ Future<bool> init(
 }
 
  */
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:firebase_core/firebase_core.dart';

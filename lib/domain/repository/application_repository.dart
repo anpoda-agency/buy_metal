@@ -30,11 +30,20 @@ class ApplicationRepository {
     }
   }
 
-  Future<ApplicationGetResponsesByApplicationIdResponse> applicationGetResponsesByApplicationId(
-      {required String path}) async {
+  Future<List<ApplicationGetResponsesByApplicationIdResponse>> applicationGetResponsesByApplicationId(
+      {required String path, String? accessToken}) async {
     try {
-      final response = await applicationApi.applicationGetResponsesByApplicationId(path: path);
-      return ApplicationGetResponsesByApplicationIdResponse.fromJson(response.data);
+      final response =
+          await applicationApi.applicationGetResponsesByApplicationId(path: path, accessToken: accessToken);
+      if (response.data is List<dynamic>) {
+        List<ApplicationGetResponsesByApplicationIdResponse> list = [];
+        for (dynamic item in response.data as List<dynamic>) {
+          list.add(ApplicationGetResponsesByApplicationIdResponse.fromJson(item as Map<String, dynamic>));
+        }
+        return list;
+      }
+      return [];
+      //return ApplicationGetResponsesByApplicationIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

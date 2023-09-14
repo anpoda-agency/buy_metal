@@ -1,8 +1,5 @@
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class TestListProposals extends StatefulWidget {
   const TestListProposals({super.key});
@@ -16,8 +13,7 @@ class _TestListProposalsState extends State<TestListProposals> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
-  final CollectionReference _productss =
-      FirebaseFirestore.instance.collection('similar_proposals');
+  final CollectionReference _productss = FirebaseFirestore.instance.collection('similar_proposals');
 
   // This function is triggered when the floatting button or one of the edit buttons is pressed
   // Adding a product if no documentSnapshot is passed
@@ -50,8 +46,7 @@ class _TestListProposalsState extends State<TestListProposals> {
                   decoration: const InputDecoration(labelText: 'Name'),
                 ),
                 TextField(
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   controller: _priceController,
                   decoration: const InputDecoration(
                     labelText: 'Price',
@@ -64,8 +59,7 @@ class _TestListProposalsState extends State<TestListProposals> {
                   child: Text(action == 'create' ? 'Create' : 'Update'),
                   onPressed: () async {
                     final String? name = _nameController.text;
-                    final double? price =
-                        double.tryParse(_priceController.text);
+                    final double? price = double.tryParse(_priceController.text);
                     if (name != null && price != null) {
                       if (action == 'create') {
                         // Persist a new product to Firestore
@@ -74,9 +68,7 @@ class _TestListProposalsState extends State<TestListProposals> {
 
                       if (action == 'update') {
                         // Update the product
-                        await _productss
-                            .doc(documentSnapshot!.id)
-                            .update({"name": name, "price": price});
+                        await _productss.doc(documentSnapshot!.id).update({"name": name, "price": price});
                       }
 
                       // Clear the text fields
@@ -99,8 +91,8 @@ class _TestListProposalsState extends State<TestListProposals> {
     await _productss.doc(productId).delete();
 
     // Show a snackbar
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('You have successfully deleted a product')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('You have successfully deleted a product')));
   }
 
   @override
@@ -119,8 +111,7 @@ class _TestListProposalsState extends State<TestListProposals> {
             return ListView.builder(
               itemCount: streamSnapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                final DocumentSnapshot documentSnapshot =
-                    streamSnapshot.data!.docs[index];
+                final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
                 return Card(
                   margin: const EdgeInsets.all(10),
                   child: Column(

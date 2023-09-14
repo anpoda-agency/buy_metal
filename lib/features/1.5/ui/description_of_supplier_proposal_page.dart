@@ -1,6 +1,4 @@
-import 'package:buy_metal_app/data/models/firebase_models/answer_order_model.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/features/1.6/ui/supplier_contacts_page.dart';
+import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionOfSupplierProposalPage extends StatefulWidget {
@@ -8,26 +6,25 @@ class DescriptionOfSupplierProposalPage extends StatefulWidget {
   final Object? args;
 
   @override
-  State<DescriptionOfSupplierProposalPage> createState() =>
-      _DescriptionOfSupplierProposalPageState();
+  State<DescriptionOfSupplierProposalPage> createState() => _DescriptionOfSupplierProposalPageState();
 }
 
-class _DescriptionOfSupplierProposalPageState
-    extends State<DescriptionOfSupplierProposalPage> {
+class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplierProposalPage> {
+  /* 
   AnswerOrderModel answerModel = const AnswerOrderModel();
   UserModel userModel = const UserModel();
 
   @override
   void initState() {
-    Map<String, dynamic> map =
-        widget.args != null ? widget.args as Map<String, dynamic> : {};
+    Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
     answerModel = map['answer_model'];
     userModel = map['user_model'];
     super.initState();
   }
-
+ */
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
@@ -45,13 +42,13 @@ class _DescriptionOfSupplierProposalPageState
                 const SizedBox(height: 20),
                 Center(
                   child: Text(
-                    '${userModel.companyName} ${userModel.companyAdress}',
+                    '${args.supplier.companyName} ${args.supplier.companyAddress}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
                 Center(
                   child: Text(
-                    'от ${answerModel.dataCreate}',
+                    'от ${args.creationDate}',
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ),
@@ -66,7 +63,7 @@ class _DescriptionOfSupplierProposalPageState
                       width: 10,
                     ),
                     Text(
-                      answerModel.similar ? 'Аналог' : 'Соответствует', //аналог
+                      args.similar ? 'Аналог' : 'Соответствует', //аналог
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
@@ -82,15 +79,15 @@ class _DescriptionOfSupplierProposalPageState
                   height: 5,
                 ),
                 Text(
-                  '${answerModel.formRolled} ${answerModel.type} ${answerModel.sizeRolled}', //форма проката + классификация/тип профиля + размер
+                  '${args.rolledForm} ${args.rolledType} ${args.rolledSize}', //форма проката + классификация/тип профиля + размер
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 Text(
-                  '${answerModel.paramsRolled} ${answerModel.gostRolled}', //параметры проката + гост на прокат
+                  '${args.rolledParams} ${args.rolledGost}', //параметры проката + гост на прокат
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 Text(
-                  '${answerModel.brandMaterial} ${answerModel.paramsMaterial} ${answerModel.gostMaterial}', //марка материала + параметры материала + ГОСТ на материал
+                  '${args.materialBrand} ${args.materialParams} ${args.materialGost}', //марка материала + параметры материала + ГОСТ на материал
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
@@ -104,7 +101,7 @@ class _DescriptionOfSupplierProposalPageState
                       width: 10,
                     ),
                     Text(
-                      '${answerModel.pricePerTonne} RUB',
+                      '${args.price} RUB',
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
@@ -122,7 +119,7 @@ class _DescriptionOfSupplierProposalPageState
                       width: 10,
                     ),
                     Text(
-                      '${answerModel.requirement} т',
+                      '${args.amount} т',
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
@@ -140,7 +137,7 @@ class _DescriptionOfSupplierProposalPageState
                       width: 10,
                     ),
                     Text(
-                      '${answerModel.priceFull.floorToDouble()} RUB',
+                      '${args.fullPrice.floorToDouble()} RUB',
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
@@ -158,12 +155,12 @@ class _DescriptionOfSupplierProposalPageState
                       width: 10,
                     ),
                     Text(
-                      answerModel.onStock ? 'Дa' : 'Нет',
+                      args.inStock ? 'Дa' : 'Нет',
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
-                answerModel.dateToStorage.isNotEmpty
+                args.deliverDate.isNotEmpty
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -178,9 +175,8 @@ class _DescriptionOfSupplierProposalPageState
                             height: 5,
                           ),
                           Text(
-                            answerModel.dateToStorage,
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.black),
+                            args.deliverDate,
+                            style: const TextStyle(fontSize: 20, color: Colors.black),
                           ),
                         ],
                       )
@@ -194,17 +190,20 @@ class _DescriptionOfSupplierProposalPageState
                 height: 60,
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
+
+                    /*
                     Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => SupplierContactsPage(
-                                args: userModel,
+                                args: args,
                               )),
                     );
+                    */
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
                     'Связаться',

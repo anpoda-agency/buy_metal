@@ -1,10 +1,6 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/1.7/bloc/create_order_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -74,7 +70,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   //final TextEditingController dataCreateTextController = TextEditingController();
   //final TextEditingController idTextController = TextEditingController();
 
-  final CollectionReference _orders = FirebaseFirestore.instance.collection('orders');
+  // final CollectionReference _orders = FirebaseFirestore.instance.collection('orders');
 
   @override
   void initState() {
