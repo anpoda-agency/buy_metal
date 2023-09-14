@@ -150,6 +150,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
+                                //context.read<CreateOrderBloc>().add(CreateOrderInputRolledForm(formChoosed));
                                 //TypeListEnum formChoosed;
                                 //TypeListEnum.STRIP;
                                 if (val == typeList[0]) {
@@ -172,7 +173,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                                   formChoosed = TypeListEnum.PIPE;
                                 } else if (val == typeList[9]) {
                                   formChoosed = TypeListEnum.SHEET;
-                                } else if (val == typeList[9]) {
+                                } else if (val == typeList[10]) {
                                   formChoosed = TypeListEnum.ARMATURE;
                                 }
 
@@ -239,9 +240,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                         controller: _requirementTextController,
                         inputType: TextInputType.number,
                         onChanged: (value) {
-                          int amount = 0;
+                          double amount = 0;
                           if (value != '') {
-                            amount = int.parse(value);
+                            amount = double.parse(value);
                           }
                           //int amount = int.parse(value);
                           context.read<CreateOrderBloc>().add(CreateOrderInputAmount(amount));

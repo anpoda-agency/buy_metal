@@ -7,8 +7,8 @@ part 'application_upload_search_response.g.dart';
 
 @JsonSerializable()
 class ApplicationUploadSearchResponse {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'customer')
@@ -55,7 +55,7 @@ class ApplicationUploadSearchResponse {
   Map<String, dynamic> toJson() => _$ApplicationUploadSearchResponseToJson(this);
 
   ApplicationUploadSearchResponse copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     Customer? customer,
     String? id,
@@ -100,7 +100,7 @@ class Customer {
   @JsonKey(name: 'fullName', fromJson: FromJsonBase.jsonToString)
   final String fullName;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
-  final String? id;
+  final String id;
   @JsonKey(name: 'mailConfirmed', fromJson: FromJsonBase.jsonToBool)
   final bool mailConfirmed;
   @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)

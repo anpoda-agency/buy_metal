@@ -7,14 +7,14 @@ part 'application_get_responses_by_application_id_response.g.dart';
 
 @JsonSerializable()
 class ApplicationGetResponsesByApplicationIdResponse {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'deliverDate', fromJson: FromJsonBase.jsonToString)
   final String deliverDate;
-  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToInt)
-  final int fullPrice;
+  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToDouble)
+  final double fullPrice;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
   final String id;
   @JsonKey(name: 'inStock', fromJson: FromJsonBase.jsonToBool)
@@ -25,8 +25,8 @@ class ApplicationGetResponsesByApplicationIdResponse {
   final String materialGost;
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
-  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToInt)
-  final int price;
+  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToDouble)
+  final double price;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
   final String? rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
@@ -67,16 +67,16 @@ class ApplicationGetResponsesByApplicationIdResponse {
   Map<String, dynamic> toJson() => _$ApplicationGetResponsesByApplicationIdResponseToJson(this);
 
   ApplicationGetResponsesByApplicationIdResponse copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     String? deliverDate,
-    int? fullPrice,
+    double? fullPrice,
     String? id,
     bool? inStock,
     String? materialBrand,
     String? materialGost,
     String? materialParams,
-    int? price,
+    double? price,
     String? rolledForm,
     String? rolledGost,
     String? rolledParams,

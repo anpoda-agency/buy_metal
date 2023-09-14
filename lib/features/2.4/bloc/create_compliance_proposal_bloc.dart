@@ -35,7 +35,7 @@ class CreateComplianceProposalBloc extends Bloc<CreateComplianceProposalEvent, C
     var model = state.pageState.request.copyWith(
       amount: applicationInfo.amount,
       applicationId: applicationInfo.id,
-      creationDate: applicationInfo.creationDate,
+      //creationDate: applicationInfo.creationDate,
       materialBrand: applicationInfo.materialBrand,
       materialGost: applicationInfo.materialGost,
       materialParams: applicationInfo.materialParams,
@@ -79,6 +79,12 @@ class CreateComplianceProposalBloc extends Bloc<CreateComplianceProposalEvent, C
   }
 
   createComplianceProposalSendProposal(CreateComplianceProposalSendProposal event, emit) async {
+    DateTime now = DateTime.now();
+
+    String creationDate =
+        "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+    var model = state.pageState.request.copyWith(creationDate: creationDate);
+    emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
     //var model = state.pageState.request.copyWith(position: event.value);
     var token = userRepository.user?.accessToken;
 

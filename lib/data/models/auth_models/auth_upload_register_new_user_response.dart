@@ -20,11 +20,9 @@ class AuthUploadRegisterNewUserResponse {
     this.user = const User(),
   });
 
-  factory AuthUploadRegisterNewUserResponse.fromJson(
-          Map<String, dynamic> json) =>
+  factory AuthUploadRegisterNewUserResponse.fromJson(Map<String, dynamic> json) =>
       _$AuthUploadRegisterNewUserResponseFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$AuthUploadRegisterNewUserResponseToJson(this);
+  Map<String, dynamic> toJson() => _$AuthUploadRegisterNewUserResponseToJson(this);
 
   AuthUploadRegisterNewUserResponse copyWith({
     String? accessToken,
@@ -52,7 +50,7 @@ class User {
   @JsonKey(name: 'fullName', fromJson: FromJsonBase.jsonToString)
   final String fullName;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
-  final String? id;
+  final String id;
   @JsonKey(name: 'mailConfirmed', fromJson: FromJsonBase.jsonToBool)
   final bool mailConfirmed;
   @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)

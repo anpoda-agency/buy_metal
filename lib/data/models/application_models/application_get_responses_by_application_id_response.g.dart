@@ -12,7 +12,7 @@ ApplicationGetResponsesByApplicationIdResponse
         ApplicationGetResponsesByApplicationIdResponse(
           amount: json['amount'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['amount']),
+              : FromJsonBase.jsonToDouble(json['amount']),
           creationDate: json['creationDate'] == null
               ? ''
               : FromJsonBase.jsonToString(json['creationDate']),
@@ -21,7 +21,7 @@ ApplicationGetResponsesByApplicationIdResponse
               : FromJsonBase.jsonToString(json['deliverDate']),
           fullPrice: json['fullPrice'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['fullPrice']),
+              : FromJsonBase.jsonToDouble(json['fullPrice']),
           id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
           inStock: json['inStock'] == null
               ? false
@@ -35,8 +35,9 @@ ApplicationGetResponsesByApplicationIdResponse
           materialParams: json['materialParams'] == null
               ? ''
               : FromJsonBase.jsonToString(json['materialParams']),
-          price:
-              json['price'] == null ? 0 : FromJsonBase.jsonToInt(json['price']),
+          price: json['price'] == null
+              ? 0
+              : FromJsonBase.jsonToDouble(json['price']),
           rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
           rolledGost: json['rolledGost'] == null
               ? ''

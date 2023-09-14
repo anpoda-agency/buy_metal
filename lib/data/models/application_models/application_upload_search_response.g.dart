@@ -9,8 +9,9 @@ part of 'application_upload_search_response.dart';
 ApplicationUploadSearchResponse _$ApplicationUploadSearchResponseFromJson(
         Map<String, dynamic> json) =>
     ApplicationUploadSearchResponse(
-      amount:
-          json['amount'] == null ? 0 : FromJsonBase.jsonToInt(json['amount']),
+      amount: json['amount'] == null
+          ? 0
+          : FromJsonBase.jsonToDouble(json['amount']),
       creationDate: json['creationDate'] == null
           ? ''
           : FromJsonBase.jsonToString(json['creationDate']),

@@ -8,8 +8,8 @@ part 'application_upload_create_application_request.g.dart';
 
 @JsonSerializable()
 class ApplicationUploadCreateApplicationRequest {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'materialBrand', fromJson: FromJsonBase.jsonToString)
@@ -50,7 +50,7 @@ class ApplicationUploadCreateApplicationRequest {
   Map<String, dynamic> toJson() => _$ApplicationUploadCreateApplicationRequestToJson(this);
 
   ApplicationUploadCreateApplicationRequest copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     String? materialBrand,
     String? materialGost,

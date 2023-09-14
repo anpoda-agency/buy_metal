@@ -1,10 +1,10 @@
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/answer_order_model.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
+import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/features/2.5/bloc/create_similar_proposal_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class CreateSimilarProposalPage extends StatefulWidget {
   const CreateSimilarProposalPage({super.key, required this.args});
@@ -15,16 +15,16 @@ class CreateSimilarProposalPage extends StatefulWidget {
 }
 
 class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
-  late UserModel userModel;
-  late OrderModel orderModel;
+  //late UserModel userModel;
+  //late OrderModel orderModel;
   //final TextEditingController testController = TextEditingController();
   int selectedValue = 0;
   final TextEditingController _priceController = TextEditingController();
   double price = 0;
 
   final String _requirement = '5.4 т';
-  bool _inStock = false;
-  bool _notStock = false;
+  //bool _inStock = false;
+  //bool _notStock = false;
 
   final TextEditingController _typeTextController = TextEditingController();
   final TextEditingController _sizeRolledTextController = TextEditingController();
@@ -35,8 +35,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   final TextEditingController _gostMaterialTextController = TextEditingController();
   final TextEditingController _dateTextController = TextEditingController();
 
-  final CollectionReference _similarProposal = FirebaseFirestore.instance.collection('similar_proposals');
-
+  //final CollectionReference _similarProposal = FirebaseFirestore.instance.collection('similar_proposals');
+  /*
   @override
   void initState() {
     Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
@@ -44,265 +44,347 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
     userModel = map['user_model'];
     super.initState();
   }
+  */
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: const Text('Описание предложения'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Center(
-                child: Text(
-                  '${userModel.companyName} ${userModel.companyAdress}',
-                  style: const TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
-              Center(
-                child: Text(
-                  'от ${orderModel.dataCreate}',
-                  style: const TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const Text(
-                    'Форма проката:',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    orderModel.formRolled,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                '* поля обязательные для заполнения',
-                style: TextStyle(fontSize: 16, color: Colors.blue),
-              ),
-              const SizedBox(height: 10),
-              ParamsFieldWidget(
-                title: 'Классификация/тип профиля *',
-                controller: _typeTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'Размер проката, мм *', //обязательное поле
-                controller: _sizeRolledTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'Параметры проката *',
-                controller: _paramsRolledTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'ГОСТ на прокат',
-                controller: _gostRolledTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'Марка материала *', //обязательное
-                controller: _brandMaterialTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'Параметры материала',
-                controller: _paramsMaterialTextController,
-                inputType: TextInputType.text,
-              ),
-              ParamsFieldWidget(
-                title: 'ГОСТ на материал',
-                controller: _gostMaterialTextController,
-                inputType: TextInputType.text,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Потребность в заявке:',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    _requirement,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'Цена за тонну (с НДС)',
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: TextField(
-                      controller: _priceController,
-                      onChanged: (val) {
-                        if (val.isEmpty) {
-                          setState(() {
-                            price = 0;
-                          });
-                        } else {
-                          setState(() {
-                            price = orderModel.requirement * double.parse(val);
-                          });
-                        }
-                      },
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey[300],
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(color: Colors.white)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                              ),
-                              borderRadius: BorderRadius.circular(15))),
-                      keyboardType: TextInputType.number,
+    var args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+
+    return BlocProvider(
+      create: (context) => CreateSimilarProposalBloc(
+          applicationResponseRepository: context.read<GetIt>().get<ApplicationResponseRepository>(),
+          userRepository: context.read<GetIt>().get<UserRepository>(),
+          applicationProposalResponse: args,
+          pageState: const PageState()),
+      child: BlocConsumer<CreateSimilarProposalBloc, CreateSimilarProposalState>(
+        listener: (context, state) {
+          if (state is CreateSimilarProposalAllowedToPushState) {
+            Navigator.pushReplacementNamed(context, '/success_proposal_page');
+          }
+        },
+        builder: (context, state) {
+          //final TextEditingController _priceController = TextEditingController();
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black87,
+              title: const Text('Описание предложения'),
+              centerTitle: true,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Text(
+                        '${args.customer.companyName} ${args.customer.companyAddress}',
+                        style: const TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Сумма (с НДС):',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    price.toInt().toString(),
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'В наличии:',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          selectedValue = 1;
-                          _dateTextController.clear();
-                        });
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 1 ? Colors.orange : Colors.grey),
-                          child: Text(
-                            'Да',
-                            style: TextStyle(fontSize: 20, color: selectedValue == 1 ? Colors.white : Colors.black),
-                          )),
+                    Center(
+                      child: Text(
+                        'от ${args.creationDate}',
+                        style: const TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          selectedValue = 2;
-                        });
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: selectedValue == 2 ? Colors.orange : Colors.grey),
-                          child: Text(
-                            'Нет',
-                            style: TextStyle(fontSize: 20, color: selectedValue == 2 ? Colors.white : Colors.black),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-              selectedValue == 2
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 20),
+                    Row(
                       children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Text(
-                          'Дата поступления\nна склад поставщика:',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          'Форма проката:',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                         const SizedBox(
-                          height: 10,
+                          width: 10,
                         ),
-                        TextField(
-                          controller: _dateTextController,
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey[300],
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: const BorderSide(color: Colors.white)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.white,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15))),
-                          keyboardType: TextInputType.number,
+                        Text(
+                          args.rolledForm,
+                          style: const TextStyle(fontSize: 20, color: Colors.black),
                         ),
                       ],
-                    )
-                  : const SizedBox.shrink(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30, top: 30),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 65,
-                  child: ElevatedButton(
-                    onPressed: () async {
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      '* поля обязательные для заполнения',
+                      style: TextStyle(fontSize: 16, color: Colors.blue),
+                    ),
+                    const SizedBox(height: 10),
+                    ParamsFieldWidget(
+                      title: 'Классификация/тип профиля *',
+                      controller: _typeTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputRolledTypeEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'Размер проката, мм *', //обязательное поле
+                      controller: _sizeRolledTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputRolledSizeEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'Параметры проката *',
+                      controller: _paramsRolledTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputRolledParamsEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'ГОСТ на прокат',
+                      controller: _gostRolledTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputRolledGostEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'Марка материала *', //обязательное
+                      controller: _brandMaterialTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputMaterialBrandEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'Параметры материала',
+                      controller: _paramsMaterialTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputMaterialParamsEvent(value)),
+                    ),
+                    ParamsFieldWidget(
+                      title: 'ГОСТ на материал',
+                      controller: _gostMaterialTextController,
+                      inputType: TextInputType.text,
+                      onChanged: (value) => context
+                          .read<CreateSimilarProposalBloc>()
+                          .add(CreateSimilarProposalInputMaterialGostEvent(value)),
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Потребность в заявке:',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          _requirement,
+                          style: const TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Цена за тонну (с НДС)',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: TextField(
+                            controller: _priceController,
+                            onChanged: (val) {
+                              if (val.isEmpty) {
+                                setState(() {
+                                  price = 0;
+                                  context
+                                      .read<CreateSimilarProposalBloc>()
+                                      .add(CreateSimilarProposalInputPriceEvent(0));
+                                  //.add(CreateSimilarProposalInputPriceEvent(double.parse(val)));
+                                  context
+                                      .read<CreateSimilarProposalBloc>()
+                                      .add(CreateSimilarProposalInputPriceEvent(price));
+                                });
+                              } else {
+                                setState(() {
+                                  // НЕ ЗАБЫТЬ ОБРАБОТАТЬ БЛОКОМ КОД НИЖЕ
+                                  //price = orderModel.requirement * double.parse(val);
+                                  price = args.amount //* 2;
+                                      *
+                                      double.parse(val);
+                                  context
+                                      .read<CreateSimilarProposalBloc>()
+                                      .add(CreateSimilarProposalInputPriceEvent(double.parse(val)));
+                                  context
+                                      .read<CreateSimilarProposalBloc>()
+                                      .add(CreateSimilarProposalInputPriceEvent(price));
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey[300],
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(color: Colors.white)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15))),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'Сумма (с НДС):',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          //state.pageState.request.fullPrice.toInt().toString(),
+                          price.toInt().toString(),
+                          style: const TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          'В наличии:',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedValue = 1;
+                                _dateTextController.clear();
+                                context
+                                    .read<CreateSimilarProposalBloc>()
+                                    .add(CreateSimilarProposalInputInStockEvent(true));
+                                context
+                                    .read<CreateSimilarProposalBloc>()
+                                    .add(CreateSimilarProposalInputDeliverDateEvent(''));
+                              });
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: selectedValue == 1 ? Colors.orange : Colors.grey),
+                                child: Text(
+                                  'Да',
+                                  style:
+                                      TextStyle(fontSize: 20, color: selectedValue == 1 ? Colors.white : Colors.black),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedValue = 2;
+                                context
+                                    .read<CreateSimilarProposalBloc>()
+                                    .add(CreateSimilarProposalInputInStockEvent(false));
+                              });
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: selectedValue == 2 ? Colors.orange : Colors.grey),
+                                child: Text(
+                                  'Нет',
+                                  style:
+                                      TextStyle(fontSize: 20, color: selectedValue == 2 ? Colors.white : Colors.black),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                    selectedValue == 2
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Дата поступления\nна склад поставщика:',
+                                style: TextStyle(fontSize: 20, color: Colors.black),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  context
+                                      .read<CreateSimilarProposalBloc>()
+                                      .add(CreateSimilarProposalInputDeliverDateEvent(value));
+                                },
+                                controller: _dateTextController,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.grey[300],
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                        borderSide: const BorderSide(color: Colors.white)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15))),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30, top: 30),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 65,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<CreateSimilarProposalBloc>().add(CreateSimilarProposalSendEvent());
+                          },
+
+                          /*
+                    () async {
                       //Navigator.pushNamed(context, '/buyer_orders_list_page');
 
                       if (selectedValue == 1) {
@@ -338,22 +420,29 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           ))
                           .whenComplete(() => Navigator.pushReplacementNamed(context, '/success_proposal_page'));
                     },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    */
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          ),
+                          child: const Text(
+                            'Разместить заявку',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
                     ),
-                    child: const Text(
-                      'Разместить заявку',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
+    /*
+    
+    */
   }
 }
 
@@ -467,12 +556,12 @@ class ParamsFieldWidget extends StatefulWidget {
     required this.controller,
     required this.title,
     required this.inputType,
-    //required this.onChanged,
+    required this.onChanged,
   });
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
-  //final Function(String) onChanged;
+  final Function(String) onChanged;
 
   @override
   State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
@@ -494,7 +583,7 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
             height: 10,
           ),
           TextField(
-            //onChanged: widget.onChanged,
+            onChanged: widget.onChanged,
             controller: widget.controller,
             decoration: InputDecoration(
                 filled: true,

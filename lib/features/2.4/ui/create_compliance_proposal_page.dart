@@ -186,7 +186,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                       price = 0;
                                       context
                                           .read<CreateComplianceProposalBloc>()
-                                          .add(CreateComplianceProposalInputPrice(double.parse(val)));
+                                          .add(CreateComplianceProposalInputPrice(0));
                                       context
                                           .read<CreateComplianceProposalBloc>()
                                           .add(CreateComplianceProposalInputPrice(price));
@@ -261,9 +261,13 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                 onTap: () {
                                   setState(() {
                                     selectedValue = 1;
+                                    dateToStorageController.clear();
                                     context
                                         .read<CreateComplianceProposalBloc>()
                                         .add(CreateComplianceProposalInputInStock(true));
+                                    context
+                                        .read<CreateComplianceProposalBloc>()
+                                        .add(CreateComplianceProposalInputDeliverDate(''));
                                   });
                                 },
                                 child: Container(
@@ -322,7 +326,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                     onChanged: (value) {
                                       context
                                           .read<CreateComplianceProposalBloc>()
-                                          .add(CreateComplianceProposalInputDeliverDate(''));
+                                          .add(CreateComplianceProposalInputDeliverDate(value));
                                     },
                                     decoration: InputDecoration(
                                         filled: true,

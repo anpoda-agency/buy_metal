@@ -9,8 +9,9 @@ part of 'user_get_user_payments_response.dart';
 UserGetUserPaymentsResponse _$UserGetUserPaymentsResponseFromJson(
         Map<String, dynamic> json) =>
     UserGetUserPaymentsResponse(
-      amount:
-          json['amount'] == null ? 0 : FromJsonBase.jsonToInt(json['amount']),
+      amount: json['amount'] == null
+          ? 0
+          : FromJsonBase.jsonToDouble(json['amount']),
       customerId: json['customerId'] == null
           ? ''
           : FromJsonBase.jsonToString(json['customerId']),

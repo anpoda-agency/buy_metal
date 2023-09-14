@@ -50,7 +50,7 @@ class CreateOrderInputMaterialGost extends CreateOrderEvent {
 }
 
 class CreateOrderInputAmount extends CreateOrderEvent {
-  final int value;
+  final double value;
   CreateOrderInputAmount(this.value);
 }
 

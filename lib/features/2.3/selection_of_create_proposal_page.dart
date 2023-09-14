@@ -85,7 +85,8 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.pushNamed(context, '/create_similar_proposal_page');
+                          Navigator.pushNamed(context, '/create_similar_proposal_page', arguments: args);
+                          /*
                           Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => CreateSimilarProposalPage(
@@ -93,6 +94,7 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                                       //{'order_model': orderModel, 'user_model': userModel},
                                     )),
                           );
+                          */
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.orange,

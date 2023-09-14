@@ -7,8 +7,8 @@ part 'application_response_upload_create_request.g.dart';
 
 @JsonSerializable()
 class ApplicationResponseUploadCreateRequest {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'applicationId', fromJson: FromJsonBase.jsonToString)
   final String applicationId;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
@@ -67,7 +67,7 @@ class ApplicationResponseUploadCreateRequest {
   Map<String, dynamic> toJson() => _$ApplicationResponseUploadCreateRequestToJson(this);
 
   ApplicationResponseUploadCreateRequest copyWith({
-    int? amount,
+    double? amount,
     String? applicationId,
     String? creationDate,
     String? deliverDate,

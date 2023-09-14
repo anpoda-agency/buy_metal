@@ -8,8 +8,8 @@ part 'application_get_customer_applications_response.g.dart';
 
 @JsonSerializable()
 class ApplicationGetCustomerApplicationsResponse {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'customer')
@@ -56,7 +56,7 @@ class ApplicationGetCustomerApplicationsResponse {
   Map<String, dynamic> toJson() => _$ApplicationGetCustomerApplicationsResponseToJson(this);
 
   ApplicationGetCustomerApplicationsResponse copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     Customer? customer,
     String? id,

@@ -12,7 +12,7 @@ ApplicationResponseUploadCreateRequest
         ApplicationResponseUploadCreateRequest(
           amount: json['amount'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['amount']),
+              : FromJsonBase.jsonToDouble(json['amount']),
           applicationId: json['applicationId'] == null
               ? ''
               : FromJsonBase.jsonToString(json['applicationId']),
