@@ -9,7 +9,7 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String baseUrl = "http://158.160.80.237:8080/api/v1";
+  static const String baseUrl = "http://158.160.68.140:8080/api/v1";
 
   /* //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";
@@ -60,4 +60,5 @@ abstract class AppConstants {
   //user-controller urls
   static const String userUploadBlockUserUrl = "/user/";
   static const String userGetUserPaymentsUrl = "/user/";
+  static const String userUpdateUserUrl = "/user/";
 }

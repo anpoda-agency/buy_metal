@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/data/models/user_models/user_get_user_payments_response.dart';
+import 'package:buy_metal_app/data/models/user_models/user_update_user_request.dart';
+import 'package:buy_metal_app/data/models/user_models/user_update_user_response.dart';
 import 'package:buy_metal_app/data/network/api/user_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';
 import 'package:buy_metal_app/data/storage/pref_storage.dart';
@@ -13,6 +15,20 @@ class UserRepository extends ChangeNotifier {
 
   AuthUploadLoginResponse? _user;
   AuthUploadLoginResponse? get user => _user;
+
+  // БЛЯ ХОЧУ СЕТТЕР НАПИСАТТЬ НА ИЗМЕНЕНИЕ РЕПЫ ПРЯМ СИЛЬНО ХОЧУф
+  //AuthUploadLoginResponse? set userSet(AuthUploadLoginResponse user) {};
+
+  Future<UserUpdateUserResponse> userUpdateUser(
+      {required UserUpdateUserRequest request, required String path, String? accessToken}) async {
+    try {
+      final response = await userApi.userUpdateUser(request: request, path: path, accessToken: accessToken);
+      return UserUpdateUserResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
 
   // Попов сказал разберется с респонсом
 /* 

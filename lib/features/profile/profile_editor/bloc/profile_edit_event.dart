@@ -39,4 +39,4 @@ class ProfileEditInputEmail extends ProfileEditEvent {
   ProfileEditInputEmail(this.value);
 }
 
-class ProfileEditSendChanges extends ProfileEditEvent {}
+class ProfileEditSendChangesEvent extends ProfileEditEvent {}

@@ -4,7 +4,6 @@ import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.da
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -72,7 +71,16 @@ class _ProfilePageState extends State<ProfilePage> {
         pageState: const PageState(),
       ),
       child: BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is ProfileUpdateUserInfoState) {
+            Navigator.of(context).pushNamed('/profile_edit_page', arguments: state.pageState.user).then((value) {
+              context.read<ProfileBloc>().add(ProfileInit());
+            });
+          }
+          if (state is ProfileLogOutState) {
+            Navigator.pushReplacementNamed(context, '/home_page');
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -144,6 +152,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () {
+                                  context.read<ProfileBloc>().add(ProfileUpdateEvent());
+
+                                  //Navigator.of(context)
+                                  //    .pushNamed('/profile_edit_page', arguments: state.pageState.user);
+
+                                  /*
                                   Navigator.of(context)
                                       .push(
                                         MaterialPageRoute(
@@ -152,6 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 )),
                                       )
                                       .then((value) => context.read<ProfileBloc>().add(ProfileUpdate()));
+                                    */
                                   /* .then((value) {
                               setState(() {});
                             }); */
@@ -226,8 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  context.read<ProfileBloc>().add(ProfileLogOut());
-                                  Navigator.pushReplacementNamed(context, '/home_page');
+                                  context.read<ProfileBloc>().add(ProfileLogOutEvent());
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.orange[700],

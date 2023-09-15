@@ -9,6 +9,6 @@ class ProfileMsgErr extends ProfileEvent {
   ProfileMsgErr(this.msg);
 }
 
-class ProfileLogOut extends ProfileEvent {}
+class ProfileLogOutEvent extends ProfileEvent {}
 
-class ProfileUpdate extends ProfileEvent {}
+class ProfileUpdateEvent extends ProfileEvent {}

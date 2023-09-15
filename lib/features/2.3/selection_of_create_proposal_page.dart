@@ -1,6 +1,5 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
-import 'package:buy_metal_app/features/2.5/ui/create_similar_proposal_page.dart';
 import 'package:flutter/material.dart';
 
 class SelectionOfCreateProposalPage extends StatefulWidget {

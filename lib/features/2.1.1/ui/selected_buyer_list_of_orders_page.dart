@@ -4,7 +4,6 @@ import 'package:buy_metal_app/features/2.1.1/bloc/selected_buyer_list_of_orders_
 import 'package:buy_metal_app/main.dart';
 import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -49,12 +48,33 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                 actions: [
                   IconButton(
                       onPressed: () {
+                        Navigator.pushNamed(
+                          context, '/profile_page',
+                          //arguments: state.pageState.request.source
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.account_box,
+                      )),
+                  /* IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacementNamed(context, '/home_page');
+                });
+              },
+              icon: const Icon(Icons.logout_outlined)), */
+                ],
+/*
+                actions: [
+                  IconButton(
+                      onPressed: () {
                         FirebaseAuth.instance.signOut().then((value) {
                           Navigator.pushReplacementNamed(context, '/home_page');
                         });
                       },
                       icon: const Icon(Icons.logout_outlined)),
                 ],
+*/
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {

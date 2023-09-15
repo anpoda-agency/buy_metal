@@ -18,6 +18,10 @@ class ProfileError extends ProfileState {
   const ProfileError(PageState pageState) : super(pageState);
 }
 
+class ProfileUpdateUserInfoState extends ProfileState {
+  const ProfileUpdateUserInfoState(PageState pageState) : super(pageState);
+}
+
 class ProfileLogOutState extends ProfileState {
   const ProfileLogOutState(PageState pageState) : super(pageState);
 }

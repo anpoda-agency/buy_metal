@@ -19,8 +19,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(ProfileInitial(pageState)) {
     on<ProfileInit>(profileInit);
     on<ProfileMsgErr>(profileMsgErr);
-    on<ProfileLogOut>(profileLogOut);
-    on<ProfileUpdate>(profileUpdate);
+    on<ProfileLogOutEvent>(profileLogOut);
+    on<ProfileUpdateEvent>(profileUpdate);
     add(ProfileInit());
   }
 
@@ -41,15 +41,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(ProfileUp(state.pageState.copyWith(user: model, positionRu: positionRu)));
   }
 
-  profileLogOut(ProfileLogOut event, emit) async {
+  profileLogOut(ProfileLogOutEvent event, emit) async {
     //await userRepository.clearUserData();
     authRepository.changeAuthStatus(val: false);
     emit(ProfileLogOutState(state.pageState.copyWith()));
   }
 
-  profileUpdate(ProfileUpdate event, emit) async {
+  profileUpdate(ProfileUpdateEvent event, emit) async {
     var model = userRepository.user;
-    emit(ProfileUp(state.pageState.copyWith(user: model)));
+    emit(ProfileUpdateUserInfoState(state.pageState.copyWith(user: model)));
   }
 
   profileMsgErr(ProfileMsgErr event, emit) async {
