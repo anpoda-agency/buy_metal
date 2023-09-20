@@ -169,7 +169,7 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
                                     Navigator.of(context).pop();
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.orange[700],
+                                    backgroundColor: Colors.orange[700],
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                   ),
                                   child: const Text(

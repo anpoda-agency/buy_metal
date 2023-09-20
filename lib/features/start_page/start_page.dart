@@ -32,9 +32,8 @@ class _StartPageState extends State<StartPage> {
                         Navigator.pushNamed(context, '/auth_page');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.orange[700],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                        backgroundColor: Colors.orange[700],
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: const Text(
                         'Войти',
@@ -53,9 +52,8 @@ class _StartPageState extends State<StartPage> {
                         Navigator.pushNamed(context, '/reg_page');
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.orange[700],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                        backgroundColor: Colors.orange[700],
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: const Text(
                         'Регистрация',

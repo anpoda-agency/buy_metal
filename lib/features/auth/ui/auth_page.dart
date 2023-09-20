@@ -183,7 +183,7 @@ ElevatedButton authButton(BuildContext context, Function() onTap) {
   return ElevatedButton(
     onPressed: onTap,
     style: ElevatedButton.styleFrom(
-      primary: Colors.orange[700],
+      backgroundColor: Colors.orange[700],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     ),
     child: const Text(

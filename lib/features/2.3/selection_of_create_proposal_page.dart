@@ -63,7 +63,7 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
+                          backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         ),
                         child: const Text(
@@ -96,7 +96,7 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                           */
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
+                          backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         ),
                         child: const Text(

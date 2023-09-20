@@ -21,8 +21,7 @@ class SuccessOrderPage extends StatelessWidget {
                     child: Text(
                       'Заявка успешно создана',
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white),
                     ),
                   ),
                   Padding(
@@ -30,8 +29,7 @@ class SuccessOrderPage extends StatelessWidget {
                     child: Text(
                       'Найти заявку можно в разделе\nМои заявки',
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white),
                     ),
                   ),
                 ],
@@ -46,7 +44,7 @@ class SuccessOrderPage extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.orange[700],
+                      backgroundColor: Colors.orange[700],
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(

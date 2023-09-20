@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/bloc/reg_bloc.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +37,18 @@ class _RegPageState extends State<RegPage> {
     return BlocProvider(
       create: (constext) => RegBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
+        userRepository: context.read<GetIt>().get<UserRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegBloc, RegState>(listener: (context, state) {
         if (state is RegAllowedToPush) {
           print('Reg succes for, ${state.pageState.response.user.fullName}');
+          if (_selectedType == 0) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+          }
         }
         if (state is RegError) {
           print(state.pageState.errMsg);
@@ -230,13 +238,13 @@ class _RegPageState extends State<RegPage> {
                                       ).showMyDialog(context);
                                     } else {
                                       context.read<RegBloc>().add(RegSendReg());
-                                      if (_selectedType == 0) {
+                                      /* if (_selectedType == 0) {
                                         Navigator.pushNamedAndRemoveUntil(context,
                                             '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
                                       } else {
                                         Navigator.pushNamedAndRemoveUntil(
                                             context, '/buyer_workplace_page', (Route<dynamic> route) => false);
-                                      }
+                                      } */
                                     }
                                   }
                                 } else {
@@ -302,7 +310,7 @@ class _RegPageState extends State<RegPage> {
                               },
                                */
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.orange[700],
+                                backgroundColor: Colors.orange[700],
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                               ),
                               child: const Text(

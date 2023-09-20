@@ -127,9 +127,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 16),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Выберите форму проката *', //обязательное поле
                           style: TextStyle(fontSize: 20, color: Colors.black),
@@ -293,7 +293,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                             //.whenComplete(() => Navigator.pushReplacementNamed(context, '/success_order_page'));
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.orange,
+                            backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                           ),
                           child: const Text(

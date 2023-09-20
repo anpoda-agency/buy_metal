@@ -96,7 +96,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
               },
                */
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
+                      backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(

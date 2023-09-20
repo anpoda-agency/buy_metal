@@ -211,7 +211,7 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                       Navigator.pushNamed(context, '/create_order_page');
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.orange[700],
+                                      backgroundColor: Colors.orange[700],
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                     ),
                                     child: const Text(

@@ -112,7 +112,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     Navigator.pushNamed(context, '/buyer_orders_list_page');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange[700],
+                    backgroundColor: Colors.orange[700],
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(
@@ -132,7 +132,7 @@ class BuyerWorkplacePage extends StatelessWidget {
                     Navigator.pushNamed(context, '/create_order_page');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange[700],
+                    backgroundColor: Colors.orange[700],
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(

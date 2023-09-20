@@ -1,6 +1,9 @@
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart' as aulr;
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_response.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'reg_event.dart';
@@ -8,8 +11,10 @@ part 'reg_state.dart';
 
 class RegBloc extends Bloc<RegEvent, RegState> {
   final AuthRepository authRepository;
+  final UserRepository userRepository;
   RegBloc({
     required this.authRepository,
+    required this.userRepository,
     required PageState pageState,
   }) : super(RegInitial(pageState)) {
     on<RegInit>(regInit);
@@ -72,6 +77,44 @@ class RegBloc extends Bloc<RegEvent, RegState> {
 
   regSendReg(RegSendReg event, emit) async {
     var res = await authRepository.authUploadRegisterNewUser(request: state.pageState.request);
+
+    await userRepository.setUserData(
+        user: const aulr
+            .AuthUploadLoginResponse()); // ДЕЛАЮ ИНИЦИАЛИЗАЦИЮ ПЕРЕМЕННОЙ _user КОТОРАЯ ЭКЗЕМПЛЯР КЛАССА МОДЕЛИ AuthUploadLoginResponse
+    // ЧТОБЫ ГЕТТЕР ВОЗВРАЩАЛ МНЕ ПУСТУЮ МОДЕЛЬ, А НЕ NULL
+    aulr.User? repositoryUserModel = userRepository.user?.user.copyWith(
+      blocked: res.user.blocked,
+      companyAddress: res.user.companyAddress,
+      companyName: res.user.companyName,
+      email: res.user.email,
+      fullName: res.user.fullName,
+      id: res.user.id,
+      mailConfirmed: res.user.mailConfirmed,
+      phone: res.user.phone,
+      position: res.user.position,
+      registrationDate: res.user.registrationDate,
+      tin: res.user.tin,
+      //refresh: res.user.refresh
+    );
+
+    AuthUploadLoginResponse? repositoryUserLoginResponseModel = userRepository.user?.copyWith(
+      accessToken: res.accessToken,
+      refreshToken: res.refreshToken,
+      user: repositoryUserModel,
+    );
+
+/*
+    await userRepository.setUserData(
+        user: userRepository.user
+                ?.copyWith(user: repositoryUserModel, accessToken: res.accessToken, refreshToken: res.refreshToken) ??
+            const aulr.AuthUploadLoginResponse());
+            */
+
+    await userRepository.setUserData(
+        user: repositoryUserLoginResponseModel ?? const aulr.AuthUploadLoginResponse(),
+        token: res.refreshToken); // res.refreshToken / repositoryUserLoginResponseModel?.refreshToken
+
+    authRepository.changeAuthStatus(val: true);
     emit(RegAllowedToPush(state.pageState.copyWith(response: res)));
   }
 

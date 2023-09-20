@@ -202,7 +202,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                     */
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
+                    backgroundColor: Colors.orange,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   ),
                   child: const Text(

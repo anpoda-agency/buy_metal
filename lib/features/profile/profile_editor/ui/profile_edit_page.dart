@@ -2,7 +2,6 @@ import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response
 import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/bloc/profile_edit_bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -35,7 +34,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   final TextEditingController _innController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
-  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -294,7 +293,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                   //}
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.orange[700],
+                                  backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(

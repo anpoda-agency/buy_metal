@@ -224,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             });
                           }, */
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.orange[700],
+                                  backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
@@ -244,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   context.read<ProfileBloc>().add(ProfileLogOutEvent());
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.orange[700],
+                                  backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(

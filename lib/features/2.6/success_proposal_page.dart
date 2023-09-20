@@ -21,8 +21,7 @@ class SuccessProposalPage extends StatelessWidget {
                     child: Text(
                       'Ответ на заявку\nуспешно отправлен',
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white),
                     ),
                   ),
                 ],
@@ -40,7 +39,7 @@ class SuccessProposalPage extends StatelessWidget {
                         ..pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.orange[700],
+                      backgroundColor: Colors.orange[700],
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(
