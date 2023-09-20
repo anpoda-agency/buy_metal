@@ -45,6 +45,7 @@ class _AuthPageState extends State<AuthPage> {
           appBar: AppBar(
             backgroundColor: Colors.grey[900],
             elevation: 0,
+            /*
             actions: [
               IconButton(
                   onPressed: () {
@@ -58,6 +59,7 @@ class _AuthPageState extends State<AuthPage> {
                     color: Colors.red,
                   )),
             ],
+            */
           ),
           backgroundColor: Colors.grey[900],
           body: SingleChildScrollView(

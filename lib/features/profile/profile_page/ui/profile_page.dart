@@ -87,6 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
               backgroundColor: Colors.black87,
               title: const Text('Ваш Профиль'),
               centerTitle: true,
+              /*
               actions: [
                 IconButton(
                     onPressed: () {
@@ -99,6 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Icons.edit_note,
                     )),
               ],
+              */
             ),
             //backgroundColor: Colors.grey[900],
             body: SingleChildScrollView(

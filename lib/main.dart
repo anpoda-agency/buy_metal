@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/di/service_locator.dart';
+import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/firebase_options.dart';
 import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
@@ -12,7 +13,7 @@ import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:buy_metal_app/features/2.5/ui/create_similar_proposal_page.dart';
 import 'package:buy_metal_app/features/2.2/ui/description_of_buyer_order_page.dart';
 import 'package:buy_metal_app/features/1.5/ui/description_of_supplier_proposal_page.dart';
-import 'package:buy_metal_app/features/registration/ui/reg_page.dart';
+import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
 import 'package:buy_metal_app/features/2.1.1/ui/selected_buyer_list_of_orders_page.dart';
 import 'package:buy_metal_app/features/2.3/selection_of_create_proposal_page.dart';
 import 'package:buy_metal_app/features/1.6/ui/supplier_contacts_page.dart';
@@ -103,6 +104,8 @@ class _MyAppState extends State<MyApp> {
           '/home_page': (context) => const StartPage(), // new 1.0 start page
 
           '/reg_page': (context) => const RegPage(), // registration
+
+          '/reg_confirm_conditions_page': (context) => const RegConfirmConditionsPage(),
 
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 

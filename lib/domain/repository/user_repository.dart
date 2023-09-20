@@ -14,6 +14,7 @@ class UserRepository extends ChangeNotifier {
   UserRepository({required this.userApi});
 
   AuthUploadLoginResponse? _user;
+  //  = const AuthUploadLoginResponse(); // Попов сказал потом покажет как правильно переписать
   AuthUploadLoginResponse? get user => _user;
 
   // БЛЯ ХОЧУ СЕТТЕР НАПИСАТТЬ НА ИЗМЕНЕНИЕ РЕПЫ ПРЯМ СИЛЬНО ХОЧУф

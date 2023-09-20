@@ -82,6 +82,7 @@ class RegBloc extends Bloc<RegEvent, RegState> {
         user: const aulr
             .AuthUploadLoginResponse()); // ДЕЛАЮ ИНИЦИАЛИЗАЦИЮ ПЕРЕМЕННОЙ _user КОТОРАЯ ЭКЗЕМПЛЯР КЛАССА МОДЕЛИ AuthUploadLoginResponse
     // ЧТОБЫ ГЕТТЕР ВОЗВРАЩАЛ МНЕ ПУСТУЮ МОДЕЛЬ, А НЕ NULL
+
     aulr.User? repositoryUserModel = userRepository.user?.user.copyWith(
       blocked: res.user.blocked,
       companyAddress: res.user.companyAddress,

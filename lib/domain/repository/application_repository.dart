@@ -14,6 +14,7 @@ class ApplicationRepository {
   ApplicationRepository({required this.applicationApi});
 
   ApplicationGetCustomerApplicationsResponse? _customerApplication;
+  //const ApplicationGetCustomerApplicationsResponse(); // Попов сказал потом покажет как правильно переписать
   ApplicationGetCustomerApplicationsResponse? get customerApplication {
     return _customerApplication;
   }

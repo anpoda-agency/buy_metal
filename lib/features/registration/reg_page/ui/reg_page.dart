@@ -1,7 +1,7 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
-import 'package:buy_metal_app/features/registration/bloc/reg_bloc.dart';
+import 'package:buy_metal_app/features/registration/reg_page/bloc/reg_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -43,12 +43,16 @@ class _RegPageState extends State<RegPage> {
       child: BlocConsumer<RegBloc, RegState>(listener: (context, state) {
         if (state is RegAllowedToPush) {
           print('Reg succes for, ${state.pageState.response.user.fullName}');
+          // ДОБАВИТЬ В АРГУМЕНТЫ ПЕРЕДАЧУ МОДЕЛИ РЕКВЕСТА НА РЕГИСТРАЦИЮ
+          //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
+          /*
           if (_selectedType == 0) {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
           } else {
             Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
           }
+          */
         }
         if (state is RegError) {
           print(state.pageState.errMsg);
@@ -237,7 +241,10 @@ class _RegPageState extends State<RegPage> {
                                             'Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз',
                                       ).showMyDialog(context);
                                     } else {
-                                      context.read<RegBloc>().add(RegSendReg());
+                                      // ПОТОМ РАСКОМЕНТИТЬ ТЕСТИМ ЧЕКБОКС ОТ ПОПОВА
+                                      //context.read<RegBloc>().add(RegSendReg());
+                                      Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
+
                                       /* if (_selectedType == 0) {
                                         Navigator.pushNamedAndRemoveUntil(context,
                                             '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
