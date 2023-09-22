@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'reg_confirm_conditions_bloc.dart';
 
 abstract class RegConfirmConditionsState {
@@ -25,18 +26,23 @@ class PageState {
   final bool onAwait;
   final String errMsg;
 
+  final AuthUploadRegisterNewUserResponse response;
+
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
+    this.response = const AuthUploadRegisterNewUserResponse(),
   });
 
   PageState copyWith({
     bool? onAwait,
     String? errMsg,
+    AuthUploadRegisterNewUserResponse? response,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
+      response: response ?? this.response,
     );
   }
 }

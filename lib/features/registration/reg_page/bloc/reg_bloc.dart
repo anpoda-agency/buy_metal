@@ -76,6 +76,7 @@ class RegBloc extends Bloc<RegEvent, RegState> {
   }
 
   regSendReg(RegSendReg event, emit) async {
+    /*
     var res = await authRepository.authUploadRegisterNewUser(request: state.pageState.request);
 
     await userRepository.setUserData(
@@ -116,7 +117,8 @@ class RegBloc extends Bloc<RegEvent, RegState> {
         token: res.refreshToken); // res.refreshToken / repositoryUserLoginResponseModel?.refreshToken
 
     authRepository.changeAuthStatus(val: true);
-    emit(RegAllowedToPush(state.pageState.copyWith(response: res)));
+    */
+    emit(RegAllowedToPush(state.pageState));
   }
 
   regMsgErr(RegMsgErr event, emit) async {

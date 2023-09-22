@@ -105,29 +105,21 @@ class _MyAppState extends State<MyApp> {
 
           '/reg_page': (context) => const RegPage(), // registration
 
-          '/reg_confirm_conditions_page': (context) => const RegConfirmConditionsPage(),
+          '/reg_confirm_conditions_page': (context) => RegConfirmConditionsPage(arsg: args),
 
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
-          '/profile_page': (context) => ProfilePage(
-                args: args,
-              ),
+          '/profile_page': (context) => ProfilePage(args: args),
 
-          '/profile_edit_page': (context) => ProfileEditPage(
-                args: args,
-              ),
+          '/profile_edit_page': (context) => ProfileEditPage(args: args),
 
           '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
 
           '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
 
-          '/suppliers_list_page': (context) => SuppliersProposalsListPage(
-                args: args,
-              ), //1.3
+          '/suppliers_list_page': (context) => SuppliersProposalsListPage(args: args), //1.3
 
-          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(
-                args: args,
-              ), // 1.5
+          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(args: args), // 1.5
 
           '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
 
@@ -139,17 +131,11 @@ class _MyAppState extends State<MyApp> {
 
           '/description_of_buyer_order_page': (context) => DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(
-                args: args,
-              ), //2.3
+          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(args: args), //2.3
 
-          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(
-                args: args,
-              ), //2.4
+          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(args: args), //2.4
 
-          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
-                args: args,
-              ), //2.5
+          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(args: args), //2.5
 
           '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
         },

@@ -45,14 +45,13 @@ class _RegPageState extends State<RegPage> {
           print('Reg succes for, ${state.pageState.response.user.fullName}');
           // ДОБАВИТЬ В АРГУМЕНТЫ ПЕРЕДАЧУ МОДЕЛИ РЕКВЕСТА НА РЕГИСТРАЦИЮ
           //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
-          /*
+
           if (_selectedType == 0) {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
           } else {
-            Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+            Navigator.pushNamed(context, '/reg_confirm_conditions_page', arguments: state.pageState.request);
           }
-          */
         }
         if (state is RegError) {
           print(state.pageState.errMsg);
@@ -242,8 +241,8 @@ class _RegPageState extends State<RegPage> {
                                       ).showMyDialog(context);
                                     } else {
                                       // ПОТОМ РАСКОМЕНТИТЬ ТЕСТИМ ЧЕКБОКС ОТ ПОПОВА
-                                      //context.read<RegBloc>().add(RegSendReg());
-                                      Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
+                                      context.read<RegBloc>().add(RegSendReg());
+                                      //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
 
                                       /* if (_selectedType == 0) {
                                         Navigator.pushNamedAndRemoveUntil(context,
