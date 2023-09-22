@@ -1,9 +1,6 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/1.2/bloc/buyer_orders_list_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -16,14 +13,6 @@ class BuyerOrdersListPage extends StatefulWidget {
 }
 
 class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
-  late List<OrderModel> listOrdersModels;
-
-  @override
-  void initState() {
-    listOrdersModels = getIt.get<ProfileRepository>().user.listOrdersModels ?? [];
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

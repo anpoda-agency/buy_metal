@@ -1,9 +1,6 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -22,7 +19,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   //late String position;
 
-  late UserModel userModel;
   late String profileType = '';
 
   //int _selectedType = 0;
@@ -45,10 +41,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     //getIt.get<ProfileRepository>().user;
-    userModel = getIt.get<ProfileRepository>().user;
 
     //widget.args != null ? widget.args as UserModel : const UserModel();
+
     super.initState();
+    /*
     print(userModel.toFirestore());
     if (userModel.buyer) {
       profileType = 'Заказчик';
@@ -56,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (userModel.supplier) {
       profileType = 'Поставщик';
     }
-
+    */
     // калл который нулл выбрасывает
     /* ProfileRepository? userInstance;
     userInstance!.getUserInfo(userId: userModel.id); */

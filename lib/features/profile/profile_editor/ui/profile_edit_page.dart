@@ -1,5 +1,4 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/bloc/profile_edit_bloc.dart';
 import 'package:flutter/material.dart';
@@ -18,39 +17,11 @@ class ProfileEditPage extends StatefulWidget {
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
-  late UserModel userModel;
-
   //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
 
-  final TextEditingController _emailController = TextEditingController();
-  //final TextEditingController _passwordController = TextEditingController();
-  //final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _ownerNameController = TextEditingController();
-  final TextEditingController _postNameController = TextEditingController();
-  final TextEditingController _adressController = TextEditingController();
-  final TextEditingController _innController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
   //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
-
-  @override
-  void initState() {
-    //getIt.get<ProfileRepository>().user;
-    userModel = //getIt.get<ProfileRepository>().user;
-        widget.args != null ? widget.args as UserModel : const UserModel();
-    super.initState();
-    print(userModel.toFirestore());
-    _emailController.text = userModel.email;
-    _companyNameController.text = userModel.companyName;
-    _ownerNameController.text = userModel.userFIO;
-    _postNameController.text = userModel.post;
-    _adressController.text = userModel.companyAdress;
-    _innController.text = userModel.inn;
-    _phoneController.text = userModel.phone;
-  }
 
   @override
   Widget build(BuildContext context) {
