@@ -1,9 +1,6 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -22,45 +19,11 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   //late String position;
 
-  late UserModel userModel;
   late String profileType = '';
 
   //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
-  /*
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _ownerNameController = TextEditingController();
-  final TextEditingController _postNameController = TextEditingController();
-  final TextEditingController _adressController = TextEditingController();
-  final TextEditingController _innController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
-  final CollectionReference _users = FirebaseFirestore.instance.collection('users');
-  */
-
-  @override
-  void initState() {
-    //getIt.get<ProfileRepository>().user;
-    userModel = getIt.get<ProfileRepository>().user;
-
-    //widget.args != null ? widget.args as UserModel : const UserModel();
-    super.initState();
-    print(userModel.toFirestore());
-    if (userModel.buyer) {
-      profileType = 'Заказчик';
-    }
-    if (userModel.supplier) {
-      profileType = 'Поставщик';
-    }
-
-    // калл который нулл выбрасывает
-    /* ProfileRepository? userInstance;
-    userInstance!.getUserInfo(userId: userModel.id); */
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +36,10 @@ class _ProfilePageState extends State<ProfilePage> {
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileUpdateUserInfoState) {
-            Navigator.of(context).pushNamed('/profile_edit_page', arguments: state.pageState.user).then((value) {
+            Navigator.of(context)
+                .pushNamed('/profile_edit_page',
+                    arguments: state.pageState.user)
+                .then((value) {
               context.read<ProfileBloc>().add(ProfileInit());
             });
           }
@@ -124,28 +90,33 @@ class _ProfilePageState extends State<ProfilePage> {
                               //userInfo: 'Попов Данила',
                             ),
                             _ProfileInfoDisplayField(
-                                fieldName: 'ФИО Пользователя:', userInfo: state.pageState.user.user.fullName
+                                fieldName: 'ФИО Пользователя:',
+                                userInfo: state.pageState.user.user.fullName
                                 //userModel.userFIO.toString(),
                                 //userInfo: 'Попов Данила',
                                 ),
                             //_ProfileInfoDisplayField(fieldName: 'Должность в компании:', userInfo: userModel.post),
                             _ProfileInfoDisplayField(
                                 fieldName: 'Наименование организации:',
-                                userInfo: state.pageState.user.user.companyName),
+                                userInfo:
+                                    state.pageState.user.user.companyName),
                             _ProfileInfoDisplayField(
                                 fieldName: 'Фактический адрес организации:',
-                                userInfo: state.pageState.user.user.companyAddress),
+                                userInfo:
+                                    state.pageState.user.user.companyAddress),
                             _ProfileInfoDisplayField(
                               fieldName: 'ИНН:',
                               userInfo: state.pageState.user.user.tin,
                               //userModel.inn.toString()
                             ),
                             _ProfileInfoDisplayField(
-                              fieldName: 'Телефон:', userInfo: state.pageState.user.user.phone,
+                              fieldName: 'Телефон:',
+                              userInfo: state.pageState.user.user.phone,
                               //userModel.phone
                             ),
                             _ProfileInfoDisplayField(
-                                fieldName: 'Эл. почта:', userInfo: state.pageState.user.user.email),
+                                fieldName: 'Эл. почта:',
+                                userInfo: state.pageState.user.user.email),
                             const SizedBox(
                               height: 10,
                             ),
@@ -154,7 +125,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  context.read<ProfileBloc>().add(ProfileUpdateEvent());
+                                  context
+                                      .read<ProfileBloc>()
+                                      .add(ProfileUpdateEvent());
 
                                   //Navigator.of(context)
                                   //    .pushNamed('/profile_edit_page', arguments: state.pageState.user);
@@ -227,7 +200,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           }, */
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
                                   'Редактировать',
@@ -243,11 +217,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  context.read<ProfileBloc>().add(ProfileLogOutEvent());
+                                  context
+                                      .read<ProfileBloc>()
+                                      .add(ProfileLogOutEvent());
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
                                   'Выйти из аккаунта',
@@ -439,7 +416,11 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class RegFieldWidget extends StatefulWidget {
-  const RegFieldWidget({super.key, required this.controller, required this.title, required this.inputType});
+  const RegFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.title,
+      required this.inputType});
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
@@ -469,7 +450,8 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Colors.white)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.white,
@@ -509,7 +491,8 @@ class _ProfileInfoDisplayField extends StatelessWidget {
           ),
           Text(
             userInfo,
-            style: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
           ),
         ],
       ),

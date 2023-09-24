@@ -1,9 +1,6 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/2.1.1/bloc/selected_buyer_list_of_orders_bloc.dart';
-import 'package:buy_metal_app/main.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -12,31 +9,23 @@ class SelectedBuyerListOfOrdersPage extends StatefulWidget {
   const SelectedBuyerListOfOrdersPage({super.key});
 
   @override
-  State<SelectedBuyerListOfOrdersPage> createState() => _SelectedBuyerListOfOrdersPageState();
+  State<SelectedBuyerListOfOrdersPage> createState() =>
+      _SelectedBuyerListOfOrdersPageState();
 }
 
-class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrdersPage> {
-  List<OrderModel> listOrders = [];
-
-  @override
-  void initState() {
-    /* 
-    getIt.get<ProfileRepository>().getAllOrders().then((value) => setState(() {
-          listOrders = value;
-        }));
- */
-    super.initState();
-  }
-
+class _SelectedBuyerListOfOrdersPageState
+    extends State<SelectedBuyerListOfOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SelectedBuyerListOfOrdersBloc(
-        applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
+        applicationRepository:
+            context.read<GetIt>().get<ApplicationRepository>(),
         userRepository: context.read<GetIt>().get<UserRepository>(),
         pageState: const PageState(),
       ),
-      child: BlocConsumer<SelectedBuyerListOfOrdersBloc, SelectedBuyerListOfOrdersState>(
+      child: BlocConsumer<SelectedBuyerListOfOrdersBloc,
+          SelectedBuyerListOfOrdersState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
@@ -76,6 +65,7 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                 ],
 */
               ),
+/*
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   getIt.get<ProfileRepository>().getAllOrders().then((value) => setState(() {
@@ -85,6 +75,8 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                 backgroundColor: Colors.orange[700],
                 child: const Icon(Icons.replay_outlined),
               ),
+*/
+
               body: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ListView.builder(
@@ -92,14 +84,18 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                     //listOrders.length,
                     itemBuilder: (BuildContext context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Colors.black54,
-                                Colors.grey.shade400,
-                              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black54,
+                                    Colors.grey.shade400,
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -115,7 +111,8 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                             onTap: () {
                               Navigator.of(context).pushNamed(
                                 '/description_of_buyer_order_page',
-                                arguments: state.pageState.response.elementAt(index),
+                                arguments:
+                                    state.pageState.response.elementAt(index),
                               );
 
                               /*  
@@ -129,29 +126,36 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                               */
                             },
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
                                       Text(
-                                        state.pageState.response[index].rolledForm,
-                                        style: const TextStyle(fontSize: 20, color: Colors.white),
+                                        state.pageState.response[index]
+                                            .rolledForm,
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                       const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
-                                        state.pageState.response[index].rolledType,
-                                        style: const TextStyle(fontSize: 20, color: Colors.white),
+                                        state.pageState.response[index]
+                                            .rolledType,
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                       const SizedBox(
                                         height: 15,
                                       ),
                                       Text(
-                                        state.pageState.response[index].rolledSize,
-                                        style: const TextStyle(fontSize: 20, color: Colors.white),
+                                        state.pageState.response[index]
+                                            .rolledSize,
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                     ],
                                   ),
@@ -162,8 +166,10 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        state.pageState.response[index].creationDate,
-                                        style: const TextStyle(fontSize: 20, color: Colors.white),
+                                        state.pageState.response[index]
+                                            .creationDate,
+                                        style: const TextStyle(
+                                            fontSize: 20, color: Colors.white),
                                       ),
                                     ],
                                   ),

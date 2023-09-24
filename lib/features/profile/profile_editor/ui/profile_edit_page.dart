@@ -1,5 +1,4 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
-import 'package:buy_metal_app/data/models/firebase_models/user_model.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/bloc/profile_edit_bloc.dart';
 import 'package:flutter/material.dart';
@@ -18,43 +17,16 @@ class ProfileEditPage extends StatefulWidget {
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
-  late UserModel userModel;
-
   //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
 
-  final TextEditingController _emailController = TextEditingController();
-  //final TextEditingController _passwordController = TextEditingController();
-  //final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _ownerNameController = TextEditingController();
-  final TextEditingController _postNameController = TextEditingController();
-  final TextEditingController _adressController = TextEditingController();
-  final TextEditingController _innController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
   //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
-  void initState() {
-    //getIt.get<ProfileRepository>().user;
-    userModel = //getIt.get<ProfileRepository>().user;
-        widget.args != null ? widget.args as UserModel : const UserModel();
-    super.initState();
-    print(userModel.toFirestore());
-    _emailController.text = userModel.email;
-    _companyNameController.text = userModel.companyName;
-    _ownerNameController.text = userModel.userFIO;
-    _postNameController.text = userModel.post;
-    _adressController.text = userModel.companyAdress;
-    _innController.text = userModel.inn;
-    _phoneController.text = userModel.phone;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments as AuthUploadLoginResponse;
+    var args =
+        ModalRoute.of(context)!.settings.arguments as AuthUploadLoginResponse;
 
     return BlocProvider(
       create: (context) => ProfileEditBloc(
@@ -182,8 +154,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 //controller: _ownerNameController,
                                 title: 'ФИО Пользователя',
                                 inputType: TextInputType.text,
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputFullName(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputFullName(value))),
                             /* RegFieldWidget(
                         controller: _postNameController,
                         title: 'Должность в компании',
@@ -194,35 +167,42 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 //controller: _companyNameController,
                                 title: 'Наименование организации',
                                 inputType: TextInputType.text,
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputCompanyName(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputCompanyName(value))),
                             RegFieldWidget(
                                 initialValue: args.user.companyAddress,
                                 //controller: _adressController,
                                 title: 'Фактический адрес организации',
                                 inputType: TextInputType.text,
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputCompanyAddress(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(
+                                        ProfileEditInputCompanyAddress(value))),
                             RegFieldWidget(
                                 initialValue: args.user.tin,
                                 //controller: _innController,
                                 title: 'ИНН',
                                 inputType: TextInputType.number,
-                                onChanged: (value) => context.read<ProfileEditBloc>().add(ProfileEditInputTIN(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputTIN(value))),
                             RegFieldWidget(
                                 initialValue: args.user.phone,
                                 //controller: _phoneController,
                                 title: 'Телефон',
                                 inputType: TextInputType.phone,
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputPhoneNumber(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputPhoneNumber(value))),
                             RegFieldWidget(
                                 initialValue: args.user.email,
                                 //controller: _emailController,
                                 title: 'Эл. почта',
                                 inputType: TextInputType.emailAddress,
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputEmail(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputEmail(value))),
                             /*  RegFieldWidget(
                           controller: _passwordController,
                           title: 'Придумайте пароль',
@@ -239,7 +219,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                               height: 75,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  context.read<ProfileEditBloc>().add(ProfileEditSendChangesEvent());
+                                  context
+                                      .read<ProfileEditBloc>()
+                                      .add(ProfileEditSendChangesEvent());
                                   /* FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: _emailController.text,
@@ -294,7 +276,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
                                   'Сохранить изменения',
@@ -363,7 +346,8 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Colors.white)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.white,

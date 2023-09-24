@@ -1,8 +1,5 @@
 import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
-import 'package:buy_metal_app/firebase_options.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
@@ -21,8 +18,6 @@ import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart
 import 'package:buy_metal_app/features/start_page/start_page.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -32,27 +27,13 @@ GetIt getIt = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
-      //     options: const FirebaseOptions(
-      //   apiKey: 'AIzaSyBoXWzMysUo_Wtwrq4ojjHnmnoNf_XAGNA',
-      //   appId: '1:667451689375:android:2e85ac9c87d1a8b38495aa',
-      //   messagingSenderId: '667451689375',
-      //   projectId: 'anmetal-72487',
-      //   storageBucket: 'anmetal-72487.appspot.com',
-      // )
-      );
+
   initGetIt();
   runApp(const MyApp());
 }
 
-void initGetIt() async {
-  var profile = ProfileRepository();
-  getIt.registerSingleton<ProfileRepository>(profile);
-  User? user = FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
-  if (user != null) {
-    //var res =
-    await getIt.get<ProfileRepository>().saveUser(id: user.uid);
-  }
+void initGetIt() {
+  setup();
 }
 
 class MyApp extends StatefulWidget {
@@ -65,6 +46,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool loading = true;
 
+/*
   @override
   void initState() {
     setup();
@@ -87,7 +69,7 @@ class _MyAppState extends State<MyApp> {
     getIt.get<ProfileRepository>().removeListener(() {});
     super.dispose();
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
@@ -99,13 +81,12 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/test_list_proposals_page': (context) => const TestListProposals(), // тестовая страница для предложений
-
           '/home_page': (context) => const StartPage(), // new 1.0 start page
 
           '/reg_page': (context) => const RegPage(), // registration
 
-          '/reg_confirm_conditions_page': (context) => const RegConfirmConditionsPage(),
+          '/reg_confirm_conditions_page': (context) =>
+              const RegConfirmConditionsPage(),
 
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
@@ -117,53 +98,53 @@ class _MyAppState extends State<MyApp> {
                 args: args,
               ),
 
-          '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
+          '/buyer_workplace_page': (context) =>
+              const BuyerWorkplacePage(), //1.1
 
-          '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
+          '/buyer_orders_list_page': (context) =>
+              const BuyerOrdersListPage(), // 1.2
 
           '/suppliers_list_page': (context) => SuppliersProposalsListPage(
                 args: args,
               ), //1.3
 
-          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(
+          '/description_of_supplier_proposal_page': (context) =>
+              DescriptionOfSupplierProposalPage(
                 args: args,
               ), // 1.5
 
-          '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
+          '/supplier_contacts_page': (context) =>
+              SupplierContactsPage(args: args), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
           '/success_order_page': (context) => const SuccessOrderPage(), //1.8
 
-          '/selected_buyer_list_of_orders_page': (context) => const SelectedBuyerListOfOrdersPage(), // 2.1.1
+          '/selected_buyer_list_of_orders_page': (context) =>
+              const SelectedBuyerListOfOrdersPage(), // 2.1.1
 
-          '/description_of_buyer_order_page': (context) => DescriptionOfBuyerOrderPage(args: args), //2.2
+          '/description_of_buyer_order_page': (context) =>
+              DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(
+          '/selection_of_create_proposal_page': (context) =>
+              SelectionOfCreateProposalPage(
                 args: args,
               ), //2.3
 
-          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(
+          '/create_compliance_proposal_page': (context) =>
+              CreateComplianceProposalPage(
                 args: args,
               ), //2.4
 
-          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(
+          '/create_similar_proposal_page': (context) =>
+              CreateSimilarProposalPage(
                 args: args,
               ), //2.5
 
-          '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
+          '/success_proposal_page': (context) =>
+              const SuccessProposalPage(), //2.6
         },
-        home: loading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : getIt.get<ProfileRepository>().user.id.isNotEmpty
-                ? getIt.get<ProfileRepository>().user.buyer
-                    ? const BuyerWorkplacePage()
-                    : const SelectedBuyerListOfOrdersPage()
-                : const MyHomePage(
-                    title: 'start',
-                  ),
+        home: const StartPage(),
       ),
     );
   }
