@@ -22,7 +22,7 @@ class ApplicationUploadCreateApplicationResponse {
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -42,7 +42,7 @@ class ApplicationUploadCreateApplicationResponse {
     this.materialBrand = '',
     this.materialGost = '',
     this.materialParams = '',
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',

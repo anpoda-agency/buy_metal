@@ -29,7 +29,9 @@ ApplicationUploadCreateApplicationResponse
           materialParams: json['materialParams'] == null
               ? ''
               : FromJsonBase.jsonToString(json['materialParams']),
-          rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+          rolledForm: json['rolledForm'] == null
+              ? ''
+              : FromJsonBase.jsonToString(json['rolledForm']),
           rolledGost: json['rolledGost'] == null
               ? ''
               : FromJsonBase.jsonToString(json['rolledGost']),
