@@ -1,5 +1,8 @@
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -29,7 +32,8 @@ class _StartPageState extends State<StartPage> {
                     height: 75,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/auth_page');
+                        //Navigator.pushNamed(context, '/auth_page');
+                        context.read<RouteImpl>().push('auth/${RootRoutes.authPage.name}');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[700],
@@ -49,7 +53,8 @@ class _StartPageState extends State<StartPage> {
                     height: 75,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/reg_page');
+                        //Navigator.pushNamed(context, '/reg_page');
+                        context.read<RouteImpl>().push('auth/${RootRoutes.regPage.name}');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[700],

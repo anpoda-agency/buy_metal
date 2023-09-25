@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/bloc/reg_confirm_conditions_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +10,11 @@ import 'package:get_it/get_it.dart';
 
 class RegConfirmConditionsPage extends StatefulWidget {
   const RegConfirmConditionsPage({
-    required this.arsg,
+    required this.args,
     super.key,
   });
 
-  final Object? arsg;
+  final Object? args;
 
   @override
   State<RegConfirmConditionsPage> createState() => _RegConfirmConditionsPageState();
@@ -20,21 +22,45 @@ class RegConfirmConditionsPage extends StatefulWidget {
 
 class _RegConfirmConditionsPageState extends State<RegConfirmConditionsPage> {
   //    final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+  //late Map<String, dynamic> regRequest;
+  late final regRequest;
+
+  /* @override
+  void initState() {
+    phoneAndPassword =
+        (widget.args is Map<String, dynamic>) ? widget.args as Map<String, dynamic> : {'phone': '', 'password': ''};
+    super.initState();
+  } */
+
+/*   @override
+  void initState() {
+    regRequest = (widget.args is Map<String, dynamic>)
+        ? widget.args as AuthUploadRegisterNewUserRequest
+        : {'phone': '', 'password': ''};
+    super.initState(); */
+
+  @override
+  void initState() {
+    regRequest = widget.args as AuthUploadRegisterNewUserRequest;
+
+    super.initState();
+  }
 
   bool isAgree = false;
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as AuthUploadRegisterNewUserRequest;
+    //final args = ModalRoute.of(context)!.settings.arguments as AuthUploadRegisterNewUserRequest;
 
     return BlocProvider(
       create: (context) => RegConfirmConditionsBloc(
-          userRegInfoRequest: args,
+          userRegInfoRequest: regRequest,
           authRepository: context.read<GetIt>().get<AuthRepository>(),
           userRepository: context.read<GetIt>().get<UserRepository>(),
           pageState: const PageState()),
       child: BlocConsumer<RegConfirmConditionsBloc, RegConfirmConditionsState>(listener: (context, state) {
         if (state is RegConfirmConditionsAllowedToPushState) {
-          Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+          //Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+          context.read<RouteImpl>().go(DealsRoutes.deals.name);
         }
       }, builder: (context, state) {
         return Scaffold(

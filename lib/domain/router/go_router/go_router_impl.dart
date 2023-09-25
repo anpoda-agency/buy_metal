@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/features/main_bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class GoRouterImplt {
             ...root,
             StatefulShellRoute.indexedStack(
               builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-                return ScaffoldNavBar(navigationShell: navigationShell);
+                return MainBottomNavigationBar(navigationShell: navigationShell);
               },
               branches: [
                 if (deals.isNotEmpty)
@@ -57,7 +58,8 @@ class GoRouterImplt {
           redirect: (BuildContext context, state) {
             bool loggingIn = context.read<GetIt>().get<AuthRepository>().isAuth;
             if ((!loggingIn) && (!state.uri.toString().startsWith('/auth'))) {
-              return '/start';
+              //return '/auth/auth';
+              return '/startPage';
             } else {
               return null;
             }

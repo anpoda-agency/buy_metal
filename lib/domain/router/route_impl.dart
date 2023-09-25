@@ -7,24 +7,24 @@ import 'route_constants.dart';
 
 class RouteImpl {
   final GlobalKey<NavigatorState> rootNavigatorKey;
-  final GlobalKey<NavigatorState> meetsNavigatorKey;
-  final GlobalKey<NavigatorState> mapNavigatorKey;
-  final GlobalKey<NavigatorState> businessNavigatorKey;
+  final GlobalKey<NavigatorState> dealsNavigatorKey;
+  final GlobalKey<NavigatorState> ordersNavigatorKey;
+  final GlobalKey<NavigatorState> createOrderNavigatorKey;
   final GlobalKey<NavigatorState> profileNavigatorKey;
   GoRouterImplt goRouterImplt;
 
   RouteImpl({
     required this.rootNavigatorKey,
-    required this.meetsNavigatorKey,
-    required this.mapNavigatorKey,
-    required this.businessNavigatorKey,
+    required this.dealsNavigatorKey,
+    required this.ordersNavigatorKey,
+    required this.createOrderNavigatorKey,
     required this.profileNavigatorKey,
   }) : goRouterImplt = GoRouterImplt(
-          initPage: RootRoutes.start.name,
+          initPage: RootRoutes.startPage.name,
           rootNavigatorKey: rootNavigatorKey,
-          meetsNavigatorKey: meetsNavigatorKey,
-          mapNavigatorKey: mapNavigatorKey,
-          businessNavigatorKey: businessNavigatorKey,
+          dealsNavigatorKey: dealsNavigatorKey,
+          ordersNavigatorKey: ordersNavigatorKey,
+          createOrderNavigatorKey: createOrderNavigatorKey,
           profileNavigatorKey: profileNavigatorKey,
           auth: RootRoutes.values
               .map(
@@ -42,27 +42,27 @@ class RouteImpl {
                 ),
               )
               .toList(),
-          meets: MeetsRoutes.values
+          deals: DealsRoutes.values
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.meets(e, args: state.extra),
+                  builder: (context, GoRouterState state) => RouteConstants.deals(e, args: state.extra),
                 ),
               )
               .toList(),
-          map: MapRoutes.values
+          orders: OrdersRoutes.values
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.map(e, args: state.extra),
+                  builder: (context, GoRouterState state) => RouteConstants.orders(e, args: state.extra),
                 ),
               )
               .toList(),
-          business: BusinessRoutes.values
+          createOrder: CreateOrderRoutes.values
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.business(e, args: state.extra),
+                  builder: (context, GoRouterState state) => RouteConstants.createOrder(e, args: state.extra),
                 ),
               )
               .toList(),

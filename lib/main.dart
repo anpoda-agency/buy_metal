@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/di/service_locator.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
@@ -46,15 +47,30 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool loading = true;
 
+  var router = RouteImpl(
+    rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+    dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
+    ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
+    createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+    profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+  );
+
   @override
   Widget build(BuildContext context) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
 
     return MultiProvider(
-      providers: [
-        RepositoryProvider(create: (context) => getIt),
-      ],
-      child: MaterialApp(
+        providers: [
+          RepositoryProvider(create: (context) => getIt),
+          RepositoryProvider(create: (context) => router),
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router.goRouterImplt.router,
+        )
+
+        /*
+      MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
           '/home_page': (context) => const StartPage(), // new 1.0 start page
@@ -97,7 +113,8 @@ class _MyAppState extends State<MyApp> {
         },
         home: const StartPage(),
       ),
-    );
+      */
+        );
   }
 }
 

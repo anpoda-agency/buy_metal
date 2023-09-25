@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/reg_page/bloc/reg_bloc.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +49,14 @@ class _RegPageState extends State<RegPage> {
           //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
 
           if (_selectedType == 0) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
+            //Navigator.pushNamedAndRemoveUntil(
+            //    context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
           } else {
-            Navigator.pushNamed(context, '/reg_confirm_conditions_page', arguments: state.pageState.request);
+            //Navigator.pushNamed(context, '/reg_confirm_conditions_page', arguments: state.pageState.request);
+            //context.read<RouteImpl>().go(DealsRoutes.deals.name);
+            context
+                .read<RouteImpl>()
+                .push('auth/${RootRoutes.regConfirmConditionsPage.name}', args: state.pageState.request);
           }
         }
         if (state is RegError) {

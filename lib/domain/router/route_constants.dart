@@ -1,22 +1,12 @@
+import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
+import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
+import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
+import 'package:buy_metal_app/features/start_page/start_page.dart';
 import 'package:flutter/material.dart';
-import 'package:quick_meet/features/auth/auth_start/start_page.dart';
-import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
-import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
-import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
-import 'package:quick_meet/features/map/map_page/ui/map_page.dart';
-import 'package:quick_meet/features/profile/profile_editor/ui/profile_edit_page.dart';
-import 'package:quick_meet/features/profile/profile_page/ui/profile_page.dart';
-import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
-import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
-import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
-import 'package:quick_meet/features/registration/step_two_code/ui/reg_sms_code_page.dart';
-import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
-import 'package:quick_meet/features/reset_password/step_three/ui/password_recovery_enter_page.dart';
-import 'package:quick_meet/features/reset_password/step_two/ui/password_recovery_sms_code_page.dart';
 
 class RouteConstants {
   static root(RootRoutes route, {Object? args}) {
-    if (route == RootRoutes.start) {
+    if (route == RootRoutes.startPage) {
       return const StartPage();
     } else {
       return Scaffold(
@@ -27,16 +17,16 @@ class RouteConstants {
   }
 
   static auth(RootRoutes route, {Object? args}) {
-    if (route == RootRoutes.authChoose) {
+    if (route == RootRoutes.startPage) {
       return const StartPage();
-    } else if (route == RootRoutes.authWithSmsPhone) {
-      return const AuthSmsPage();
-    } else if (route == RootRoutes.authWithSmsCode) {
-      return AuthSmsCodePage(args: args);
-    } else if (route == RootRoutes.authWithPassword) {
-      return const AuthPasswordPage();
-    } else if (route == RootRoutes.registrationPhone) {
-      return const RegPhonePage();
+    } else if (route == RootRoutes.authPage) {
+      return const AuthPage();
+    } else if (route == RootRoutes.regPage) {
+      return const RegPage();
+    } else if (route == RootRoutes.regConfirmConditionsPage) {
+      return RegConfirmConditionsPage(args: args);
+
+      /*
     } else if (route == RootRoutes.registrationCode) {
       return RegSmsCodePage(args: args);
     } else if (route == RootRoutes.registrationPassword) {
@@ -49,6 +39,7 @@ class RouteConstants {
       return PasswordRecoverySmsCodePage(args: args);
     } else if (route == RootRoutes.resetPasswordEnterPassword) {
       return PasswordRecoveryEnterPage(args: args);
+    */
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -57,10 +48,10 @@ class RouteConstants {
     }
   }
 
-  static meets(MeetsRoutes route, {Object? args}) {
-    if (route == MeetsRoutes.meets) {
+  static deals(DealsRoutes route, {Object? args}) {
+    if (route == DealsRoutes.deals) {
       return Scaffold(
-        appBar: AppBar(title: const Text('meets')),
+        appBar: AppBar(title: const Text('deals')),
         body: const Center(child: Text('Page not found')),
       );
     } else {
@@ -71,9 +62,32 @@ class RouteConstants {
     }
   }
 
-  static map(MapRoutes route, {Object? args}) {
-    if (route == MapRoutes.map) {
-      return const MapScreen();
+  static orders(OrdersRoutes route, {Object? args}) {
+    if (route == OrdersRoutes.orders) {
+      //return const MapScreen();
+      return Scaffold(
+        appBar: AppBar(title: const Text('orders')),
+        body: const Center(child: Text('Page not found')),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('404')),
+        body: const Center(child: Text('Page not found')),
+      );
+    }
+  }
+
+  static createOrder(CreateOrderRoutes route, {Object? args}) {
+    if (route == CreateOrderRoutes.createOrder) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('createOrder')),
+        body: const Center(child: Text('Page not found')),
+      );
+      /*
+      return const ProfilePage();
+    } else if (route == ProfileRoutes.profileEdit) {
+      return const ProfileEditPage();
+      */
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -84,21 +98,8 @@ class RouteConstants {
 
   static profile(ProfileRoutes route, {Object? args}) {
     if (route == ProfileRoutes.profile) {
-      return const ProfilePage();
-    } else if (route == ProfileRoutes.profileEdit) {
-      return const ProfileEditPage();
-    } else {
       return Scaffold(
-        appBar: AppBar(title: const Text('404')),
-        body: const Center(child: Text('Page not found')),
-      );
-    }
-  }
-
-  static business(BusinessRoutes route, {Object? args}) {
-    if (route == BusinessRoutes.business) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('business')),
+        appBar: AppBar(title: const Text('profile')),
         body: const Center(child: Text('Page not found')),
       );
     } else {
@@ -111,8 +112,13 @@ class RouteConstants {
 }
 
 enum RootRoutes {
-  start,
-  authChoose,
+  startPage,
+  authPage,
+  regPage,
+  regConfirmConditionsPage,
+  // Дописать машруты на восстановление пароля
+
+/* 
   authWithSmsPhone,
   authWithPassword,
   registrationPhone,
@@ -124,25 +130,26 @@ enum RootRoutes {
   resetPasswordCode,
   resetPasswordEnterPassword,
   empty, // reserved name for routing
+   */
 }
 
-enum MeetsRoutes {
-  meets,
+enum DealsRoutes {
+  deals,
   empty, // reserved name for routing
 }
 
-enum MapRoutes {
-  map,
+enum OrdersRoutes {
+  orders,
   empty, // reserved name for routing
+}
+
+enum CreateOrderRoutes {
+  createOrder,
+  empty,
 }
 
 enum ProfileRoutes {
   profile,
-  empty,
-  profileEdit, // reserved name for routing
-}
-
-enum BusinessRoutes {
-  business,
+  profileEdit,
   empty, // reserved name for routing
 }
