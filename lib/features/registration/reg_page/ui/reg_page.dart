@@ -1,7 +1,7 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
-import 'package:buy_metal_app/domain/router/route_constants.dart';
-import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/domain/router/buyer_router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/buyer_router/route_impl.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/reg_page/bloc/reg_bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,8 @@ class _RegPageState extends State<RegPage> {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _ownerNameController = TextEditingController();
   //final TextEditingController _postNameController = TextEditingController();
@@ -54,9 +55,9 @@ class _RegPageState extends State<RegPage> {
           } else {
             //Navigator.pushNamed(context, '/reg_confirm_conditions_page', arguments: state.pageState.request);
             //context.read<RouteImpl>().go(DealsRoutes.deals.name);
-            context
-                .read<RouteImpl>()
-                .push('auth/${RootRoutes.regConfirmConditionsPage.name}', args: state.pageState.request);
+            context.read<RouteImpl>().push(
+                'auth/${RootRoutes.regConfirmConditionsPage.name}',
+                args: state.pageState.request);
           }
         }
         if (state is RegError) {
@@ -105,7 +106,9 @@ class _RegPageState extends State<RegPage> {
                                 onTap: () {
                                   position = 'SUPPLIER';
                                   //(position) => context.read<RegBloc>().add(RegInputPosition('SUPPLIER'));
-                                  context.read<RegBloc>().add(RegInputPosition(position));
+                                  context
+                                      .read<RegBloc>()
+                                      .add(RegInputPosition(position));
                                   setState(() {
                                     _selectedType = 0;
                                     //position = 'SUPPLIER';
@@ -115,15 +118,23 @@ class _RegPageState extends State<RegPage> {
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 65,
-                                  width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5 -
+                                          16 -
+                                          5,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: _selectedType == 0 ? Colors.orange[700] : Colors.grey),
+                                      color: _selectedType == 0
+                                          ? Colors.orange[700]
+                                          : Colors.grey),
                                   child: Text(
                                     'Поставщиком',
                                     style: TextStyle(
-                                        fontSize: 22, color: _selectedType == 0 ? Colors.white : Colors.black),
+                                        fontSize: 22,
+                                        color: _selectedType == 0
+                                            ? Colors.white
+                                            : Colors.black),
                                   ),
                                 ),
                               ),
@@ -135,7 +146,9 @@ class _RegPageState extends State<RegPage> {
                                 onTap: () {
                                   position = 'CUSTOMER';
                                   //(position) => context.read<RegBloc>().add(RegInputPosition('CUSTOMER'));
-                                  context.read<RegBloc>().add(RegInputPosition(position));
+                                  context
+                                      .read<RegBloc>()
+                                      .add(RegInputPosition(position));
                                   setState(() {
                                     _selectedType = 1;
                                     //position = 'CUSTOMER';
@@ -145,15 +158,23 @@ class _RegPageState extends State<RegPage> {
                                 child: Container(
                                   height: 65,
                                   alignment: Alignment.center,
-                                  width: MediaQuery.of(context).size.width * 0.5 - 16 - 5,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5 -
+                                          16 -
+                                          5,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: _selectedType == 1 ? Colors.orange[700] : Colors.grey),
+                                      color: _selectedType == 1
+                                          ? Colors.orange[700]
+                                          : Colors.grey),
                                   child: Text(
                                     'Заказчиком',
                                     style: TextStyle(
-                                        fontSize: 22, color: _selectedType == 1 ? Colors.white : Colors.black),
+                                        fontSize: 22,
+                                        color: _selectedType == 1
+                                            ? Colors.white
+                                            : Colors.black),
                                   ),
                                 ),
                               ),
@@ -173,7 +194,9 @@ class _RegPageState extends State<RegPage> {
                             controller: _ownerNameController,
                             title: 'ФИО Пользователя',
                             inputType: TextInputType.text,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputFullName(value)),
                           ),
                           /* RegFieldWidget(
                             controller: _postNameController,
@@ -185,38 +208,49 @@ class _RegPageState extends State<RegPage> {
                             controller: _companyNameController,
                             title: 'Наименование организации',
                             inputType: TextInputType.text,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputCompanyName(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputCompanyName(value)),
                           ),
                           RegFieldWidget(
                             controller: _adressController,
                             title: 'Фактический адрес организации',
                             inputType: TextInputType.text,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputCompanyAddress(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputCompanyAddress(value)),
                           ),
 
                           RegFieldWidget(
                             controller: _innController,
                             title: 'ИНН',
                             inputType: TextInputType.number,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputTIN(value)),
+                            onChanged: (value) =>
+                                context.read<RegBloc>().add(RegInputTIN(value)),
                           ),
                           RegFieldWidget(
                             controller: _phoneController,
                             title: 'Телефон',
                             inputType: TextInputType.phone,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputPhoneNumber(value)),
                           ),
                           RegFieldWidget(
                             controller: _emailController,
                             title: 'Эл. почта',
                             inputType: TextInputType.emailAddress,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputEmail(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputEmail(value)),
                           ),
                           RegFieldWidget(
                             controller: _passwordController,
                             title: 'Придумайте пароль',
                             inputType: TextInputType.text,
-                            onChanged: (value) => context.read<RegBloc>().add(RegInputPassword(value)),
+                            onChanged: (value) => context
+                                .read<RegBloc>()
+                                .add(RegInputPassword(value)),
                           ),
                           RegFieldWidget(
                             controller: _confirmPasswordController,
@@ -236,10 +270,12 @@ class _RegPageState extends State<RegPage> {
                                   if (_passwordController.text == '') {
                                     const ErrorDialog(
                                       dialogTittle: 'Отсутствует пароль',
-                                      dialogText: 'Вы забыли придумать пароль. Пожалуйста, введите пароль',
+                                      dialogText:
+                                          'Вы забыли придумать пароль. Пожалуйста, введите пароль',
                                     ).showMyDialog(context);
                                   } else {
-                                    if (_passwordController.text != _confirmPasswordController.text) {
+                                    if (_passwordController.text !=
+                                        _confirmPasswordController.text) {
                                       const ErrorDialog(
                                         dialogTittle: 'Пароли не совпадают',
                                         dialogText:
@@ -262,7 +298,8 @@ class _RegPageState extends State<RegPage> {
                                 } else {
                                   const ErrorDialog(
                                     dialogTittle: 'Не выбран тип аккаунта',
-                                    dialogText: 'Сделайте выбор в поле \n"Вы являетесь"',
+                                    dialogText:
+                                        'Сделайте выбор в поле \n"Вы являетесь"',
                                   ).showMyDialog(context);
                                 }
                               },
@@ -323,7 +360,8 @@ class _RegPageState extends State<RegPage> {
                                */
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange[700],
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
                               ),
                               child: const Text(
                                 'Зарегистрироваться',
@@ -385,7 +423,8 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(color: Colors.white)),
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.white,

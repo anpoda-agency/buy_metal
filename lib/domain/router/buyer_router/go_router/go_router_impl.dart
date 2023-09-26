@@ -20,6 +20,16 @@ class GoRouterImplt {
     required List<RouteBase> orders,
     required List<RouteBase> createOrder,
     required List<RouteBase> profile,
+
+    // Поставщик
+    /* required GlobalKey<NavigatorState> supplierDealsNavigatorKey,
+    required GlobalKey<NavigatorState> supplierOrdersNavigatorKey,
+    required GlobalKey<NavigatorState> supplierCreateOrderNavigatorKey,
+    required GlobalKey<NavigatorState> supplierProfileNavigatorKey,
+    required List<RouteBase> supplierDeals,
+    required List<RouteBase> supplierOrders,
+    required List<RouteBase> supplierCreateOrder,
+    required List<RouteBase> supplierProfile, */
   }) : router = GoRouter(
           navigatorKey: rootNavigatorKey,
           debugLogDiagnostics: kDebugMode,
@@ -28,8 +38,10 @@ class GoRouterImplt {
             ...auth,
             ...root,
             StatefulShellRoute.indexedStack(
-              builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-                return MainBottomNavigationBar(navigationShell: navigationShell);
+              builder: (BuildContext context, GoRouterState state,
+                  StatefulNavigationShell navigationShell) {
+                return MainBottomNavigationBar(
+                    navigationShell: navigationShell);
               },
               branches: [
                 if (deals.isNotEmpty)

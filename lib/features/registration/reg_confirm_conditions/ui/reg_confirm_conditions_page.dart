@@ -1,8 +1,8 @@
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
-import 'package:buy_metal_app/domain/router/route_constants.dart';
-import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/domain/router/buyer_router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/buyer_router/route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/bloc/reg_confirm_conditions_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,8 @@ class RegConfirmConditionsPage extends StatefulWidget {
   final Object? args;
 
   @override
-  State<RegConfirmConditionsPage> createState() => _RegConfirmConditionsPageState();
+  State<RegConfirmConditionsPage> createState() =>
+      _RegConfirmConditionsPageState();
 }
 
 class _RegConfirmConditionsPageState extends State<RegConfirmConditionsPage> {
@@ -57,7 +58,8 @@ class _RegConfirmConditionsPageState extends State<RegConfirmConditionsPage> {
           authRepository: context.read<GetIt>().get<AuthRepository>(),
           userRepository: context.read<GetIt>().get<UserRepository>(),
           pageState: const PageState()),
-      child: BlocConsumer<RegConfirmConditionsBloc, RegConfirmConditionsState>(listener: (context, state) {
+      child: BlocConsumer<RegConfirmConditionsBloc, RegConfirmConditionsState>(
+          listener: (context, state) {
         if (state is RegConfirmConditionsAllowedToPushState) {
           //Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
           context.read<RouteImpl>().go(DealsRoutes.deals.name);
@@ -126,13 +128,16 @@ class _RegConfirmConditionsPageState extends State<RegConfirmConditionsPage> {
                     onPressed: isAgree
                         ? () {
                             //Navigator.pushNamed(context, '/auth_page');
-                            context.read<RegConfirmConditionsBloc>().add(RegConfirmConditionSendRegEvent());
+                            context
+                                .read<RegConfirmConditionsBloc>()
+                                .add(RegConfirmConditionSendRegEvent());
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange[700],
                       //isAgree ? Colors.orange[700] : Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
                     ),
                     child: const Text(
                       'Завершить регистрацию',

@@ -14,11 +14,13 @@ import 'package:go_router/go_router.dart';
   }
 } */
 
-class MainBottomNavigationBar extends StatelessWidget {
-  const MainBottomNavigationBar({
+class SupplierMainBottomNavigationBar extends StatelessWidget {
+  const SupplierMainBottomNavigationBar({
     required this.navigationShell,
     Key? key,
-  }) : super(key: key ?? const ValueKey<String>('MainBottomNavigationBar'));
+  }) : super(
+            key: key ??
+                const ValueKey<String>('SupplierMainBottomNavigationBar'));
 
   final StatefulNavigationShell navigationShell;
 
@@ -66,13 +68,13 @@ class MainBottomNavigationBar extends StatelessWidget {
                         Icons.map,
                         color: Colors.white,
                       ),
-                      label: 'Orders'),
+                      label: 'Proposals'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         color: Colors.white,
                       ),
-                      label: 'CreateOrder'),
+                      label: 'Search Orders'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,

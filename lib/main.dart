@@ -1,5 +1,9 @@
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/di/service_locator.dart';
-import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/buyer_router/route_impl.dart';
+import 'package:buy_metal_app/domain/router/supplier_router/supplier_route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
@@ -47,29 +51,132 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool loading = true;
 
+  var supplierRouter = SupplierRouteImpl(
+    supplierRootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+    supplierDealsNavigatorKey:
+        GlobalKey<NavigatorState>(debugLabel: 'supplierDeals'),
+    supplierProposalsNavigatorKey:
+        GlobalKey<NavigatorState>(debugLabel: 'supplierProposal'),
+    supplierSearchOrdersNavigatorKey:
+        GlobalKey<NavigatorState>(debugLabel: 'supplierSearchOrders'),
+    supplierProfileNavigatorKey:
+        GlobalKey<NavigatorState>(debugLabel: 'supplierProfile'),
+  );
+
   var router = RouteImpl(
     rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
     dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
     ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
-    createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+    createOrderNavigatorKey:
+        GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
     profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
   );
 
   @override
   Widget build(BuildContext context) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
-
+    late final User? position;
     return MultiProvider(
-        providers: [
-          RepositoryProvider(create: (context) => getIt),
-          RepositoryProvider(create: (context) => router),
-        ],
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: router.goRouterImplt.router,
-        )
+      providers: [
+        RepositoryProvider(create: (context) => getIt),
+        RepositoryProvider(
+            create: (context) => position =
+                context.read<GetIt>().get<UserRepository>().user?.user),
+        RepositoryProvider(create: (context) => router),
+        RepositoryProvider(create: (context) => supplierRouter),
+      ],
+      /* builder: setState(() {
+          
+        });
+        context
+                      .read<GetIt>()
+                      .get<UserRepository>()
+                      .user
+                      ?.user
+                      .position; */
 
-        /*
+      child: Consumer<User?>(
+        builder: (context, value, child) {
+          {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: //(true)
+
+                  (context
+                              .read<GetIt>()
+                              .get<UserRepository>()
+                              .user
+                              ?.user
+                              .position ==
+                          'SUPPLIER')
+                      ? supplierRouter.supplierGoRouterImplt.supplierRouter
+                      : router.goRouterImplt.router,
+              //: router.goRouterImplt.router,
+              //: supplierRouter.supplierGoRouterImplt.supplierRouter,
+            );
+          }
+        },
+      ),
+      /* return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: //(true)
+
+                (context
+                            .read<GetIt>()
+                            .get<UserRepository>()
+                            .user
+                            ?.user
+                            .position ==
+                        'SUPPLIER')
+                    ? supplierRouter.supplierGoRouterImplt.supplierRouter
+                    : router.goRouterImplt.router,
+            //: router.goRouterImplt.router,
+            //: supplierRouter.supplierGoRouterImplt.supplierRouter,
+          ); */
+    );
+  }
+
+/* 
+        Builder(
+          builder: (context) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: //(true)
+
+                  (context
+                              .read<GetIt>()
+                              .get<UserRepository>()
+                              .user
+                              ?.user
+                              .position ==
+                          'SUPPLIER')
+                      ? supplierRouter.supplierGoRouterImplt.supplierRouter
+                      : router.goRouterImplt.router,
+              //: router.goRouterImplt.router,
+              //: supplierRouter.supplierGoRouterImplt.supplierRouter,
+            );
+          },
+        )
+         */
+  /* MaterialApp.router(
+          
+          debugShowCheckedModeBanner: false,
+          routerConfig: //(true)
+              
+          (context
+                      .read<GetIt>()
+                      .get<UserRepository>()
+                      .user
+                      ?.user
+                      .position ==
+                  'CUSTOMER')
+                   
+              ? router.goRouterImplt.router
+              : supplierRouter.supplierGoRouterImplt.supplierRouter,
+          
+        ) */
+
+  /*
       MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
@@ -114,8 +221,6 @@ class _MyAppState extends State<MyApp> {
         home: const StartPage(),
       ),
       */
-        );
-  }
 }
 
 class MyHomePage extends StatefulWidget {

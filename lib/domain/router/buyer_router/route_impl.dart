@@ -1,8 +1,8 @@
+import 'package:buy_metal_app/domain/router/buyer_router/go_router/go_router_impl.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'go_router/go_router_impl.dart';
 import 'route_constants.dart';
 
 class RouteImpl {
@@ -30,7 +30,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/auth/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.auth(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.auth(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -38,7 +39,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.root(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.root(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -46,7 +48,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.deals(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.deals(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -54,7 +57,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.orders(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.orders(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -62,7 +66,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.createOrder(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.createOrder(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -70,7 +75,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.profile(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.profile(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -87,11 +93,13 @@ class RouteImpl {
   }) async {
     if (route != null) {
       if (rootContext) {
-        var routeName = RootRoutes.values.firstWhereOrNull((el) => el.name == route);
+        var routeName =
+            RootRoutes.values.firstWhereOrNull((el) => el.name == route);
         return (routeName != null)
             ? rootNavigatorKey.currentState?.push(
                 MaterialPageRoute(
-                  builder: (BuildContext context) => RouteConstants.root(routeName, args: args),
+                  builder: (BuildContext context) =>
+                      RouteConstants.root(routeName, args: args),
                   settings: RouteSettings(name: '/$route', arguments: args),
                 ),
               )
@@ -109,10 +117,12 @@ class RouteImpl {
     }
   }
 
-  void popUntilAndPush({required String routeUntil, required String route, Object? args}) {
+  void popUntilAndPush(
+      {required String routeUntil, required String route, Object? args}) {
     var canPop = false;
     int countPop = 0;
-    for (var element in goRouterImplt.router.routerDelegate.currentConfiguration.matches) {
+    for (var element
+        in goRouterImplt.router.routerDelegate.currentConfiguration.matches) {
       countPop++;
       if (element.matchedLocation == '/$routeUntil') {
         canPop = true;
@@ -147,7 +157,10 @@ class RouteImpl {
 
   void newRoutesPath(List<String> routesPath, {Object? args}) {
     if (routesPath.isNotEmpty) {
-      for (var i = goRouterImplt.router.routerDelegate.currentConfiguration.matches.length; i > 1; i--) {
+      for (var i = goRouterImplt
+              .router.routerDelegate.currentConfiguration.matches.length;
+          i > 1;
+          i--) {
         pop();
       }
       for (var route in routesPath) {
