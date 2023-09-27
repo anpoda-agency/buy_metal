@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.7/bloc/create_order_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,7 +103,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
         }
         if (state is CreateOrderAllowedToPush) {
           // ТУТ КОРОЧЕЕ ПЕРЕХОД ДЕЛАЕМ
-          Navigator.pushReplacementNamed(context, '/success_order_page');
+          //Navigator.pushReplacementNamed(context, '/success_order_page');
+          context.read<RouteImpl>().go(CreateOrderRoutes.successOrder.name);
         }
       }, builder: (context, state) {
         late TypeListEnum formChoosed;

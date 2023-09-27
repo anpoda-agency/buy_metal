@@ -32,9 +32,33 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
     super.initState();
   }
 */
+
+  late final String args;
+
+  /* @override
+  void initState() {
+    phoneAndPassword =
+        (widget.args is Map<String, dynamic>) ? widget.args as Map<String, dynamic> : {'phone': '', 'password': ''};
+    super.initState();
+  } */
+
+/*   @override
+  void initState() {
+    regRequest = (widget.args is Map<String, dynamic>)
+        ? widget.args as AuthUploadRegisterNewUserRequest
+        : {'phone': '', 'password': ''};
+    super.initState(); */
+
+  @override
+  void initState() {
+    args = widget.args as String;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments as String;
+    //  var args = ModalRoute.of(context)!.settings.arguments as String;
     return BlocProvider(
       create: (context) => SuppliersProposalsListBloc(
         pageState: const PageState(),

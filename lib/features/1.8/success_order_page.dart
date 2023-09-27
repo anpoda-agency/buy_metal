@@ -1,4 +1,7 @@
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SuccessOrderPage extends StatelessWidget {
   const SuccessOrderPage({super.key});
@@ -41,7 +44,8 @@ class SuccessOrderPage extends StatelessWidget {
                   height: 65,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      //  Navigator.of(context).pop();
+                      context.read<RouteImpl>().go(OrdersRoutes.orders.name);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange[700],

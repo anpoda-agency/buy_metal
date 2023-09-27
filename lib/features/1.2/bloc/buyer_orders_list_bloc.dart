@@ -16,14 +16,16 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
     required this.userRepository,
     required this.applicationRepository,
     required PageState pageState,
-  }) : super(BuyerOrdersListInitial(pageState)) {
-    on<BuyerOrdersListInit>(buyerOrdersListInit);
-    on<BuyerOrdersListMsgErr>(buyerOrdersListMsgErr);
-    add(BuyerOrdersListInit());
+  }) : super(BuyerOrdersListInitialState(pageState)) {
+    on<BuyerOrdersListInitEvent>(buyerOrdersListInit);
+    on<BuyerOrdersListMsgErrEvent>(buyerOrdersListMsgErr);
+    on<BuyerOrdersListChooseProposalEvent>(buyerOrdersListChooseProposal);
+    on<BuyerOrdersListCreateOrderEvent>(buyerOrdersListCreateOrder);
+    add(BuyerOrdersListInitEvent());
   }
 
-  buyerOrdersListInit(BuyerOrdersListInit event, emit) async {
-    emit(BuyerOrdersListUp(state.pageState.copyWith(onAwait: true)));
+  buyerOrdersListInit(BuyerOrdersListInitEvent event, emit) async {
+    emit(BuyerOrdersListUpState(state.pageState.copyWith(onAwait: true)));
     //var model = applicationModel;
     //var model = applicationRepository.customerApplication;
 
@@ -43,11 +45,23 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
       }
     } */
     print(res);
-    emit(BuyerOrdersListUp(state.pageState.copyWith(listApplcations: res, onAwait: false)));
+    emit(BuyerOrdersListUpState(state.pageState.copyWith(listApplcations: res, onAwait: false)));
   }
 
-  buyerOrdersListMsgErr(BuyerOrdersListMsgErr event, emit) async {
-    emit(BuyerOrdersListError(state.pageState.copyWith(
+  buyerOrdersListChooseProposal(BuyerOrdersListChooseProposalEvent event, emit) async {
+    //var model = userRepository.user;
+    //var model = state.pageState.copyWith(proposalById: event.proposalById);
+
+    emit(BuyerOrdersListChooseProposalState(state.pageState.copyWith(proposalById: event.proposalById)));
+  }
+
+  buyerOrdersListCreateOrder(BuyerOrdersListCreateOrderEvent event, emit) async {
+    //var model = userRepository.user;
+    emit(BuyerOrdersListCreateOrderState(state.pageState));
+  }
+
+  buyerOrdersListMsgErr(BuyerOrdersListMsgErrEvent event, emit) async {
+    emit(BuyerOrdersListErrorState(state.pageState.copyWith(
       onAwait: false,
       errMsg: event.msg,
     )));
@@ -55,7 +69,7 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
 
   @override
   void onError(Object error, StackTrace stackTrace) {
-    add(BuyerOrdersListMsgErr(error.toString()));
+    add(BuyerOrdersListMsgErrEvent(error.toString()));
     super.onError(error, stackTrace);
   }
 }

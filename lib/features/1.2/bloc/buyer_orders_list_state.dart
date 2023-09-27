@@ -6,16 +6,24 @@ abstract class BuyerOrdersListState {
   const BuyerOrdersListState(this.pageState);
 }
 
-class BuyerOrdersListInitial extends BuyerOrdersListState {
-  const BuyerOrdersListInitial(PageState pageState) : super(pageState);
+class BuyerOrdersListInitialState extends BuyerOrdersListState {
+  const BuyerOrdersListInitialState(PageState pageState) : super(pageState);
 }
 
-class BuyerOrdersListUp extends BuyerOrdersListState {
-  const BuyerOrdersListUp(PageState pageState) : super(pageState);
+class BuyerOrdersListUpState extends BuyerOrdersListState {
+  const BuyerOrdersListUpState(PageState pageState) : super(pageState);
 }
 
-class BuyerOrdersListError extends BuyerOrdersListState {
-  const BuyerOrdersListError(PageState pageState) : super(pageState);
+class BuyerOrdersListErrorState extends BuyerOrdersListState {
+  const BuyerOrdersListErrorState(PageState pageState) : super(pageState);
+}
+
+class BuyerOrdersListChooseProposalState extends BuyerOrdersListState {
+  const BuyerOrdersListChooseProposalState(PageState pageState) : super(pageState);
+}
+
+class BuyerOrdersListCreateOrderState extends BuyerOrdersListState {
+  const BuyerOrdersListCreateOrderState(PageState pageState) : super(pageState);
 }
 
 class PageState {
@@ -23,12 +31,14 @@ class PageState {
   final String errMsg;
   final ApplicationGetCustomerApplicationsResponse applicationResponse;
   final List<ApplicationGetCustomerApplicationsResponse> listApplcations;
+  final String proposalById;
 
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
     this.applicationResponse = const ApplicationGetCustomerApplicationsResponse(),
     this.listApplcations = const [],
+    this.proposalById = '',
   });
 
   PageState copyWith({
@@ -36,12 +46,14 @@ class PageState {
     String? errMsg,
     ApplicationGetCustomerApplicationsResponse? applicationResponse,
     List<ApplicationGetCustomerApplicationsResponse>? listApplcations,
+    String? proposalById,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       applicationResponse: applicationResponse ?? this.applicationResponse,
       listApplcations: listApplcations ?? this.listApplcations,
+      proposalById: proposalById ?? this.proposalById,
     );
   }
 }

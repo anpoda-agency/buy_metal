@@ -30,6 +30,7 @@ class GoRouterImplt {
             StatefulShellRoute.indexedStack(
               builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
                 return MainBottomNavigationBar(navigationShell: navigationShell);
+                //return StatefulNavigationShell(navigationShell: navigationShell);
               },
               branches: [
                 if (deals.isNotEmpty)

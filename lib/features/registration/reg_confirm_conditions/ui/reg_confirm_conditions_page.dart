@@ -23,7 +23,7 @@ class RegConfirmConditionsPage extends StatefulWidget {
 class _RegConfirmConditionsPageState extends State<RegConfirmConditionsPage> {
   //    final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
   //late Map<String, dynamic> regRequest;
-  late final regRequest;
+  late final AuthUploadRegisterNewUserRequest regRequest;
 
   /* @override
   void initState() {

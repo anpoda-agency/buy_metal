@@ -1,5 +1,10 @@
 import 'package:buy_metal_app/features/1.2/ui/buyer_orders_list_page.dart';
+import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart';
+import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
+import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
+import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
+import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
 import 'package:buy_metal_app/features/start_page/start_page.dart';
@@ -72,6 +77,8 @@ class RouteConstants {
         );
         */
       return const BuyerOrdersListPage();
+    } else if (route == OrdersRoutes.suppliersProposalsList) {
+      return SuppliersProposalsListPage(args: args);
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -82,15 +89,18 @@ class RouteConstants {
 
   static createOrder(CreateOrderRoutes route, {Object? args}) {
     if (route == CreateOrderRoutes.createOrder) {
-      return Scaffold(
+      /* return Scaffold(
         appBar: AppBar(title: const Text('createOrder')),
         body: const Center(child: Text('Page not found')),
-      );
+      ); */
       /*
       return const ProfilePage();
     } else if (route == ProfileRoutes.profileEdit) {
       return const ProfileEditPage();
       */
+      return const CreateOrderPage();
+    } else if (route == CreateOrderRoutes.successOrder) {
+      return const SuccessOrderPage();
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -101,9 +111,12 @@ class RouteConstants {
 
   static profile(ProfileRoutes route, {Object? args}) {
     if (route == ProfileRoutes.profile) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('profile')),
-        body: const Center(child: Text('Page not found')),
+      return ProfilePage(
+        args: args,
+      );
+    } else if (route == ProfileRoutes.profileEdit) {
+      return ProfileEditPage(
+        args: args,
       );
     } else {
       return Scaffold(
@@ -143,11 +156,13 @@ enum DealsRoutes {
 
 enum OrdersRoutes {
   orders,
+  suppliersProposalsList,
   empty, // reserved name for routing
 }
 
 enum CreateOrderRoutes {
   createOrder,
+  successOrder,
   empty,
 }
 

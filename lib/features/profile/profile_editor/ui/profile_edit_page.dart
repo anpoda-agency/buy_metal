@@ -20,12 +20,35 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   //int _selectedType = 0;
   bool supplier = true;
   bool buyer = false;
+  // ПЕРЕПИСАТЬ НА ЕДИТ ПРОФИЛЬ ПЕРЕМЕННЫЕ !!!!
+  late final AuthUploadLoginResponse args;
+
+  /* @override
+  void initState() {
+    phoneAndPassword =
+        (widget.args is Map<String, dynamic>) ? widget.args as Map<String, dynamic> : {'phone': '', 'password': ''};
+    super.initState();
+  } */
+
+/*   @override
+  void initState() {
+    regRequest = (widget.args is Map<String, dynamic>)
+        ? widget.args as AuthUploadRegisterNewUserRequest
+        : {'phone': '', 'password': ''};
+    super.initState(); */
+
+  @override
+  void initState() {
+    args = widget.args as AuthUploadLoginResponse;
+
+    super.initState();
+  }
 
   //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments as AuthUploadLoginResponse;
+    //var args = ModalRoute.of(context)!.settings.arguments as AuthUploadLoginResponse;
 
     return BlocProvider(
       create: (context) => ProfileEditBloc(

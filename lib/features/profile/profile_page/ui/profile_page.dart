@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,12 +72,17 @@ class _ProfilePageState extends State<ProfilePage> {
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileUpdateUserInfoState) {
-            Navigator.of(context).pushNamed('/profile_edit_page', arguments: state.pageState.user).then((value) {
-              context.read<ProfileBloc>().add(ProfileInit());
-            });
+            //Navigator.of(context).pushNamed('/profile_edit_page', arguments: state.pageState.user).then((value) {
+            //  context.read<ProfileBloc>().add(ProfileInit());
+            //});
+            context
+                .read<RouteImpl>()
+                .push(ProfileRoutes.profileEdit.name, args: state.pageState.user)
+                .then((value) => context.read<ProfileBloc>().add(ProfileInit()));
           }
           if (state is ProfileLogOutState) {
-            Navigator.pushReplacementNamed(context, '/home_page');
+            //Navigator.pushReplacementNamed(context, '/home_page');
+            context.read<RouteImpl>().go(RootRoutes.startPage.name);
           }
         },
         builder: (context, state) {

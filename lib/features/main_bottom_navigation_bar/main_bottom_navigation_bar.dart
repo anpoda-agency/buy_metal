@@ -33,7 +33,7 @@ class MainBottomNavigationBar extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 30,
+            bottom: 40,
             child: Container(
               height: 90,
               margin: const EdgeInsets.only(left: 20, right: 20),
@@ -56,7 +56,7 @@ class MainBottomNavigationBar extends StatelessWidget {
                         Icons.list,
                         color: Colors.white,
                       ),
-                      label: 'Deals'),
+                      label: 'Deals\nSupplierFlow'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,
