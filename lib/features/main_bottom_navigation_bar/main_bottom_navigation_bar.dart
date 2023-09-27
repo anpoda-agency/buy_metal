@@ -33,9 +33,9 @@ class MainBottomNavigationBar extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 20,
+            bottom: 30,
             child: Container(
-              height: 80,
+              height: 90,
               margin: const EdgeInsets.only(left: 20, right: 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [

@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/features/1.2/ui/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
@@ -65,10 +66,12 @@ class RouteConstants {
   static orders(OrdersRoutes route, {Object? args}) {
     if (route == OrdersRoutes.orders) {
       //return const MapScreen();
-      return Scaffold(
+      /* return Scaffold(
         appBar: AppBar(title: const Text('orders')),
-        body: const Center(child: Text('Page not found')),
-      );
+        body: const Center(child: Text('Page not found')), 
+        );
+        */
+      return const BuyerOrdersListPage();
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
