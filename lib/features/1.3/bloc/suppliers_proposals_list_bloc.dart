@@ -18,6 +18,7 @@ class SuppliersProposalsListBloc extends Bloc<SuppliersProposalsListEvent, Suppl
   }) : super(SuppliersProposalsListInitial(pageState)) {
     on<SuppliersProposalsListInit>(suppliersProposalsListInit);
     on<SuppliersProposalsListMsgErr>(suppliersProposalsListMsgErr);
+    on<SupplierProposalsListChooseProposalEvent>(supplierProposalsListChooseProposal);
     add(SuppliersProposalsListInit());
   }
 
@@ -29,6 +30,13 @@ class SuppliersProposalsListBloc extends Bloc<SuppliersProposalsListEvent, Suppl
         await applicationRepository.applicationGetResponsesByApplicationId(path: applicationId, accessToken: token);
 
     emit(SuppliersProposalsListUp(state.pageState.copyWith(response: res, onAwait: false)));
+  }
+
+  supplierProposalsListChooseProposal(SupplierProposalsListChooseProposalEvent event, emit) async {
+    //var model = userRepository.user;
+    //var model = state.pageState.copyWith(proposalById: event.proposalById);
+
+    emit(SupplierProposalsListChooseProposalState(state.pageState.copyWith(proposalById: event.proposalById)));
   }
 
   suppliersProposalsListMsgErr(SuppliersProposalsListMsgErr event, emit) async {

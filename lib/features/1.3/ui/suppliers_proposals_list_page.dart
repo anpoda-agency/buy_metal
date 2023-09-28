@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.3/bloc/suppliers_proposals_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +70,15 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
       ),
       child: BlocConsumer<SuppliersProposalsListBloc, SuppliersProposalsListState>(
         //bloc: SuppliersProposalsListBloc,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SupplierProposalsListChooseProposalState) {
+            //Navigator.of(context).pushNamed('/description_of_supplier_proposal_page',
+            //    arguments: state.pageState.response.elementAt(index));
+            context
+                .read<RouteImpl>()
+                .push(OrdersRoutes.descriptionOfSupplierProposal.name, args: state.pageState.proposalById);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.white,
@@ -112,10 +122,12 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).pushNamed('/description_of_supplier_proposal_page',
-                                          arguments: state.pageState.response.elementAt(index));
-
-                                      /*
+                                      //Navigator.of(context).pushNamed('/description_of_supplier_proposal_page',
+                                      //    arguments: state.pageState.response.elementAt(index));
+                                      context.read<SuppliersProposalsListBloc>().add(
+                                          SupplierProposalsListChooseProposalEvent(state.pageState.response[index]));
+                                    },
+                                    /*
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) => DescriptionOfSupplierProposalPage(
@@ -126,7 +138,7 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
                                             )),
                                   );
                                   */
-                                    },
+
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                       child: Column(
@@ -150,12 +162,18 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                state.pageState.response[index].similar ? 'Аналог' : 'Соответствие',
+                                                // Бага с фаербазы, отоображало тип заявки наоборот
+                                                //state.pageState.response[index].similar ? 'Аналог' : 'Соответствие',
+                                                state.pageState.response[index].similar ? 'Соответствие' : 'Аналог',
                                                 style: TextStyle(
                                                     fontSize: 18,
+                                                    //color: state.pageState.response[index].similar
+                                                    //    ? Colors.yellow
+                                                    //    : Colors.greenAccent),
+                                                    //),
                                                     color: state.pageState.response[index].similar
-                                                        ? Colors.yellow
-                                                        : Colors.greenAccent),
+                                                        ? Colors.greenAccent
+                                                        : Colors.yellow),
                                               ),
                                               Text(
                                                 state.pageState.response[index].creationDate,

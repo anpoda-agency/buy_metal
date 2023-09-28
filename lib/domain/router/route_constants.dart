@@ -1,5 +1,6 @@
 import 'package:buy_metal_app/features/1.2/ui/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart';
+import 'package:buy_metal_app/features/1.5/ui/description_of_supplier_proposal_page.dart';
 import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
@@ -79,6 +80,8 @@ class RouteConstants {
       return const BuyerOrdersListPage();
     } else if (route == OrdersRoutes.suppliersProposalsList) {
       return SuppliersProposalsListPage(args: args);
+    } else if (route == OrdersRoutes.descriptionOfSupplierProposal) {
+      return DescriptionOfSupplierProposalPage(args: args);
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -157,6 +160,7 @@ enum DealsRoutes {
 enum OrdersRoutes {
   orders,
   suppliersProposalsList,
+  descriptionOfSupplierProposal,
   empty, // reserved name for routing
 }
 
