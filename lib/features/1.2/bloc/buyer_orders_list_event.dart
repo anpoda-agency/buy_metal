@@ -9,9 +9,10 @@ class BuyerOrdersListMsgErrEvent extends BuyerOrdersListEvent {
   BuyerOrdersListMsgErrEvent(this.msg);
 }
 
-class BuyerOrdersListChooseProposalEvent extends BuyerOrdersListEvent {
-  final String proposalById;
-  BuyerOrdersListChooseProposalEvent(this.proposalById);
+class BuyerOrdersListChooseOrderEvent extends BuyerOrdersListEvent {
+  final String orderById;
+  final ApplicationGetCustomerApplicationsResponse applicationResponse;
+  BuyerOrdersListChooseOrderEvent(this.orderById, this.applicationResponse);
 }
 
 class BuyerOrdersListCreateOrderEvent extends BuyerOrdersListEvent {}

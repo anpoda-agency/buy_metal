@@ -1,7 +1,13 @@
 import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
+import 'package:buy_metal_app/domain/repository/application_repository.dart';
+import 'package:buy_metal_app/domain/repository/deal_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.5/bloc/description_of_supplier_proposal_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class DescriptionOfSupplierProposalPage extends StatefulWidget {
   const DescriptionOfSupplierProposalPage({super.key, required this.args});
@@ -37,15 +43,25 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
     return BlocProvider(
-      create: (context) => DescriptionOfSupplierProposalBloc(pageState: const PageState()),
+      create: (context) => DescriptionOfSupplierProposalBloc(
+          infoForDeal: args,
+          dealRepository: context.read<GetIt>().get<DealRepository>(),
+          applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
+          userRepository: context.read<GetIt>().get<UserRepository>(),
+          pageState: const PageState()),
       child: BlocConsumer<DescriptionOfSupplierProposalBloc, DescriptionOfSupplierProposalState>(
           listener: (context, state) {
         if (state is DescriptionOfSupplierProposalConfirmDealState) {
-          const CreateDealDialog(
-            //dialogTittle: 'Ошибка запроса',
-            dialogText:
-                'После просмотра контактов\nВы начинаете сделку\nс поставщиком и не сможете взаимодействовать\nс предложениями других поставщиков по данной заявке.',
-          ).showMyDialog(context);
+          //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
+
+          // Вообще тут не главная страница вкладки сделок,
+          // а конкретная сделка должна окткрыться.
+          // Но я придумал как реализовать изначальный сценарий навигации,
+          // так же как на карте сделать переход на контакты, но по закрытию контактов,
+          // нужно делать го на экран заявок, так проще
+          // надо доделать экран заявок и го сюда закинуть
+          //context.read<RouteImpl>().go(DealsRoutes.deals.name);
+          context.read<RouteImpl>().go(OrdersRoutes.supplierContacts.name, args: args);
         }
       }, builder: (context, state) {
         return Scaffold(
@@ -214,9 +230,18 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                     child: ElevatedButton(
                       onPressed: () {
                         //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
-                        context
-                            .read<DescriptionOfSupplierProposalBloc>()
-                            .add(DescriptionOfSupplierProposalConfirmDealEvent());
+                        /* 
+                        CreateDealDialog(
+                          //dialogTittle: 'Ошибка запроса',
+                          dialogText:
+                              'После просмотра контактов\nВы начинаете сделку\nс поставщиком и не сможете взаимодействовать\nс предложениями других поставщиков по данной заявке.',
+                          //onPressed:
+                          /* (context) => context
+                              .read<DescriptionOfSupplierProposalBloc>()
+                              .add(DescriptionOfSupplierProposalConfirmDealEvent()), */
+                          context: context,
+                        ).showMyDialog(context);
+ */
                         /*
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -225,6 +250,85 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                               )),
                     );
                     */
+                        // Код вставить в кнопку Вступить у поп апа сделки
+                        //context
+                        //    .read<DescriptionOfSupplierProposalBloc>()
+                        //    .add(DescriptionOfSupplierProposalConfirmDealEvent());
+                        openDeal() {
+                          context
+                              .read<DescriptionOfSupplierProposalBloc>()
+                              .add(DescriptionOfSupplierProposalConfirmDealEvent());
+                        }
+
+                        showDialog<void>(
+                          context: context,
+                          //barrierDismissible: false, // user must tap button!
+                          barrierDismissible: true, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              //title: Text(dialogTittle),
+                              //const Text('Пароли не совпадают'),
+                              content: const SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text(
+                                        'После просмотра контактов\nВы начинаете сделку\nс поставщиком и не сможете взаимодействовать\nс предложениями других поставщиков по данной заявке.'),
+                                    //Text('Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз'),
+                                    //Text('Проверьте, чтобы пароли совпадали'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                /* 
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+             */
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: openDeal,
+                                      //onPressed;
+                                      //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
+                                      //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
+                                      /* (context) => context
+                                            .read<DescriptionOfSupplierProposalBloc>()
+                                            .add(DescriptionOfSupplierProposalConfirmDealEvent()); */
+
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      ),
+                                      child: const Text(
+                                        'Вступить',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
+                                        //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.orange,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                      ),
+                                      child: const Text(
+                                        'Закрыть',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
@@ -444,10 +548,14 @@ class CreateDealDialog {
   const CreateDealDialog({
     //required this.dialogTittle,
     required this.dialogText,
+    this.onPressed,
+    this.context,
   });
 
   //final String dialogTittle;
   final String dialogText;
+  final Function(BuildContext)? onPressed;
+  final BuildContext? context;
 
   Future<void> showMyDialog(BuildContext context) async {
     return showDialog<void>(
@@ -481,8 +589,12 @@ class CreateDealDialog {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    //onPressed;
                     //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
                     //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
+                    (context) => context
+                        .read<DescriptionOfSupplierProposalBloc>()
+                        .add(DescriptionOfSupplierProposalConfirmDealEvent());
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

@@ -1,8 +1,10 @@
 import 'package:buy_metal_app/features/1.2/ui/buyer_orders_list_page.dart';
 import 'package:buy_metal_app/features/1.3/ui/suppliers_proposals_list_page.dart';
 import 'package:buy_metal_app/features/1.5/ui/description_of_supplier_proposal_page.dart';
+import 'package:buy_metal_app/features/1.6/ui/supplier_contacts_page.dart';
 import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
+import 'package:buy_metal_app/features/2.4.1.1/ui/buyer_deals_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
@@ -57,10 +59,11 @@ class RouteConstants {
 
   static deals(DealsRoutes route, {Object? args}) {
     if (route == DealsRoutes.deals) {
-      return Scaffold(
+      return const BuyerDealsPage();
+      /* return Scaffold(
         appBar: AppBar(title: const Text('deals')),
         body: const Center(child: Text('Page not found')),
-      );
+      ); */
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -82,6 +85,8 @@ class RouteConstants {
       return SuppliersProposalsListPage(args: args);
     } else if (route == OrdersRoutes.descriptionOfSupplierProposal) {
       return DescriptionOfSupplierProposalPage(args: args);
+    } else if (route == OrdersRoutes.supplierContacts) {
+      return SupplierContactsPage(args: args);
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -161,6 +166,7 @@ enum OrdersRoutes {
   orders,
   suppliersProposalsList,
   descriptionOfSupplierProposal,
+  supplierContacts,
   empty, // reserved name for routing
 }
 

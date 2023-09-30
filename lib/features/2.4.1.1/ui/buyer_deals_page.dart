@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
+import 'package:buy_metal_app/domain/repository/deal_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
@@ -20,7 +21,8 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
     return BlocProvider(
       create: (context) => BuyerDealsBloc(
         //applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
-        //userRepository: context.read<GetIt>().get<UserRepository>(),
+        userRepository: context.read<GetIt>().get<UserRepository>(),
+        dealRepository: context.read<GetIt>().get<DealRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<BuyerDealsBloc, BuyerDealsState>(listener: (context, state) {
@@ -32,14 +34,14 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
         //context.read<RouteImpl>().push(OrdersRoutes.suppliersProposalsList.name, args: state.pageState.proposalById);
         //);
       }, builder: (context, state) {
-        var listApplcations = state.pageState.listApplcations;
+        var listDeals = state.pageState.response;
 
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.black87,
             title: const Text(
-              'Мои заявки',
+              'Мои сделки',
             ),
             centerTitle: true,
           ),
@@ -47,14 +49,14 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : listApplcations.isNotEmpty
+              : listDeals.isNotEmpty
                   //!(state.pageState.applicationResponse == const ApplicationGetCustomerApplicationsResponse())
                   //listOrdersModels.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: ListView.builder(
                           itemCount: //
-                              listApplcations.length,
+                              listDeals.length,
                           itemBuilder: (BuildContext context, index) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -105,21 +107,22 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              listApplcations[index].rolledForm,
+                                              //listApplcations[index].rolledForm,
+                                              listDeals[index].application.rolledForm,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
-                                              listApplcations[index].rolledType,
+                                              listDeals[index].application.rolledType,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
-                                              listApplcations[index].rolledSize,
+                                              listDeals[index].application.rolledSize,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                           ],
@@ -131,14 +134,14 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              listApplcations[index].rolledParams,
+                                              listDeals[index].application.rolledParams,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
-                                              listApplcations[index].rolledGost,
+                                              listDeals[index].application.rolledGost,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                           ],
@@ -150,21 +153,21 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              listApplcations[index].materialBrand,
+                                              listDeals[index].application.materialBrand,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
-                                              listApplcations[index].materialParams,
+                                              listDeals[index].application.materialParams,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
-                                              listApplcations[index].materialGost,
+                                              listDeals[index].application.materialGost,
                                               style: const TextStyle(fontSize: 20, color: Colors.white),
                                             ),
                                           ],
@@ -173,10 +176,14 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                           height: 15,
                                         ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
                                             Text(
-                                              listApplcations[index].creationDate,
+                                              listDeals[index].status,
+                                              style: const TextStyle(fontSize: 18, color: Colors.white),
+                                            ),
+                                            Text(
+                                              listDeals[index].agreementDate,
                                               style: const TextStyle(fontSize: 18, color: Colors.white),
                                             ),
                                           ],
@@ -189,7 +196,15 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                             );
                           }),
                     )
-                  : Padding(
+                  : const Center(
+                      child: Text(
+                        'Список сделок пуст',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+
+          /* Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,7 +212,7 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                         children: [
                           const SizedBox.shrink(),
                           const Text(
-                            'Список заявок пуст',
+                            'Список сделок пуст',
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
                           ),
@@ -225,7 +240,7 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                           ),
                         ],
                       ),
-                    ),
+                    ), */
         );
       }),
     );

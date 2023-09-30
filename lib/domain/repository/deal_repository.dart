@@ -14,9 +14,10 @@ class DealRepository {
 
   DealRepository({required this.dealApi});
 
-  Future<DealUploadCreateDealResponse> dealUploadCreateDeal({required DealUploadCreateDealRequest request}) async {
+  Future<DealUploadCreateDealResponse> dealUploadCreateDeal(
+      {required DealUploadCreateDealRequest request, String? accessToken}) async {
     try {
-      final response = await dealApi.dealUploadCreateDeal(request: request);
+      final response = await dealApi.dealUploadCreateDeal(request: request, accessToken: accessToken);
       return DealUploadCreateDealResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -45,10 +46,22 @@ class DealRepository {
     }
   }
 
-  Future<DealUploadSearchResponse> dealUploadSearch({required DealUploadSearchRequest request}) async {
+  Future<List<DealUploadSearchResponse>> dealUploadSearch({
+    required DealUploadSearchRequest request,
+    String? accessToken,
+  }) async {
     try {
-      final response = await dealApi.dealUploadSearch(request: request);
-      return DealUploadSearchResponse.fromJson(response.data);
+      final response = await dealApi.dealUploadSearch(request: request, accessToken: accessToken);
+      if (response.data is List<dynamic>) {
+        List<DealUploadSearchResponse> list = [];
+        for (dynamic item in response.data as List<dynamic>) {
+          list.add(DealUploadSearchResponse.fromJson(item as Map<String, dynamic>));
+        }
+        return list;
+      }
+      return [];
+
+      //return DealUploadSearchResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

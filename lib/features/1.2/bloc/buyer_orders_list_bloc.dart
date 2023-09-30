@@ -19,7 +19,7 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
   }) : super(BuyerOrdersListInitialState(pageState)) {
     on<BuyerOrdersListInitEvent>(buyerOrdersListInit);
     on<BuyerOrdersListMsgErrEvent>(buyerOrdersListMsgErr);
-    on<BuyerOrdersListChooseProposalEvent>(buyerOrdersListChooseProposal);
+    on<BuyerOrdersListChooseOrderEvent>(buyerOrdersListOrderProposal);
     on<BuyerOrdersListCreateOrderEvent>(buyerOrdersListCreateOrder);
     add(BuyerOrdersListInitEvent());
   }
@@ -48,11 +48,11 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
     emit(BuyerOrdersListUpState(state.pageState.copyWith(listApplcations: res, onAwait: false)));
   }
 
-  buyerOrdersListChooseProposal(BuyerOrdersListChooseProposalEvent event, emit) async {
+  buyerOrdersListOrderProposal(BuyerOrdersListChooseOrderEvent event, emit) async {
     //var model = userRepository.user;
     //var model = state.pageState.copyWith(proposalById: event.proposalById);
-
-    emit(BuyerOrdersListChooseProposalState(state.pageState.copyWith(proposalById: event.proposalById)));
+    await applicationRepository.setApplicationData(customerApplication: event.applicationResponse);
+    emit(BuyerOrdersListChooseOrderState(state.pageState.copyWith(orderById: event.orderById)));
   }
 
   buyerOrdersListCreateOrder(BuyerOrdersListCreateOrderEvent event, emit) async {

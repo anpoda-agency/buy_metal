@@ -1,11 +1,13 @@
 import 'package:buy_metal_app/data/network/api/application_api.dart';
 import 'package:buy_metal_app/data/network/api/application_response_api.dart';
 import 'package:buy_metal_app/data/network/api/auth_api.dart';
+import 'package:buy_metal_app/data/network/api/deal_api.dart';
 import 'package:buy_metal_app/data/network/api/user_api.dart';
 import 'package:buy_metal_app/data/network/dio_client.dart';
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/deal_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -37,4 +39,7 @@ Future<void> setup() async {
 
   getIt.registerSingleton(ApplicationResponseApi(dioClient: getIt.get<DioClient>()));
   getIt.registerSingleton(ApplicationResponseRepository(applicationResponseApi: getIt.get<ApplicationResponseApi>()));
+
+  getIt.registerSingleton(DealApi(dioClient: getIt.get<DioClient>()));
+  getIt.registerSingleton(DealRepository(dealApi: getIt.get<DealApi>()));
 }

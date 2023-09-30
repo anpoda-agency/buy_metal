@@ -10,12 +10,13 @@ class DealApi {
 
   DealApi({required this.dioClient});
 
-  Future<Response> dealUploadCreateDeal({required DealUploadCreateDealRequest request}) async {
+  Future<Response> dealUploadCreateDeal({required DealUploadCreateDealRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.dealUploadCreateDealUrl,
         body: request.toJson(),
+        accessToken: accessToken,
       );
       return response;
     } catch (e) {
@@ -52,12 +53,13 @@ class DealApi {
     }
   }
 
-  Future<Response> dealUploadSearch({required DealUploadSearchRequest request}) async {
+  Future<Response> dealUploadSearch({required DealUploadSearchRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.dealUploadSearchUrl,
         body: request.toJson(),
+        accessToken: accessToken,
       );
       return response;
     } catch (e) {

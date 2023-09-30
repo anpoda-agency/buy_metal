@@ -7,8 +7,9 @@ import 'package:buy_metal_app/data/models/application_models/application_upload_
 import 'package:buy_metal_app/data/network/api/application_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
-class ApplicationRepository {
+class ApplicationRepository extends ChangeNotifier {
   final ApplicationApi applicationApi;
 
   ApplicationRepository({required this.applicationApi});
@@ -17,6 +18,15 @@ class ApplicationRepository {
   //const ApplicationGetCustomerApplicationsResponse(); // Попов сказал потом покажет как правильно переписать
   ApplicationGetCustomerApplicationsResponse? get customerApplication {
     return _customerApplication;
+  }
+
+  Future<void> setApplicationData({required ApplicationGetCustomerApplicationsResponse customerApplication}) async {
+    _customerApplication = customerApplication;
+    /* if (token != null) {
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, user.user.id);
+    } */
+    notifyListeners();
   }
 
   Future<ApplicationUploadCreateApplicationResponse> applicationUploadCreateApplication(

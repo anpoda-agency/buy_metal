@@ -19,9 +19,19 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
     super.initState();
   }
  */
+
+  late final ApplicationGetResponsesByApplicationIdResponse args;
+
+  @override
+  void initState() {
+    args = widget.args as ApplicationGetResponsesByApplicationIdResponse;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
+    //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,

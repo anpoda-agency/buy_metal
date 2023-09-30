@@ -2,9 +2,9 @@ part of 'buyer_deals_bloc.dart';
 
 abstract class BuyerDealsEvent {}
 
-class BuyerDealsInit extends BuyerDealsEvent {}
+class BuyerDealsInitEvent extends BuyerDealsEvent {}
 
-class BuyerDealsMsgErr extends BuyerDealsEvent {
+class BuyerDealsMsgErrEvent extends BuyerDealsEvent {
   final String msg;
-  BuyerDealsMsgErr(this.msg);
+  BuyerDealsMsgErrEvent(this.msg);
 }

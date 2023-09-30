@@ -18,8 +18,8 @@ class BuyerOrdersListErrorState extends BuyerOrdersListState {
   const BuyerOrdersListErrorState(PageState pageState) : super(pageState);
 }
 
-class BuyerOrdersListChooseProposalState extends BuyerOrdersListState {
-  const BuyerOrdersListChooseProposalState(PageState pageState) : super(pageState);
+class BuyerOrdersListChooseOrderState extends BuyerOrdersListState {
+  const BuyerOrdersListChooseOrderState(PageState pageState) : super(pageState);
 }
 
 class BuyerOrdersListCreateOrderState extends BuyerOrdersListState {
@@ -31,14 +31,14 @@ class PageState {
   final String errMsg;
   final ApplicationGetCustomerApplicationsResponse applicationResponse;
   final List<ApplicationGetCustomerApplicationsResponse> listApplcations;
-  final String proposalById;
+  final String orderById;
 
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
     this.applicationResponse = const ApplicationGetCustomerApplicationsResponse(),
     this.listApplcations = const [],
-    this.proposalById = '',
+    this.orderById = '',
   });
 
   PageState copyWith({
@@ -46,14 +46,14 @@ class PageState {
     String? errMsg,
     ApplicationGetCustomerApplicationsResponse? applicationResponse,
     List<ApplicationGetCustomerApplicationsResponse>? listApplcations,
-    String? proposalById,
+    String? orderById,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       applicationResponse: applicationResponse ?? this.applicationResponse,
       listApplcations: listApplcations ?? this.listApplcations,
-      proposalById: proposalById ?? this.proposalById,
+      orderById: orderById ?? this.orderById,
     );
   }
 }

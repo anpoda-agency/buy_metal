@@ -24,13 +24,13 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
         pageState: const PageState(),
       ),
       child: BlocConsumer<BuyerOrdersListBloc, BuyerOrdersListState>(listener: (context, state) {
-        if (state is BuyerOrdersListChooseProposalState) {
+        if (state is BuyerOrdersListChooseOrderState) {
           /*  Navigator.of(context).pushNamed(
             '/suppliers_list_page',
             arguments: state.pageState.proposalById,
             //arguments: state.pageState.response.elementAt(index),
             //? */
-          context.read<RouteImpl>().push(OrdersRoutes.suppliersProposalsList.name, args: state.pageState.proposalById);
+          context.read<RouteImpl>().push(OrdersRoutes.suppliersProposalsList.name, args: state.pageState.orderById);
           //);
         }
         if (state is BuyerOrdersListCreateOrderState) {
@@ -89,9 +89,9 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           //arguments: state.pageState.response.elementAt(index),
                                           //?
                                         ); */
-                                    context
-                                        .read<BuyerOrdersListBloc>()
-                                        .add(BuyerOrdersListChooseProposalEvent(listApplcations[index].id));
+                                    context.read<BuyerOrdersListBloc>().add(BuyerOrdersListChooseOrderEvent(
+                                        listApplcations[index].id, listApplcations[index]));
+
 /*                                      
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
