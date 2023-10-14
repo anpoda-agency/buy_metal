@@ -80,6 +80,9 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                     borderRadius: BorderRadius.circular(5)),
                                 child: InkWell(
                                   onTap: () {
+                                    context
+                                        .read<RouteImpl>()
+                                        .push(DealsRoutes.BuyerDealStatusInfo.name, args: listDeals[index].id);
                                     /*  Navigator.of(context).pushNamed(
                                           '/suppliers_list_page',
                                           arguments: listApplcations[index].id,

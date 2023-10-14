@@ -25,9 +25,9 @@ class DealRepository {
     }
   }
 
-  Future<DealGetFindDealByIdResponse> dealGetFindDealById({required String path}) async {
+  Future<DealGetFindDealByIdResponse> dealGetFindDealById({required String path, String? accessToken}) async {
     try {
-      final response = await dealApi.dealGetFindDealById(path: path);
+      final response = await dealApi.dealGetFindDealById(path: path, accessToken: accessToken);
       return DealGetFindDealByIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();

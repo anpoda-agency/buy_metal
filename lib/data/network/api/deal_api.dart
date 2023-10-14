@@ -24,12 +24,13 @@ class DealApi {
     }
   }
 
-  Future<Response> dealGetFindDealById({required String path}) async {
+  Future<Response> dealGetFindDealById({required String path, String? accessToken}) async {
     // request body empty
     //const String endUrl = "/responses";
     try {
       final Response response = await dioClient.get(
         AppConstants.dealGetFindDealByIdUrl + path,
+        accessToken: accessToken,
         //body: request.toJson(),
       );
       return response;

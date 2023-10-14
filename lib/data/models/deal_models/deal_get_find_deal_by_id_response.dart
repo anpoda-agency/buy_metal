@@ -270,6 +270,8 @@ class Response {
   final String rolledType;
   @JsonKey(name: 'similar', fromJson: FromJsonBase.jsonToBool)
   final bool similar;
+  @JsonKey(name: 'supplier')
+  final Supplier supplier;
 
   const Response({
     this.amount = 0,
@@ -288,6 +290,7 @@ class Response {
     this.rolledSize = '',
     this.rolledType = '',
     this.similar = false,
+    this.supplier = const Supplier(),
   });
 
   factory Response.fromJson(Map<String, dynamic> json) => _$ResponseFromJson(json);
@@ -310,6 +313,7 @@ class Response {
     String? rolledSize,
     String? rolledType,
     bool? similar,
+    Supplier? supplier,
   }) {
     return Response(
       amount: amount ?? this.amount,
@@ -328,6 +332,83 @@ class Response {
       rolledSize: rolledSize ?? this.rolledSize,
       rolledType: rolledType ?? this.rolledType,
       similar: similar ?? this.similar,
+      supplier: supplier ?? this.supplier,
+    );
+  }
+}
+
+@JsonSerializable()
+class Supplier {
+  @JsonKey(name: 'blocked', fromJson: FromJsonBase.jsonToBool)
+  final bool blocked;
+  @JsonKey(name: 'companyAddress', fromJson: FromJsonBase.jsonToString)
+  final String companyAddress;
+  @JsonKey(name: 'companyName', fromJson: FromJsonBase.jsonToString)
+  final String companyName;
+  @JsonKey(name: 'email', fromJson: FromJsonBase.jsonToString)
+  final String email;
+  @JsonKey(name: 'fullName', fromJson: FromJsonBase.jsonToString)
+  final String fullName;
+  @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
+  final String id;
+  @JsonKey(name: 'mailConfirmed', fromJson: FromJsonBase.jsonToBool)
+  final bool mailConfirmed;
+  @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)
+  final String phone;
+  @JsonKey(name: 'position', fromJson: FromJsonBase.jsonToString)
+  final String position;
+  @JsonKey(name: 'refresh', fromJson: FromJsonBase.jsonToString)
+  final String refresh;
+  @JsonKey(name: 'registrationDate', fromJson: FromJsonBase.jsonToString)
+  final String registrationDate;
+  @JsonKey(name: 'tin', fromJson: FromJsonBase.jsonToString)
+  final String tin;
+
+  const Supplier({
+    this.blocked = false,
+    this.companyAddress = '',
+    this.companyName = '',
+    this.email = '',
+    this.fullName = '',
+    this.id = '',
+    this.mailConfirmed = false,
+    this.phone = '',
+    this.position = '',
+    this.refresh = '',
+    this.registrationDate = '',
+    this.tin = '',
+  });
+
+  factory Supplier.fromJson(Map<String, dynamic> json) => _$SupplierFromJson(json);
+  Map<String, dynamic> toJson() => _$SupplierToJson(this);
+
+  Supplier copyWith({
+    bool? blocked,
+    String? companyAddress,
+    String? companyName,
+    String? email,
+    String? fullName,
+    String? id,
+    bool? mailConfirmed,
+    String? phone,
+    String? position,
+    String? refresh,
+    String? registrationDate,
+    String? tin,
+  }) {
+    return Supplier(
+      blocked: blocked ?? this.blocked,
+      companyAddress: companyAddress ?? this.companyAddress,
+      companyName: companyName ?? this.companyName,
+      email: email ?? this.email,
+      fullName: fullName ?? this.fullName,
+      id: id ?? this.id,
+      mailConfirmed: mailConfirmed ?? this.mailConfirmed,
+      phone: phone ?? this.phone,
+      position: position ?? this.position,
+      refresh: refresh ?? this.refresh,
+      registrationDate: registrationDate ?? this.registrationDate,
+      tin: tin ?? this.tin,
     );
   }
 }
