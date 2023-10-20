@@ -33,7 +33,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/auth/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.auth(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.auth(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -41,7 +42,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.root(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.root(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -49,7 +51,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.deals(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.deals(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -58,7 +61,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.dealsSupplier(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.dealsSupplier(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -66,7 +70,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.orders(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.orders(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -74,7 +79,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.createOrder(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.createOrder(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -82,7 +88,8 @@ class RouteImpl {
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
-                  builder: (context, GoRouterState state) => RouteConstants.profile(e, args: state.extra),
+                  builder: (context, GoRouterState state) =>
+                      RouteConstants.profile(e, args: state.extra),
                 ),
               )
               .toList(),
@@ -159,7 +166,9 @@ class RouteImpl {
 
   void newRoutesPath(List<String> routesPath, {Object? args}) {
     if (routesPath.isNotEmpty) {
-      for (var i = goRouterImplt.router.routerDelegate.currentConfiguration.matches.length; i > 1; i--) {
+      for (var i = goRouterImplt.router.routerDelegate.currentConfiguration.matches.length;
+          i > 1;
+          i--) {
         pop();
       }
       for (var route in routesPath) {
