@@ -33,6 +33,7 @@ class DescriptionOfSupplierProposalBloc
   }
 
   descriptionOfSupplierProposalConfirmDeal(DescriptionOfSupplierProposalConfirmDealEvent event, emit) async {
+/* 
     var model = state.pageState.request
         .copyWith(applicationId: applicationRepository.customerApplication?.id, applicationResponseId: infoForDeal.id);
 
@@ -40,6 +41,11 @@ class DescriptionOfSupplierProposalBloc
 
     var res = await dealRepository.dealUploadCreateDeal(request: model, accessToken: userAccessToken);
     emit(DescriptionOfSupplierProposalConfirmDealState(state.pageState.copyWith(response: res)));
+
+     */
+
+    // тест перехода на страницу
+    emit(DescriptionOfSupplierProposalConfirmDealState(state.pageState));
   }
 
   descriptionOfSupplierProposalMsgErr(DescriptionOfSupplierProposalMsgErrEvent event, emit) async {

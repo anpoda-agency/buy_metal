@@ -1,5 +1,3 @@
-import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart' as aulr;
-import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_response.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';

@@ -18,6 +18,8 @@ class BuyerDealStatusInfoBloc extends Bloc<BuyerDealStatusInfoEvent, BuyerDealSt
   }) : super(BuyerDealStatusInfoInitialState(pageState)) {
     on<BuyerDealStatusInfoInitEvent>(buyerDealStatusInfoInit);
     on<BuyerDealStatusInfoMsgErrEvent>(buyerDealStatusInfoMsgErr);
+    on<BuyerDealStatusInfoOpenSupplierContactsInfoEvent>(buyerDealStatusInfoOpenSupplierContactsInfo);
+    on<BuyerDealStatusInfoOpenSupplierProposalInfoEvent>(buyerDealStatusInfoOpenSupplierProposalInfo);
     add(BuyerDealStatusInfoInitEvent());
   }
 
@@ -26,7 +28,17 @@ class BuyerDealStatusInfoBloc extends Bloc<BuyerDealStatusInfoEvent, BuyerDealSt
 
     var res = await dealRepository.dealGetFindDealById(path: orderId, accessToken: accessToken);
 
+    await dealRepository.setDealData(deal: res);
+
     emit(BuyerDealStatusInfoUpState(state.pageState.copyWith(response: res)));
+  }
+
+  buyerDealStatusInfoOpenSupplierContactsInfo(BuyerDealStatusInfoOpenSupplierContactsInfoEvent event, emit) async {
+    emit(BuyerDealStatusInfoOpenSupplierContactsInfoState(state.pageState));
+  }
+
+  buyerDealStatusInfoOpenSupplierProposalInfo(BuyerDealStatusInfoOpenSupplierProposalInfoEvent event, emit) async {
+    emit(BuyerDealStatusInfoOpenSupplierProposalInfoState(state.pageState));
   }
 
   buyerDealStatusInfoMsgErr(BuyerDealStatusInfoMsgErrEvent event, emit) async {

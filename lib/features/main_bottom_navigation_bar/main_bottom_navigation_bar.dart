@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 /* class MainBottomNavigationBar extends StatelessWidget {
@@ -56,7 +54,7 @@ class MainBottomNavigationBar extends StatelessWidget {
                         Icons.list,
                         color: Colors.white,
                       ),
-                      label: 'Deals\nSupplierFlow'),
+                      label: 'Deals\nBuyerFlow'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,

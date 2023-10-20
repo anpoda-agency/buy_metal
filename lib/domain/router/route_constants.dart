@@ -6,6 +6,8 @@ import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
 import 'package:buy_metal_app/features/2.4.1.1/ui/buyer_deals_page.dart';
 import 'package:buy_metal_app/features/2.4.2.1/ui/buyer_deal_status_info_page.dart';
+import 'package:buy_metal_app/features/2.4.3/ui/buyer_deal_supplier_contacts_page.dart';
+import 'package:buy_metal_app/features/2.4.4/ui/buyer_deal_supplier_proposal_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
@@ -65,8 +67,12 @@ class RouteConstants {
         appBar: AppBar(title: const Text('deals')),
         body: const Center(child: Text('Page not found')),
       ); */
-    } else if (route == DealsRoutes.BuyerDealStatusInfo) {
+    } else if (route == DealsRoutes.buyerDealStatusInfo) {
       return BuyerDealStatusInfoPage(args: args);
+    } else if (route == DealsRoutes.buyerDealSupplierContacts) {
+      return const BuyerDealSupplierContactsPage();
+    } else if (route == DealsRoutes.buyerDealSupplierProposal) {
+      return const BuyerDealSupplierProposalPage();
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -162,7 +168,9 @@ enum RootRoutes {
 
 enum DealsRoutes {
   deals,
-  BuyerDealStatusInfo,
+  buyerDealStatusInfo,
+  buyerDealSupplierContacts,
+  buyerDealSupplierProposal,
   empty, // reserved name for routing
 }
 

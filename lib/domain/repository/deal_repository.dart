@@ -14,6 +14,14 @@ class DealRepository {
 
   DealRepository({required this.dealApi});
 
+  DealGetFindDealByIdResponse? _deal;
+
+  DealGetFindDealByIdResponse? get deal => _deal;
+
+  Future<void> setDealData({required DealGetFindDealByIdResponse deal}) async {
+    _deal = deal;
+  }
+
   Future<DealUploadCreateDealResponse> dealUploadCreateDeal(
       {required DealUploadCreateDealRequest request, String? accessToken}) async {
     try {

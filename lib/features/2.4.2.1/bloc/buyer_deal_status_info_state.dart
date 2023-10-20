@@ -18,6 +18,14 @@ class BuyerDealStatusInfoErrorState extends BuyerDealStatusInfoState {
   const BuyerDealStatusInfoErrorState(PageState pageState) : super(pageState);
 }
 
+class BuyerDealStatusInfoOpenSupplierContactsInfoState extends BuyerDealStatusInfoState {
+  const BuyerDealStatusInfoOpenSupplierContactsInfoState(PageState pageState) : super(pageState);
+}
+
+class BuyerDealStatusInfoOpenSupplierProposalInfoState extends BuyerDealStatusInfoState {
+  const BuyerDealStatusInfoOpenSupplierProposalInfoState(PageState pageState) : super(pageState);
+}
+
 class PageState {
   final bool onAwait;
   final String errMsg;

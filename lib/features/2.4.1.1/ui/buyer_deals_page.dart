@@ -1,4 +1,3 @@
-import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/deal_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
@@ -82,7 +81,7 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                   onTap: () {
                                     context
                                         .read<RouteImpl>()
-                                        .push(DealsRoutes.BuyerDealStatusInfo.name, args: listDeals[index].id);
+                                        .push(DealsRoutes.buyerDealStatusInfo.name, args: listDeals[index].id);
                                     /*  Navigator.of(context).pushNamed(
                                           '/suppliers_list_page',
                                           arguments: listApplcations[index].id,
