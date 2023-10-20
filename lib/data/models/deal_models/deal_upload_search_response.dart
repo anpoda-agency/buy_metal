@@ -41,8 +41,7 @@ class DealUploadSearchResponse {
     this.updateDate = '',
   });
 
-  factory DealUploadSearchResponse.fromJson(Map<String, dynamic> json) =>
-      _$DealUploadSearchResponseFromJson(json);
+  factory DealUploadSearchResponse.fromJson(Map<String, dynamic> json) => _$DealUploadSearchResponseFromJson(json);
   Map<String, dynamic> toJson() => _$DealUploadSearchResponseToJson(this);
 
   DealUploadSearchResponse copyWith({
@@ -74,8 +73,8 @@ class DealUploadSearchResponse {
 
 @JsonSerializable()
 class Application {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'customer')
@@ -93,7 +92,7 @@ class Application {
   final String materialParams;
 
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -114,7 +113,7 @@ class Application {
     this.materialBrand = '',
     this.materialGost = '',
     this.materialParams = '',
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',
@@ -122,12 +121,11 @@ class Application {
     this.status = '',
   });
 
-  factory Application.fromJson(Map<String, dynamic> json) =>
-      _$ApplicationFromJson(json);
+  factory Application.fromJson(Map<String, dynamic> json) => _$ApplicationFromJson(json);
   Map<String, dynamic> toJson() => _$ApplicationToJson(this);
 
   Application copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     Customer? customer,
     String? id,
@@ -174,7 +172,7 @@ class Customer {
   @JsonKey(name: 'fullName', fromJson: FromJsonBase.jsonToString)
   final String fullName;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
-  final String? id;
+  final String id;
   @JsonKey(name: 'mailConfirmed', fromJson: FromJsonBase.jsonToBool)
   final bool mailConfirmed;
   @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)
@@ -203,8 +201,7 @@ class Customer {
     this.tin = '',
   });
 
-  factory Customer.fromJson(Map<String, dynamic> json) =>
-      _$CustomerFromJson(json);
+  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
   Map<String, dynamic> toJson() => _$CustomerToJson(this);
 
   Customer copyWith({
@@ -240,14 +237,14 @@ class Customer {
 
 @JsonSerializable()
 class Response {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'deliverDate', fromJson: FromJsonBase.jsonToString)
   final String deliverDate;
-  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToInt)
-  final int fullPrice;
+  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToDouble)
+  final double fullPrice;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
   final String id;
   @JsonKey(name: 'inStock', fromJson: FromJsonBase.jsonToBool)
@@ -258,10 +255,10 @@ class Response {
   final String materialGost;
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
-  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToInt)
-  final int price;
+  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToDouble)
+  final double price;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -284,7 +281,7 @@ class Response {
     this.materialGost = '',
     this.materialParams = '',
     this.price = 0,
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',
@@ -292,21 +289,20 @@ class Response {
     this.similar = false,
   });
 
-  factory Response.fromJson(Map<String, dynamic> json) =>
-      _$ResponseFromJson(json);
+  factory Response.fromJson(Map<String, dynamic> json) => _$ResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ResponseToJson(this);
 
   Response copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     String? deliverDate,
-    int? fullPrice,
+    double? fullPrice,
     String? id,
     bool? inStock,
     String? materialBrand,
     String? materialGost,
     String? materialParams,
-    int? price,
+    double? price,
     String? rolledForm,
     String? rolledGost,
     String? rolledParams,

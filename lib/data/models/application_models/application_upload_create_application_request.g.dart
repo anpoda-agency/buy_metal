@@ -12,7 +12,7 @@ ApplicationUploadCreateApplicationRequest
         ApplicationUploadCreateApplicationRequest(
           amount: json['amount'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['amount']),
+              : FromJsonBase.jsonToDouble(json['amount']),
           creationDate: json['creationDate'] == null
               ? ''
               : FromJsonBase.jsonToString(json['creationDate']),
@@ -25,7 +25,8 @@ ApplicationUploadCreateApplicationRequest
           materialParams: json['materialParams'] == null
               ? ''
               : FromJsonBase.jsonToString(json['materialParams']),
-          rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+          rolledForm:
+              $enumDecodeNullable(_$TypeListEnumEnumMap, json['rolledForm']),
           rolledGost: json['rolledGost'] == null
               ? ''
               : FromJsonBase.jsonToString(json['rolledGost']),
@@ -51,10 +52,24 @@ Map<String, dynamic> _$ApplicationUploadCreateApplicationRequestToJson(
       'materialBrand': instance.materialBrand,
       'materialGost': instance.materialGost,
       'materialParams': instance.materialParams,
-      'rolledForm': instance.rolledForm,
+      'rolledForm': _$TypeListEnumEnumMap[instance.rolledForm],
       'rolledGost': instance.rolledGost,
       'rolledParams': instance.rolledParams,
       'rolledSize': instance.rolledSize,
       'rolledType': instance.rolledType,
       'userId': instance.userId,
     };
+
+const _$TypeListEnumEnumMap = {
+  TypeListEnum.STRIP: 'STRIP',
+  TypeListEnum.CIRCLE: 'CIRCLE',
+  TypeListEnum.SQUARE: 'SQUARE',
+  TypeListEnum.WIRE: 'WIRE',
+  TypeListEnum.HEXAGON: 'HEXAGON',
+  TypeListEnum.CHANNEL: 'CHANNEL',
+  TypeListEnum.I_BEAM: 'I_BEAM',
+  TypeListEnum.CORNER: 'CORNER',
+  TypeListEnum.PIPE: 'PIPE',
+  TypeListEnum.SHEET: 'SHEET',
+  TypeListEnum.ARMATURE: 'ARMATURE',
+};

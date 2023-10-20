@@ -9,7 +9,8 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String baseUrl = "http://158.160.29.78:8080/api/v1";
+  static const String ip = '51.250.101.123';
+  static const String baseUrl = "http://$ip:8080/api/v1";
 
   /* //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";
@@ -38,17 +39,13 @@ abstract class AppConstants {
 
   //application-controller urls
   static const String applicationUploadCreateApplicationUrl = "/application";
-  static const String applicationGetResponsesByApplicationIdUrl =
-      "/application/";
-  static const String applicationGetCustomerApplicationsdUrl =
-      "/application/customer/";
+  static const String applicationGetResponsesByApplicationIdUrl = "/application/";
+  static const String applicationGetCustomerApplicationsdUrl = "/application/customer/";
   static const String applicationUploadSearchUrl = "/application/search";
 
   //application-response-controller urls
-  static const String applicationResponseUploadCreateUrl =
-      "/application-response";
-  static const String applicationResponseGetSupplierResponsesUrl =
-      "/application-response/supplier/";
+  static const String applicationResponseUploadCreateUrl = "/application-response";
+  static const String applicationResponseGetSupplierResponsesUrl = "/application-response/supplier/";
 
   //authentication-controller urls
   static const String authUploadLoginUrl = "/auth/login";
@@ -57,11 +54,12 @@ abstract class AppConstants {
 
   //order-controller urls
   static const String dealUploadCreateDealUrl = "/order";
-  static const String dealGetFindDealByIdUrl = "/order";
+  static const String dealGetFindDealByIdUrl = "/order/";
   static const String dealUploadUpdateOrderStatusUrl = "/order/";
   static const String dealUploadSearchUrl = "/order/search";
 
   //user-controller urls
   static const String userUploadBlockUserUrl = "/user/";
   static const String userGetUserPaymentsUrl = "/user/";
+  static const String userUpdateUserUrl = "/user/";
 }

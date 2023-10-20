@@ -12,7 +12,7 @@ ApplicationResponseUploadCreateRequest
         ApplicationResponseUploadCreateRequest(
           amount: json['amount'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['amount']),
+              : FromJsonBase.jsonToDouble(json['amount']),
           applicationId: json['applicationId'] == null
               ? ''
               : FromJsonBase.jsonToString(json['applicationId']),
@@ -24,7 +24,7 @@ ApplicationResponseUploadCreateRequest
               : FromJsonBase.jsonToString(json['deliverDate']),
           fullPrice: json['fullPrice'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['fullPrice']),
+              : FromJsonBase.jsonToDouble(json['fullPrice']),
           inStock: json['inStock'] == null
               ? false
               : FromJsonBase.jsonToBool(json['inStock']),
@@ -37,9 +37,12 @@ ApplicationResponseUploadCreateRequest
           materialParams: json['materialParams'] == null
               ? ''
               : FromJsonBase.jsonToString(json['materialParams']),
-          price:
-              json['price'] == null ? 0 : FromJsonBase.jsonToInt(json['price']),
-          rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+          price: json['price'] == null
+              ? 0
+              : FromJsonBase.jsonToDouble(json['price']),
+          rolledForm: json['rolledForm'] == null
+              ? ''
+              : FromJsonBase.jsonToString(json['rolledForm']),
           rolledGost: json['rolledGost'] == null
               ? ''
               : FromJsonBase.jsonToString(json['rolledGost']),

@@ -20,8 +20,7 @@ class AuthUploadLoginResponse {
     this.user = const User(),
   });
 
-  factory AuthUploadLoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$AuthUploadLoginResponseFromJson(json);
+  factory AuthUploadLoginResponse.fromJson(Map<String, dynamic> json) => _$AuthUploadLoginResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthUploadLoginResponseToJson(this);
 
   AuthUploadLoginResponse copyWith({
@@ -50,7 +49,7 @@ class User {
   @JsonKey(name: 'fullName', fromJson: FromJsonBase.jsonToString)
   final String fullName;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
-  final String? id;
+  final String id;
   @JsonKey(name: 'mailConfirmed', fromJson: FromJsonBase.jsonToBool)
   final bool mailConfirmed;
   @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)

@@ -7,14 +7,14 @@ part 'application_response_upload_create_response.g.dart';
 
 @JsonSerializable()
 class ApplicationResponseUploadCreateResponse {
-  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToInt)
-  final int amount;
+  @JsonKey(name: 'amount', fromJson: FromJsonBase.jsonToDouble)
+  final double amount;
   @JsonKey(name: 'creationDate', fromJson: FromJsonBase.jsonToString)
   final String creationDate;
   @JsonKey(name: 'deliverDate', fromJson: FromJsonBase.jsonToString)
   final String deliverDate;
-  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToInt)
-  final int fullPrice;
+  @JsonKey(name: 'fullPrice', fromJson: FromJsonBase.jsonToDouble)
+  final double fullPrice;
   @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
   final String id;
   @JsonKey(name: 'inStock', fromJson: FromJsonBase.jsonToBool)
@@ -25,10 +25,10 @@ class ApplicationResponseUploadCreateResponse {
   final String materialGost;
   @JsonKey(name: 'materialParams', fromJson: FromJsonBase.jsonToString)
   final String materialParams;
-  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToInt)
-  final int price;
+  @JsonKey(name: 'price', fromJson: FromJsonBase.jsonToDouble)
+  final double price;
   @JsonKey(name: 'rolledForm', fromJson: FromJsonBase.jsonToString)
-  final String? rolledForm;
+  final String rolledForm;
   @JsonKey(name: 'rolledGost', fromJson: FromJsonBase.jsonToString)
   final String rolledGost;
   @JsonKey(name: 'rolledParams', fromJson: FromJsonBase.jsonToString)
@@ -51,7 +51,7 @@ class ApplicationResponseUploadCreateResponse {
     this.materialGost = '',
     this.materialParams = '',
     this.price = 0,
-    this.rolledForm,
+    this.rolledForm = '',
     this.rolledGost = '',
     this.rolledParams = '',
     this.rolledSize = '',
@@ -59,23 +59,21 @@ class ApplicationResponseUploadCreateResponse {
     this.similar = false,
   });
 
-  factory ApplicationResponseUploadCreateResponse.fromJson(
-          Map<String, dynamic> json) =>
+  factory ApplicationResponseUploadCreateResponse.fromJson(Map<String, dynamic> json) =>
       _$ApplicationResponseUploadCreateResponseFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$ApplicationResponseUploadCreateResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ApplicationResponseUploadCreateResponseToJson(this);
 
   ApplicationResponseUploadCreateResponse copyWith({
-    int? amount,
+    double? amount,
     String? creationDate,
     String? deliverDate,
-    int? fullPrice,
+    double? fullPrice,
     String? id,
     bool? inStock,
     String? materialBrand,
     String? materialGost,
     String? materialParams,
-    int? price,
+    double? price,
     String? rolledForm,
     String? rolledGost,
     String? rolledParams,

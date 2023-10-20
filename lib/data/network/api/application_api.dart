@@ -10,11 +10,12 @@ class ApplicationApi {
   ApplicationApi({required this.dioClient});
 
   Future<Response> applicationUploadCreateApplication(
-      {required ApplicationUploadCreateApplicationRequest request}) async {
+      {required ApplicationUploadCreateApplicationRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.applicationUploadCreateApplicationUrl,
+        accessToken: accessToken,
         body: request.toJson(),
       );
       return response;
@@ -23,13 +24,13 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationGetResponsesByApplicationId(
-      {required String path}) async {
+  Future<Response> applicationGetResponsesByApplicationId({required String path, String? accessToken}) async {
     // request body empty
     const String endUrl = "/responses";
     try {
       final Response response = await dioClient.get(
         AppConstants.applicationGetResponsesByApplicationIdUrl + path + endUrl,
+        accessToken: accessToken,
         //body: request.toJson(),
       );
       return response;
@@ -38,13 +39,13 @@ class ApplicationApi {
     }
   }
 
-  Future<Response> applicationGetCustomerApplications(
-      {required String path}) async {
+  Future<Response> applicationGetCustomerApplications({required String path, String? accessToken}) async {
     // request body empty
     //const String endUrl = "/responses";
     try {
       final Response response = await dioClient.get(
         AppConstants.applicationGetCustomerApplicationsdUrl + path,
+        accessToken: accessToken,
         //body: request.toJson(),
       );
       return response;
@@ -54,11 +55,12 @@ class ApplicationApi {
   }
 
   Future<Response> applicationUploadSearch(
-      {required ApplicationUploadSearchRequest request}) async {
+      {required ApplicationUploadSearchRequest request, String? accessToken}) async {
     // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.applicationUploadSearchUrl,
+        accessToken: accessToken,
         body: request.toJson(),
       );
       return response;

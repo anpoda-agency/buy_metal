@@ -1,27 +1,6 @@
-import 'package:buy_metal_app/firebase_options.dart';
-import 'package:buy_metal_app/data/models/firebase_models/order_model.dart';
-import 'package:buy_metal_app/repo/profile_repository.dart';
-import 'package:buy_metal_app/test_pages/test_list_proposals_page.dart';
-import 'package:buy_metal_app/ui/pages/1.8/success_order_page.dart';
-import 'package:buy_metal_app/ui/pages/2.6/success_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/auth_pages/auth_page.dart';
-import 'package:buy_metal_app/ui/pages/1.2/buyer_orders_list_page.dart';
-import 'package:buy_metal_app/ui/pages/1.1/buyer_workplace_page.dart';
-import 'package:buy_metal_app/ui/pages/2.4/create_compliance_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/1.7/create_order_page.dart';
-import 'package:buy_metal_app/ui/pages/2.5/create_similar_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/2.2/description_of_buyer_order_page.dart';
-import 'package:buy_metal_app/ui/pages/1.5/description_of_supplier_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/auth_pages/reg_page.dart';
-import 'package:buy_metal_app/ui/pages/2.1.1/selected_buyer_list_of_orders_page.dart';
-import 'package:buy_metal_app/ui/pages/2.3/selection_of_create_proposal_page.dart';
-import 'package:buy_metal_app/ui/pages/1.6/supplier_contacts_page.dart';
-import 'package:buy_metal_app/ui/pages/1.3/suppliers_list_page.dart';
-import 'package:buy_metal_app/ui/pages/home_page/home_page.dart';
-import 'package:buy_metal_app/ui/pages/profile_pages/profile_edit_page.dart';
-import 'package:buy_metal_app/ui/pages/profile_pages/profile_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:buy_metal_app/di/service_locator.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/features/start_page/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -31,27 +10,13 @@ GetIt getIt = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
-      //     options: const FirebaseOptions(
-      //   apiKey: 'AIzaSyBoXWzMysUo_Wtwrq4ojjHnmnoNf_XAGNA',
-      //   appId: '1:667451689375:android:2e85ac9c87d1a8b38495aa',
-      //   messagingSenderId: '667451689375',
-      //   projectId: 'anmetal-72487',
-      //   storageBucket: 'anmetal-72487.appspot.com',
-      // )
-      );
+
   initGetIt();
   runApp(const MyApp());
 }
 
 void initGetIt() async {
-  var profile = ProfileRepository();
-  getIt.registerSingleton<ProfileRepository>(profile);
-  User? user =
-      FirebaseAuth.instance.currentUser; //поверка на юзера авторизованного
-  if (user != null) {
-    var res = await getIt.get<ProfileRepository>().saveUser(id: user.uid);
-  }
+  setup();
 }
 
 class MyApp extends StatefulWidget {
@@ -64,114 +29,75 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool loading = true;
 
-  @override
-  void initState() {
-    getIt.get<ProfileRepository>().addListener(() {
-      setState(() {
-        loading = false;
-      });
-    });
-    getIt.get<ProfileRepository>().user.id.isEmpty
-        ? setState(() {
-            loading = false;
-          })
-        : null;
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    getIt.get<ProfileRepository>().removeListener(() {});
-    super.dispose();
-  }
+  var router = RouteImpl(
+    rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+    dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
+    dealsSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'dealsSupplier'), // SupplierFlow
+    ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
+    createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+    profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+  );
 
   @override
   Widget build(BuildContext context) {
     final Object? args = ModalRoute.of(context)?.settings.arguments;
 
     return MultiProvider(
-      providers: [
-        RepositoryProvider(create: (context) => getIt),
-      ],
-      child: MaterialApp(
+        providers: [
+          RepositoryProvider(create: (context) => getIt),
+          RepositoryProvider(create: (context) => router),
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router.goRouterImplt.router,
+        )
+
+        /*
+      MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/test_list_proposals_page': (context) =>
-              const TestListProposals(), // тестовая страница для предложений
-
-          '/home_page': (context) => const HomePage(), // new 1.0 start page
+          '/home_page': (context) => const StartPage(), // new 1.0 start page
 
           '/reg_page': (context) => const RegPage(), // registration
 
+          '/reg_confirm_conditions_page': (context) => RegConfirmConditionsPage(arsg: args),
+
           '/auth_page': (context) => const AuthPage(), //1.0 authorization
 
-          '/profile_page': (context) => ProfilePage(
-                args: args,
-              ),
+          '/profile_page': (context) => ProfilePage(args: args),
 
-          '/profile_edit_page': (context) => ProfileEditPage(
-                args: args,
-              ),
+          '/profile_edit_page': (context) => ProfileEditPage(args: args),
 
-          '/buyer_workplace_page': (context) =>
-              const BuyerWorkplacePage(), //1.1
+          '/buyer_workplace_page': (context) => const BuyerWorkplacePage(), //1.1
 
-          '/buyer_orders_list_page': (context) =>
-              const BuyerOrdersListPage(), // 1.2
+          '/buyer_orders_list_page': (context) => const BuyerOrdersListPage(), // 1.2
 
-          '/suppliers_list_page': (context) => SuppliersListPage(
-                args: args,
-              ), //1.3
+          '/suppliers_list_page': (context) => SuppliersProposalsListPage(args: args), //1.3
 
-          '/description_of_supplier_proposal_page': (context) =>
-              DescriptionOfSupplierProposalPage(
-                args: args,
-              ), // 1.5
+          '/description_of_supplier_proposal_page': (context) => DescriptionOfSupplierProposalPage(args: args), // 1.5
 
-          '/supplier_contacts_page': (context) =>
-              SupplierContactsPage(args: args), // 1.6
+          '/supplier_contacts_page': (context) => SupplierContactsPage(args: args), // 1.6
 
           '/create_order_page': (context) => const CreateOrderPage(), //1.7
 
           '/success_order_page': (context) => const SuccessOrderPage(), //1.8
 
-          '/selected_buyer_list_of_orders_page': (context) =>
-              const SelectedBuyerListOfOrdersPage(), // 2.1.1
+          '/selected_buyer_list_of_orders_page': (context) => const SelectedBuyerListOfOrdersPage(), // 2.1.1
 
-          '/description_of_buyer_order_page': (context) =>
-              DescriptionOfBuyerOrderPage(args: args), //2.2
+          '/description_of_buyer_order_page': (context) => DescriptionOfBuyerOrderPage(args: args), //2.2
 
-          '/selection_of_create_proposal_page': (context) =>
-              SelectionOfCreateProposalPage(
-                args: args,
-              ), //2.3
+          '/selection_of_create_proposal_page': (context) => SelectionOfCreateProposalPage(args: args), //2.3
 
-          '/create_compliance_proposal_page': (context) =>
-              CreateComplianceProposalPage(
-                args: args,
-              ), //2.4
+          '/create_compliance_proposal_page': (context) => CreateComplianceProposalPage(args: args), //2.4
 
-          '/create_similar_proposal_page': (context) =>
-              CreateSimilarProposalPage(
-                args: args,
-              ), //2.5
+          '/create_similar_proposal_page': (context) => CreateSimilarProposalPage(args: args), //2.5
 
-          '/success_proposal_page': (context) =>
-              const SuccessProposalPage(), //2.6
+          '/success_proposal_page': (context) => const SuccessProposalPage(), //2.6
         },
-        home: loading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : getIt.get<ProfileRepository>().user.id.isNotEmpty
-                ? getIt.get<ProfileRepository>().user.buyer
-                    ? const BuyerWorkplacePage()
-                    : const SelectedBuyerListOfOrdersPage()
-                : const MyHomePage(
-                    title: 'start',
-                  ),
+        home: const StartPage(),
       ),
-    );
+      */
+        );
   }
 }
 
@@ -186,15 +112,27 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const HomePage();
+    return const StartPage();
   }
 }
 
+// потом разберусь как кэши сделать
+/* 
+Future<bool> init(
+  StreamController<GlobalEvents> gs,
+) async {
+  bool isAuth = await setup();
 
+  var url = Uri.tryParse(AppConstants.baseUrl);
 
+  if (url == null) {
+    throw 'AppConstants.serverUrl error';
+  }
 
+  return isAuth;
+}
 
-
+ */
 
 // import 'package:flutter/material.dart';
 // import 'package:firebase_core/firebase_core.dart';

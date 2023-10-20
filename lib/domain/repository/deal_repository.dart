@@ -1,9 +1,3 @@
-import 'package:buy_metal_app/data/models/application_models/application_get_customer_applications_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_get_find_deal_by_id_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_create_deal_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_create_deal_response.dart';
@@ -11,7 +5,6 @@ import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_request
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_update_order_status_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_update_order_status_response.dart';
-import 'package:buy_metal_app/data/network/api/application_api.dart';
 import 'package:buy_metal_app/data/network/api/deal_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';
 import 'package:dio/dio.dart';
@@ -21,10 +14,18 @@ class DealRepository {
 
   DealRepository({required this.dealApi});
 
+  DealGetFindDealByIdResponse? _deal;
+
+  DealGetFindDealByIdResponse? get deal => _deal;
+
+  Future<void> setDealData({required DealGetFindDealByIdResponse deal}) async {
+    _deal = deal;
+  }
+
   Future<DealUploadCreateDealResponse> dealUploadCreateDeal(
-      {required DealUploadCreateDealRequest request}) async {
+      {required DealUploadCreateDealRequest request, String? accessToken}) async {
     try {
-      final response = await dealApi.dealUploadCreateDeal(request: request);
+      final response = await dealApi.dealUploadCreateDeal(request: request, accessToken: accessToken);
       return DealUploadCreateDealResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -32,10 +33,9 @@ class DealRepository {
     }
   }
 
-  Future<DealGetFindDealByIdResponse> dealGetFindDealById(
-      {required String path}) async {
+  Future<DealGetFindDealByIdResponse> dealGetFindDealById({required String path, String? accessToken}) async {
     try {
-      final response = await dealApi.dealGetFindDealById(path: path);
+      final response = await dealApi.dealGetFindDealById(path: path, accessToken: accessToken);
       return DealGetFindDealByIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -44,11 +44,9 @@ class DealRepository {
   }
 
   Future<DealUploadUpdateOrderStatusResponse> dealUploadUpdateOrderStatus(
-      {required DealUploadUpdateOrderStatusRequest request,
-      required String path}) async {
+      {required DealUploadUpdateOrderStatusRequest request, required String path}) async {
     try {
-      final response = await dealApi.dealUploadUpdateOrderStatus(
-          request: request, path: path);
+      final response = await dealApi.dealUploadUpdateOrderStatus(request: request, path: path);
       return DealUploadUpdateOrderStatusResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -56,11 +54,22 @@ class DealRepository {
     }
   }
 
-  Future<DealUploadSearchResponse> dealUploadSearch(
-      {required DealUploadSearchRequest request}) async {
+  Future<List<DealUploadSearchResponse>> dealUploadSearch({
+    required DealUploadSearchRequest request,
+    String? accessToken,
+  }) async {
     try {
-      final response = await dealApi.dealUploadSearch(request: request);
-      return DealUploadSearchResponse.fromJson(response.data);
+      final response = await dealApi.dealUploadSearch(request: request, accessToken: accessToken);
+      if (response.data is List<dynamic>) {
+        List<DealUploadSearchResponse> list = [];
+        for (dynamic item in response.data as List<dynamic>) {
+          list.add(DealUploadSearchResponse.fromJson(item as Map<String, dynamic>));
+        }
+        return list;
+      }
+      return [];
+
+      //return DealUploadSearchResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

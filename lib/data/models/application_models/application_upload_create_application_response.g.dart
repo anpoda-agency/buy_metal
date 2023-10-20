@@ -12,7 +12,7 @@ ApplicationUploadCreateApplicationResponse
         ApplicationUploadCreateApplicationResponse(
           amount: json['amount'] == null
               ? 0
-              : FromJsonBase.jsonToInt(json['amount']),
+              : FromJsonBase.jsonToDouble(json['amount']),
           creationDate: json['creationDate'] == null
               ? ''
               : FromJsonBase.jsonToString(json['creationDate']),
@@ -29,7 +29,9 @@ ApplicationUploadCreateApplicationResponse
           materialParams: json['materialParams'] == null
               ? ''
               : FromJsonBase.jsonToString(json['materialParams']),
-          rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+          rolledForm: json['rolledForm'] == null
+              ? ''
+              : FromJsonBase.jsonToString(json['rolledForm']),
           rolledGost: json['rolledGost'] == null
               ? ''
               : FromJsonBase.jsonToString(json['rolledGost']),

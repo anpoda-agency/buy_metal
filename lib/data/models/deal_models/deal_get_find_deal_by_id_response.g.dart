@@ -55,8 +55,9 @@ Map<String, dynamic> _$DealGetFindDealByIdResponseToJson(
     };
 
 Application _$ApplicationFromJson(Map<String, dynamic> json) => Application(
-      amount:
-          json['amount'] == null ? 0 : FromJsonBase.jsonToInt(json['amount']),
+      amount: json['amount'] == null
+          ? 0
+          : FromJsonBase.jsonToDouble(json['amount']),
       creationDate: json['creationDate'] == null
           ? ''
           : FromJsonBase.jsonToString(json['creationDate']),
@@ -76,7 +77,9 @@ Application _$ApplicationFromJson(Map<String, dynamic> json) => Application(
       materialParams: json['materialParams'] == null
           ? ''
           : FromJsonBase.jsonToString(json['materialParams']),
-      rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+      rolledForm: json['rolledForm'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['rolledForm']),
       rolledGost: json['rolledGost'] == null
           ? ''
           : FromJsonBase.jsonToString(json['rolledGost']),
@@ -161,8 +164,9 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
     };
 
 Response _$ResponseFromJson(Map<String, dynamic> json) => Response(
-      amount:
-          json['amount'] == null ? 0 : FromJsonBase.jsonToInt(json['amount']),
+      amount: json['amount'] == null
+          ? 0
+          : FromJsonBase.jsonToDouble(json['amount']),
       creationDate: json['creationDate'] == null
           ? ''
           : FromJsonBase.jsonToString(json['creationDate']),
@@ -171,7 +175,7 @@ Response _$ResponseFromJson(Map<String, dynamic> json) => Response(
           : FromJsonBase.jsonToString(json['deliverDate']),
       fullPrice: json['fullPrice'] == null
           ? 0
-          : FromJsonBase.jsonToInt(json['fullPrice']),
+          : FromJsonBase.jsonToDouble(json['fullPrice']),
       id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
       inStock: json['inStock'] == null
           ? false
@@ -185,8 +189,11 @@ Response _$ResponseFromJson(Map<String, dynamic> json) => Response(
       materialParams: json['materialParams'] == null
           ? ''
           : FromJsonBase.jsonToString(json['materialParams']),
-      price: json['price'] == null ? 0 : FromJsonBase.jsonToInt(json['price']),
-      rolledForm: FromJsonBase.jsonToString(json['rolledForm']),
+      price:
+          json['price'] == null ? 0 : FromJsonBase.jsonToDouble(json['price']),
+      rolledForm: json['rolledForm'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['rolledForm']),
       rolledGost: json['rolledGost'] == null
           ? ''
           : FromJsonBase.jsonToString(json['rolledGost']),
@@ -202,6 +209,9 @@ Response _$ResponseFromJson(Map<String, dynamic> json) => Response(
       similar: json['similar'] == null
           ? false
           : FromJsonBase.jsonToBool(json['similar']),
+      supplier: json['supplier'] == null
+          ? const Supplier()
+          : Supplier.fromJson(json['supplier'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ResponseToJson(Response instance) => <String, dynamic>{
@@ -221,4 +231,53 @@ Map<String, dynamic> _$ResponseToJson(Response instance) => <String, dynamic>{
       'rolledSize': instance.rolledSize,
       'rolledType': instance.rolledType,
       'similar': instance.similar,
+      'supplier': instance.supplier,
+    };
+
+Supplier _$SupplierFromJson(Map<String, dynamic> json) => Supplier(
+      blocked: json['blocked'] == null
+          ? false
+          : FromJsonBase.jsonToBool(json['blocked']),
+      companyAddress: json['companyAddress'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['companyAddress']),
+      companyName: json['companyName'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['companyName']),
+      email:
+          json['email'] == null ? '' : FromJsonBase.jsonToString(json['email']),
+      fullName: json['fullName'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['fullName']),
+      id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
+      mailConfirmed: json['mailConfirmed'] == null
+          ? false
+          : FromJsonBase.jsonToBool(json['mailConfirmed']),
+      phone:
+          json['phone'] == null ? '' : FromJsonBase.jsonToString(json['phone']),
+      position: json['position'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['position']),
+      refresh: json['refresh'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['refresh']),
+      registrationDate: json['registrationDate'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['registrationDate']),
+      tin: json['tin'] == null ? '' : FromJsonBase.jsonToString(json['tin']),
+    );
+
+Map<String, dynamic> _$SupplierToJson(Supplier instance) => <String, dynamic>{
+      'blocked': instance.blocked,
+      'companyAddress': instance.companyAddress,
+      'companyName': instance.companyName,
+      'email': instance.email,
+      'fullName': instance.fullName,
+      'id': instance.id,
+      'mailConfirmed': instance.mailConfirmed,
+      'phone': instance.phone,
+      'position': instance.position,
+      'refresh': instance.refresh,
+      'registrationDate': instance.registrationDate,
+      'tin': instance.tin,
     };
