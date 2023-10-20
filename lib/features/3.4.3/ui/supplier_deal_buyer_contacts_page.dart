@@ -1,23 +1,23 @@
 import 'package:buy_metal_app/domain/repository/deal_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
-import 'package:buy_metal_app/features/2.4.3/bloc/buyer_deal_supplier_contacts_bloc.dart';
+import 'package:buy_metal_app/features/3.4.3/bloc/supplier_deal_buyer_contacts_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class BuyerDealSupplierContactsPage extends StatefulWidget {
-  const BuyerDealSupplierContactsPage({
+class SupplierDealBuyerContactsPage extends StatefulWidget {
+  const SupplierDealBuyerContactsPage({
     super.key,
     //required this.args
   });
   //final Object? args;
 
   @override
-  State<BuyerDealSupplierContactsPage> createState() => _BuyerDealSupplierContactsPageState();
+  State<SupplierDealBuyerContactsPage> createState() => _SupplierDealBuyerContactsPageState();
 }
 
-class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContactsPage> {
+class _SupplierDealBuyerContactsPageState extends State<SupplierDealBuyerContactsPage> {
   /* 
   UserModel userModel = const UserModel();
   @override
@@ -41,11 +41,11 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
     return BlocProvider(
-      create: (context) => BuyerDealSupplierContactsBloc(
+      create: (context) => SupplierDealBuyerContactsBloc(
         dealRepository: context.read<GetIt>().get<DealRepository>(),
         pageState: const PageState(),
       ),
-      child: BlocConsumer<BuyerDealSupplierContactsBloc, BuyerDealSupplierContactsState>(
+      child: BlocConsumer<SupplierDealBuyerContactsBloc, SupplierDealBuyerContactsState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
@@ -65,7 +65,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                       const SizedBox(height: 20),
                       const Center(
                         child: Text(
-                          'Поставщик',
+                          'Заказчик',
                           style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -78,7 +78,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.companyName,
+                        state.pageState.dealByIdInfo.application.customer.companyName,
                         //userModel.companyName,
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -93,7 +93,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.companyAddress,
+                        state.pageState.dealByIdInfo.application.customer.companyAddress,
                         //userModel.companyAdress,
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -108,7 +108,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.tin.toString(),
+                        state.pageState.dealByIdInfo.application.customer.tin.toString(),
                         //userModel.inn.toString(),
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -128,7 +128,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.fullName.toString(),
+                        state.pageState.dealByIdInfo.application.customer.fullName.toString(),
                         //userModel.userFIO,
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -162,7 +162,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.phone,
+                        state.pageState.dealByIdInfo.application.customer.phone,
                         //userModel.phone,
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -177,7 +177,7 @@ class _BuyerDealSupplierContactsPageState extends State<BuyerDealSupplierContact
                         height: 10,
                       ),
                       SelectableText(
-                        state.pageState.dealByIdInfo.response.supplier.email,
+                        state.pageState.dealByIdInfo.application.customer.email,
                         //userModel.email,
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),

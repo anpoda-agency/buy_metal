@@ -8,6 +8,10 @@ import 'package:buy_metal_app/features/2.4.1.1/ui/buyer_deals_page.dart';
 import 'package:buy_metal_app/features/2.4.2.1/ui/buyer_deal_status_info_page.dart';
 import 'package:buy_metal_app/features/2.4.3/ui/buyer_deal_supplier_contacts_page.dart';
 import 'package:buy_metal_app/features/2.4.4/ui/buyer_deal_supplier_proposal_page.dart';
+import 'package:buy_metal_app/features/3.4.1/ui/supplier_deals_page.dart';
+import 'package:buy_metal_app/features/3.4.2.1/ui/supplier_deal_status_info_page.dart';
+import 'package:buy_metal_app/features/3.4.3/ui/supplier_deal_buyer_contacts_page.dart';
+import 'package:buy_metal_app/features/3.4.4/ui/supplier_deal_supplier_proposal_page.dart';
 import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
@@ -68,11 +72,33 @@ class RouteConstants {
         body: const Center(child: Text('Page not found')),
       ); */
     } else if (route == DealsRoutes.buyerDealStatusInfo) {
-      return BuyerDealStatusInfoPage(args: args);
+      return SupplierDealStatusInfoPage(args: args);
     } else if (route == DealsRoutes.buyerDealSupplierContacts) {
       return const BuyerDealSupplierContactsPage();
     } else if (route == DealsRoutes.buyerDealSupplierProposal) {
       return const BuyerDealSupplierProposalPage();
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('404')),
+        body: const Center(child: Text('Page not found')),
+      );
+    }
+  }
+
+// SupplierFlow
+  static dealsSupplier(DealsSupplierRoutes route, {Object? args}) {
+    if (route == DealsSupplierRoutes.dealsSupplier) {
+      return const SupplierDealsPage();
+      /* return Scaffold(
+        appBar: AppBar(title: const Text('deals')),
+        body: const Center(child: Text('Page not found')),
+      ); */
+    } else if (route == DealsSupplierRoutes.supplierDealStatusInfo) {
+      return SupplierDealStatusInfoPage(args: args);
+    } else if (route == DealsSupplierRoutes.supplierDealBuyerContacts) {
+      return const SupplierDealBuyerContactsPage();
+    } else if (route == DealsSupplierRoutes.supplierDealSupplierProposal) {
+      return const SupplierDealSupplierProposalPage();
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -171,6 +197,14 @@ enum DealsRoutes {
   buyerDealStatusInfo,
   buyerDealSupplierContacts,
   buyerDealSupplierProposal,
+  empty, // reserved name for routing
+}
+
+enum DealsSupplierRoutes {
+  dealsSupplier,
+  supplierDealStatusInfo,
+  supplierDealBuyerContacts,
+  supplierDealSupplierProposal,
   empty, // reserved name for routing
 }
 

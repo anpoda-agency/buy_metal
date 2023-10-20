@@ -8,6 +8,7 @@ import 'route_constants.dart';
 class RouteImpl {
   final GlobalKey<NavigatorState> rootNavigatorKey;
   final GlobalKey<NavigatorState> dealsNavigatorKey;
+  final GlobalKey<NavigatorState> dealsSupplierNavigatorKey; // SupplierFlow
   final GlobalKey<NavigatorState> ordersNavigatorKey;
   final GlobalKey<NavigatorState> createOrderNavigatorKey;
   final GlobalKey<NavigatorState> profileNavigatorKey;
@@ -16,6 +17,7 @@ class RouteImpl {
   RouteImpl({
     required this.rootNavigatorKey,
     required this.dealsNavigatorKey,
+    required this.dealsSupplierNavigatorKey, // SupplierFlow
     required this.ordersNavigatorKey,
     required this.createOrderNavigatorKey,
     required this.profileNavigatorKey,
@@ -23,6 +25,7 @@ class RouteImpl {
           initPage: RootRoutes.startPage.name,
           rootNavigatorKey: rootNavigatorKey,
           dealsNavigatorKey: dealsNavigatorKey,
+          dealsSupplierNavigatorKey: dealsSupplierNavigatorKey, // SupplierFlow
           ordersNavigatorKey: ordersNavigatorKey,
           createOrderNavigatorKey: createOrderNavigatorKey,
           profileNavigatorKey: profileNavigatorKey,
@@ -47,6 +50,15 @@ class RouteImpl {
                 (e) => GoRoute(
                   path: '/${e.name}',
                   builder: (context, GoRouterState state) => RouteConstants.deals(e, args: state.extra),
+                ),
+              )
+              .toList(),
+          // SupplierFlow
+          dealsSupplier: DealsSupplierRoutes.values // SupplierFlow
+              .map(
+                (e) => GoRoute(
+                  path: '/${e.name}',
+                  builder: (context, GoRouterState state) => RouteConstants.dealsSupplier(e, args: state.extra),
                 ),
               )
               .toList(),

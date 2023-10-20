@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   var router = RouteImpl(
     rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
     dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
+    dealsSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'dealsSupplier'), // SupplierFlow
     ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
     createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
     profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),

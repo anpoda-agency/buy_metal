@@ -57,6 +57,12 @@ class MainBottomNavigationBar extends StatelessWidget {
                       label: 'Deals\nBuyerFlow'),
                   BottomNavigationBarItem(
                       icon: Icon(
+                        Icons.list_alt,
+                        color: Colors.white,
+                      ),
+                      label: 'Deals\nSupplierFlow'),
+                  BottomNavigationBarItem(
+                      icon: Icon(
                         Icons.map,
                         color: Colors.white,
                       ),

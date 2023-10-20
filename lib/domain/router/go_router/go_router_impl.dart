@@ -11,12 +11,14 @@ class GoRouterImplt {
     required String initPage,
     required GlobalKey<NavigatorState> rootNavigatorKey,
     required GlobalKey<NavigatorState> dealsNavigatorKey,
+    required GlobalKey<NavigatorState> dealsSupplierNavigatorKey, // SupplierFlow
     required GlobalKey<NavigatorState> ordersNavigatorKey,
     required GlobalKey<NavigatorState> createOrderNavigatorKey,
     required GlobalKey<NavigatorState> profileNavigatorKey,
     required List<RouteBase> auth,
     required List<RouteBase> root,
     required List<RouteBase> deals,
+    required List<RouteBase> dealsSupplier, // SupplierFlow
     required List<RouteBase> orders,
     required List<RouteBase> createOrder,
     required List<RouteBase> profile,
@@ -37,6 +39,12 @@ class GoRouterImplt {
                   StatefulShellBranch(
                     navigatorKey: dealsNavigatorKey,
                     routes: deals,
+                  ),
+                // SupplierFlow
+                if (dealsSupplier.isNotEmpty) // SupplierFlow
+                  StatefulShellBranch(
+                    navigatorKey: dealsSupplierNavigatorKey,
+                    routes: dealsSupplier,
                   ),
                 if (orders.isNotEmpty)
                   StatefulShellBranch(

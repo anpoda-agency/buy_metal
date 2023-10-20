@@ -9,7 +9,7 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String ip = '62.84.122.154';
+  static const String ip = '51.250.101.123';
   static const String baseUrl = "http://$ip:8080/api/v1";
 
   /* //activation-code-controller urls
