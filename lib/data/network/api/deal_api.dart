@@ -40,13 +40,14 @@ class DealApi {
   }
 
   Future<Response> dealUploadUpdateOrderStatus(
-      {required DealUploadUpdateOrderStatusRequest request, required String path}) async {
+      {required DealUploadUpdateOrderStatusRequest request, required String path, String? accessToken}) async {
     // request body empty
     const String endUrl = "/status";
     try {
       final Response response = await dioClient.post(
         AppConstants.dealUploadUpdateOrderStatusUrl + path + endUrl,
         body: request.toJson(),
+        accessToken: accessToken,
       );
       return response;
     } catch (e) {

@@ -72,7 +72,7 @@ class RouteConstants {
         body: const Center(child: Text('Page not found')),
       ); */
     } else if (route == DealsRoutes.buyerDealStatusInfo) {
-      return SupplierDealStatusInfoPage(args: args);
+      return BuyerDealStatusInfoPage(args: args);
     } else if (route == DealsRoutes.buyerDealSupplierContacts) {
       return const BuyerDealSupplierContactsPage();
     } else if (route == DealsRoutes.buyerDealSupplierProposal) {

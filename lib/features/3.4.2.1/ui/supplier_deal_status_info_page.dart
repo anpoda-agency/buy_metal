@@ -65,8 +65,42 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
         */
         if (state is SupplierDealStatusInfoOpenSupplierContactsInfoState) {}
         if (state is SupplierDealStatusInfoOpenSupplierProposalInfoState) {}
+        if (state is SupplierDealStatusInfoCancelDealState) {
+          context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.sentiment_very_dissatisfied,
+                  color: Colors.amber[900],
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Сделка отменена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+            /*
+                                          action: SnackBarAction(
+                                              label: 'Закрыть',
+                                              onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar),
+                                              */
+          ));
+        }
+        if (state is SupplierDealStatusInfoConfirmDealState) {
+          /// ??? Как обновить историю сделки
+        }
       }, builder: (context, state) {
         var orderInfoById = state.pageState.response;
+        bool isConfirmDeal = false;
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black87,
@@ -129,6 +163,9 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                           /* context
                                               .read<RouteImpl>()
                                               .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoConfirmDealEvent());
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.orange,
@@ -151,6 +188,9 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                           /* context
                                               .read<RouteImpl>()
                                               .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoCancelDealEvent());
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.orange,
