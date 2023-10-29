@@ -1,16 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
-/* class MainBottomNavigationBar extends StatelessWidget {
-  const MainBottomNavigationBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-} */
 
 class MainBottomNavigationBar extends StatelessWidget {
   const MainBottomNavigationBar({
@@ -26,112 +18,60 @@ class MainBottomNavigationBar extends StatelessWidget {
       body: Stack(
         children: [
           navigationShell,
-          //context.read<GetIt>().get<HomeRepository>().isShowNavBar
-          //    ?
           Positioned(
             left: 0,
             right: 0,
-            bottom: 40,
+            bottom: 0,
             child: Container(
-              height: 90,
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  const Color(0xff4779BC),
-                  const Color(0xff1B65C8).withOpacity(0.6),
-                ]),
-                color: Colors.lightBlueAccent[100],
-                borderRadius: BorderRadius.circular(15),
+              height: 60,
+              decoration: const BoxDecoration(
+                color: Colors.white,
               ),
               child: BottomNavigationBar(
                 backgroundColor: Colors.transparent,
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 elevation: 0,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.list,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      label: 'Deals\nBuyerFlow'),
+                      label: 'Сделки З'),
+                  // if (context.read<GetIt>().get<UserRepository>().user!.user.position == 'SUPPLIER')
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.list_alt,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      label: 'Deals\nSupplierFlow'),
+                      label: 'Сделки П'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      label: 'Orders'),
+                      label: 'Заявки'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      label: 'CreateOrder'),
+                      label: 'Создать'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
-                      label: 'Profile'),
-                  /*
-                        if (context.read<GetIt>().get<UserRepository>().isBusiness)
-                          const BottomNavigationBarItem(
-                              icon: Icon(
-                                Icons.work,
-                                color: Colors.black,
-                              ),
-                              label: 'Business'),
-                        */
+                      label: 'Профиль'),
                 ],
                 currentIndex: navigationShell.currentIndex,
                 onTap: (int index) => _onTap(context, index),
               ),
             ),
           )
-          //: const SizedBox.shrink(),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Colors.transparent,
-      //   showUnselectedLabels: true,
-      //   type: BottomNavigationBarType.fixed,
-      //   elevation: 0,
-      //   items: <BottomNavigationBarItem>[
-      //     const BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.list,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Meets'),
-      //     const BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.map,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Map'),
-      //     const BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.person,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Profile'),
-      //     if (context.read<GetIt>().get<UserRepository>().isBusiness)
-      //       const BottomNavigationBarItem(
-      //           icon: Icon(
-      //             Icons.work,
-      //             color: Colors.black,
-      //           ),
-      //           label: 'Business'),
-      //   ],
-      //   currentIndex: navigationShell.currentIndex,
-      //   onTap: (int index) => _onTap(context, index),
-      // ),
     );
   }
 

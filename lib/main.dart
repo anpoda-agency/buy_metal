@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/start_page/start_page.dart';
@@ -28,6 +31,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool loading = true;
+  final globalStream = StreamController<GlobalEvents>.broadcast();
 
   var router = RouteImpl(
     rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),

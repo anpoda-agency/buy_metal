@@ -30,11 +30,13 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
             arguments: state.pageState.proposalById,
             //arguments: state.pageState.response.elementAt(index),
             //? */
-          context.read<RouteImpl>().push(OrdersRoutes.suppliersProposalsList.name, args: state.pageState.orderById);
+          context
+              .read<RouteImpl>()
+              .push(OrdersRoutes.suppliersProposalsList.name, args: state.pageState.orderById);
           //);
         }
         if (state is BuyerOrdersListCreateOrderState) {
-          context.read<RouteImpl>().push(CreateOrderRoutes.createOrder.name);
+          context.read<RouteImpl>().newRoutesPath([CreateOrderRoutes.createOrder.name]);
         }
       }, builder: (context, state) {
         var listApplcations = state.pageState.listApplcations;
@@ -52,7 +54,7 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : listApplcations.isNotEmpty
+              : listApplcations.isEmpty
                   //!(state.pageState.applicationResponse == const ApplicationGetCustomerApplicationsResponse())
                   //listOrdersModels.isNotEmpty
                   ? Padding(
@@ -89,8 +91,9 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           //arguments: state.pageState.response.elementAt(index),
                                           //?
                                         ); */
-                                    context.read<BuyerOrdersListBloc>().add(BuyerOrdersListChooseOrderEvent(
-                                        listApplcations[index].id, listApplcations[index]));
+                                    context.read<BuyerOrdersListBloc>().add(
+                                        BuyerOrdersListChooseOrderEvent(
+                                            listApplcations[index].id, listApplcations[index]));
 
 /*                                      
                                         Navigator.of(context).push(
@@ -102,7 +105,8 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
  */
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -111,21 +115,24 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           children: [
                                             Text(
                                               listApplcations[index].rolledForm,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
                                               listApplcations[index].rolledType,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
                                               listApplcations[index].rolledSize,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                           ],
                                         ),
@@ -137,14 +144,16 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           children: [
                                             Text(
                                               listApplcations[index].rolledParams,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
                                               listApplcations[index].rolledGost,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                           ],
                                         ),
@@ -156,21 +165,24 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           children: [
                                             Text(
                                               listApplcations[index].materialBrand,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
                                               listApplcations[index].materialParams,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                             const SizedBox(
                                               width: 5,
                                             ),
                                             Text(
                                               listApplcations[index].materialGost,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 20, color: Colors.white),
                                             ),
                                           ],
                                         ),
@@ -182,7 +194,8 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                                           children: [
                                             Text(
                                               listApplcations[index].creationDate,
-                                              style: const TextStyle(fontSize: 18, color: Colors.white),
+                                              style: const TextStyle(
+                                                  fontSize: 18, color: Colors.white),
                                             ),
                                           ],
                                         ),
@@ -204,7 +217,8 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                           const Text(
                             'Список заявок пуст',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -214,11 +228,14 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   //Navigator.pushNamed(context, '/create_order_page');
-                                  context.read<BuyerOrdersListBloc>().add(BuyerOrdersListCreateOrderEvent());
+                                  context
+                                      .read<BuyerOrdersListBloc>()
+                                      .add(BuyerOrdersListCreateOrderEvent());
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
                                   'Создать заявку',
