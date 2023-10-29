@@ -12,3 +12,9 @@ class SupplierDealStatusInfoMsgErr extends SupplierDealStatusInfoEvent {
 class SupplierDealStatusInfoOpenSupplierContactsInfoEvent extends SupplierDealStatusInfoEvent {}
 
 class SupplierDealStatusInfoOpenSupplierProposalInfoEvent extends SupplierDealStatusInfoEvent {}
+
+class SupplierDealStatusInfoConfirmDealEvent extends SupplierDealStatusInfoEvent {}
+
+class SupplierDealStatusInfoCancelDealEvent extends SupplierDealStatusInfoEvent {}
+
+class SupplierDealStatusInfoConfirmSupplyEvent extends SupplierDealStatusInfoEvent {}

@@ -40,6 +40,9 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
+    bool isConfirmDeal = false;
+    bool isConfirmContract = false;
+    bool isConfirmSupply = false;
     return BlocProvider(
       create: (context) => SupplierDealStatusInfoBloc(
           orderId: args,
@@ -65,8 +68,93 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
         */
         if (state is SupplierDealStatusInfoOpenSupplierContactsInfoState) {}
         if (state is SupplierDealStatusInfoOpenSupplierProposalInfoState) {}
+        if (state is SupplierDealStatusInfoCancelDealState) {
+          context.read<RouteImpl>().pop();
+          //context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.sentiment_very_dissatisfied,
+                  color: Colors.amber[900],
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Сделка отменена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+            /*
+                                          action: SnackBarAction(
+                                              label: 'Закрыть',
+                                              onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar),
+                                              */
+          ));
+        }
+        if (state is SupplierDealStatusInfoConfirmDealState) {
+          /// ??? Как обновить историю сделки
+          context.read<SupplierDealStatusInfoBloc>().add(SupplierDealStatusInfoInit());
+          isConfirmDeal = true;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 6, 123, 0),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Сделка подтверждена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          ));
+        }
+        if (state is SupplierDealStatusInfoConfirmSupplyState) {
+          context.read<SupplierDealStatusInfoBloc>().add(SupplierDealStatusInfoInit());
+          isConfirmSupply = true;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 6, 123, 0),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Поставка подтверждена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          ));
+        }
       }, builder: (context, state) {
         var orderInfoById = state.pageState.response;
+        //bool isConfirmDeal = false;
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black87,
@@ -129,6 +217,9 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                           /* context
                                               .read<RouteImpl>()
                                               .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoConfirmDealEvent());
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.orange,
@@ -151,6 +242,95 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                           /* context
                                               .read<RouteImpl>()
                                               .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoCancelDealEvent());
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orange,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                        ),
+                                        child: const Text(
+                                          'Отменить сделку',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      // пока хз че тут должно быть, надо подумать
+                      if (state.pageState.response.status == 'AGREED') ...[
+                        /*
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2)),
+                        ),
+                        
+                        Container(),
+                        */
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(width: 2, color: Colors.black),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Для продолжения сделки\nвыберите действие',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoConfirmSupplyEvent());
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.orange,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                        ),
+                                        child: const Text(
+                                          'Подтвердить поставку',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                          context
+                                              .read<SupplierDealStatusInfoBloc>()
+                                              .add(SupplierDealStatusInfoCancelDealEvent());
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.orange,
@@ -215,7 +395,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                       const SizedBox(height: 20),
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.start,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
                             Icons.check,
@@ -239,9 +419,62 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                         ],
                       ),
                       const SizedBox(height: 20),
+                      isConfirmDeal
+                          ? Row(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 6, 123, 0),
+                                ),
+                                const SizedBox(width: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'СТАТУС: Поставщик подтвердил начало сделки',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      '${orderInfoById.creationTime}',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : Row(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.donut_large,
+                                  color: Colors.blue,
+                                ),
+                                const SizedBox(width: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'СТАТУС: Ожидание подтверждения\nсделки от поставщика',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      '${orderInfoById.creationTime}',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                      const SizedBox(height: 20),
+                      // так тут надо разобраться и переписать статусы на лад богата
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.start,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
                             Icons.donut_large,
@@ -252,7 +485,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'СТАТУС: Поставщик подтвердил начало сделки',
+                                'СТАТУС: Ожидание заключение договора',
                                 style: TextStyle(color: Colors.black),
                               ),
                               const SizedBox(height: 10),
@@ -265,7 +498,58 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                         ],
                       ),
                       const SizedBox(height: 20),
-
+                      isConfirmSupply
+                          ? Row(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.check,
+                                  color: Color.fromARGB(255, 6, 123, 0),
+                                ),
+                                const SizedBox(width: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'СТАТУС: Товар отправлен',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      '${orderInfoById.creationTime}',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : Row(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.donut_large,
+                                  color: Colors.blue,
+                                ),
+                                const SizedBox(width: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'СТАТУС: Ожидание подтверждения\nпоставки от поставщика',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      '${orderInfoById.creationTime}',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                      const SizedBox(height: 20),
                       /* Center(
                         child: Text(
                           '${orderInfoById.response.supplier.companyName} ${orderInfoById.response.supplier.companyAddress}',

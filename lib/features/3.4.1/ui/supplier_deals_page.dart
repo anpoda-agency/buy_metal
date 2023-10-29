@@ -53,149 +53,157 @@ class _SupplierDealsPageState extends State<SupplierDealsPage> {
                   //listOrdersModels.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: ListView.builder(
-                          itemCount: //
-                              listDeals.length,
-                          itemBuilder: (BuildContext context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(colors: [
-                                      Colors.black54,
-                                      Colors.grey.shade400,
-                                    ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 5,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                    color: Colors.grey[500],
-                                    border: Border.all(width: 1, color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: InkWell(
-                                  onTap: () {
-                                    context.read<RouteImpl>().push(DealsSupplierRoutes.supplierDealStatusInfo.name,
-                                        args: listDeals[index].id);
-                                    /*  Navigator.of(context).pushNamed(
-                                          '/suppliers_list_page',
-                                          arguments: listApplcations[index].id,
-                                          //arguments: state.pageState.response.elementAt(index),
-                                          //?
-                                        ); */
-                                    //context
-                                    //    .read<BuyerOrdersListBloc>()
-                                    //    .add(BuyerOrdersListChooseProposalEvent(listApplcations[index].id));
-/*                                      
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => SuppliersProposalsListPage(
-                                                    args: listApplcations[index].id,
-                                                  )),
-                                        );
- */
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              //listApplcations[index].rolledForm,
-                                              listDeals[index].application.rolledForm,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              listDeals[index].application.rolledType,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              listDeals[index].application.rolledSize,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              listDeals[index].application.rolledParams,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              listDeals[index].application.rolledGost,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              listDeals[index].application.materialBrand,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              listDeals[index].application.materialParams,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              listDeals[index].application.materialGost,
-                                              style: const TextStyle(fontSize: 20, color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text(
-                                              listDeals[index].status,
-                                              style: const TextStyle(fontSize: 18, color: Colors.white),
-                                            ),
-                                            Text(
-                                              listDeals[index].agreementDate,
-                                              style: const TextStyle(fontSize: 18, color: Colors.white),
-                                            ),
-                                          ],
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<SupplierDealsBloc>().add(SupplierDealsInit());
+                        },
+                        child: ListView.builder(
+                            itemCount: //
+                                listDeals.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                        Colors.black54,
+                                        Colors.grey.shade400,
+                                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: const Offset(0, 3), // changes position of shadow
                                         ),
                                       ],
+                                      color: Colors.grey[500],
+                                      border: Border.all(width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<RouteImpl>()
+                                          .push(DealsSupplierRoutes.supplierDealStatusInfo.name,
+                                              args: listDeals[index].id)
+                                          .then((value) => context.read<SupplierDealsBloc>().add(SupplierDealsInit()));
+                                      /*  Navigator.of(context).pushNamed(
+                                            '/suppliers_list_page',
+                                            arguments: listApplcations[index].id,
+                                            //arguments: state.pageState.response.elementAt(index),
+                                            //?
+                                          ); */
+                                      //context
+                                      //    .read<BuyerOrdersListBloc>()
+                                      //    .add(BuyerOrdersListChooseProposalEvent(listApplcations[index].id));
+                                      /*                                      
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) => SuppliersProposalsListPage(
+                                                      args: listApplcations[index].id,
+                                                    )),
+                                          );
+                       */
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                //listApplcations[index].rolledForm,
+                                                listDeals[index].application.rolledForm,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                listDeals[index].application.rolledType,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                listDeals[index].application.rolledSize,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                listDeals[index].application.rolledParams,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                listDeals[index].application.rolledGost,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                listDeals[index].application.materialBrand,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                listDeals[index].application.materialParams,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                listDeals[index].application.materialGost,
+                                                style: const TextStyle(fontSize: 20, color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 15,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(
+                                                listDeals[index].status,
+                                                style: const TextStyle(fontSize: 18, color: Colors.white),
+                                              ),
+                                              Text(
+                                                listDeals[index].agreementDate,
+                                                style: const TextStyle(fontSize: 18, color: Colors.white),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            }),
+                      ),
                     )
                   : const Center(
                       child: Text(

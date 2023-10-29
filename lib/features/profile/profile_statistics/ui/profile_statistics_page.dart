@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({
+class ProfileStatisticsPage extends StatefulWidget {
+  const ProfileStatisticsPage({
     required this.args,
     super.key,
   });
   final Object? args;
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileStatisticsPage> createState() => _ProfileStatisticsPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
   //late String position;
 
   late String profileType = '';
@@ -169,23 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 //userInfo: 'Попов Данила',
                                 ),
                             //_ProfileInfoDisplayField(fieldName: 'Должность в компании:', userInfo: userModel.post),
-                            _ProfileInfoDisplayField(
-                                fieldName: 'Наименование организации:',
-                                userInfo: state.pageState.user.user.companyName),
-                            _ProfileInfoDisplayField(
-                                fieldName: 'Фактический адрес организации:',
-                                userInfo: state.pageState.user.user.companyAddress),
-                            _ProfileInfoDisplayField(
-                              fieldName: 'ИНН:',
-                              userInfo: state.pageState.user.user.tin,
-                              //userModel.inn.toString()
-                            ),
-                            _ProfileInfoDisplayField(
-                              fieldName: 'Телефон:', userInfo: state.pageState.user.user.phone,
-                              //userModel.phone
-                            ),
-                            _ProfileInfoDisplayField(
-                                fieldName: 'Эл. почта:', userInfo: state.pageState.user.user.email),
+
                             const SizedBox(
                               height: 10,
                             ),
@@ -195,76 +179,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   context.read<ProfileBloc>().add(ProfileUpdateEvent());
-
-                                  //Navigator.of(context)
-                                  //    .pushNamed('/profile_edit_page', arguments: state.pageState.user);
-
-                                  /*
-                                  Navigator.of(context)
-                                      .push(
-                                        MaterialPageRoute(
-                                            builder: (context) => ProfileEditPage(
-                                                  args: userModel,
-                                                )),
-                                      )
-                                      .then((value) => context.read<ProfileBloc>().add(ProfileUpdate()));
-                                    */
-                                  /* .then((value) {
-                              setState(() {});
-                            }); */
                                 },
-                                //Navigator.push(context,MaterialPageRoute(builder: (context) => Page2())).then((value) { setState(() {});
-                                /* () async {
-                            FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((value) async {
-                              if (_selectedType == 1) {
-                                supplier = false;
-                                buyer = true;
-                              }
-                              User? user = FirebaseAuth.instance.currentUser;
-                              String userId = user?.uid ?? '';
-                              List<String> listOrders = [];
-                              _users.doc(userId).set({
-                                "id": user?.uid,
-                                "user_fio": _ownerNameController.text,
-                                "post": _postNameController.text,
-                                'company_name': _companyNameController.text,
-                                'company_adress': _adressController.text,
-                                'inn': _innController.text,
-                                'phone': _phoneController.text,
-                                'email': _emailController.text,
-                                'password': _passwordController.text,
-                                'supplier': supplier,
-                                'buyer': buyer,
-                                'list_orders': listOrders
-                              });
-
-                              if (_selectedType == 0
-                                  // _emailController.text.isNotEmpty &&
-                                  //   _passwordController.text ==
-                                  //       _confirmPasswordController.text &&
-                                  //   _adressController.text.isNotEmpty &&
-                                  //   _companyNameController.text.isNotEmpty &&
-                                  //   _innController.text.isNotEmpty &&
-                                  //   _ogrnController.text.isNotEmpty &&
-                                  //   _ownerNameController.text.isNotEmpty &&
-                                  //   _phoneController.text.isNotEmpty
-                                  ) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/selected_buyer_list_of_orders_page',
-                                    (Route<dynamic> route) => false);
-                              } else {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/buyer_workplace_page',
-                                    (Route<dynamic> route) => false);
-                              }
-                            });
-                          }, */
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orange[700],
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                ),
+                                child: const Text(
+                                  'Редактировать',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 60,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 75,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  context.read<ProfileBloc>().add(ProfileUpdateEvent());
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

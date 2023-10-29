@@ -44,9 +44,10 @@ class DealRepository {
   }
 
   Future<DealUploadUpdateOrderStatusResponse> dealUploadUpdateOrderStatus(
-      {required DealUploadUpdateOrderStatusRequest request, required String path}) async {
+      {required DealUploadUpdateOrderStatusRequest request, required String path, String? accessToken}) async {
     try {
-      final response = await dealApi.dealUploadUpdateOrderStatus(request: request, path: path);
+      final response =
+          await dealApi.dealUploadUpdateOrderStatus(request: request, path: path, accessToken: accessToken);
       return DealUploadUpdateOrderStatusResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
