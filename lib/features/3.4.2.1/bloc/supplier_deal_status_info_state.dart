@@ -34,6 +34,10 @@ class SupplierDealStatusInfoCancelDealState extends SupplierDealStatusInfoState 
   const SupplierDealStatusInfoCancelDealState(PageState pageState) : super(pageState);
 }
 
+class SupplierDealStatusInfoConfirmSupplyState extends SupplierDealStatusInfoState {
+  const SupplierDealStatusInfoConfirmSupplyState(PageState pageState) : super(pageState);
+}
+
 class PageState {
   final bool onAwait;
   final String errMsg;

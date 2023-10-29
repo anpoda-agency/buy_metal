@@ -16,3 +16,5 @@ class SupplierDealStatusInfoOpenSupplierProposalInfoEvent extends SupplierDealSt
 class SupplierDealStatusInfoConfirmDealEvent extends SupplierDealStatusInfoEvent {}
 
 class SupplierDealStatusInfoCancelDealEvent extends SupplierDealStatusInfoEvent {}
+
+class SupplierDealStatusInfoConfirmSupplyEvent extends SupplierDealStatusInfoEvent {}

@@ -11,23 +11,27 @@ class AuthUploadLoginRequest {
   final String email;
   @JsonKey(name: 'password', fromJson: FromJsonBase.jsonToString)
   final String password;
+  @JsonKey(name: 'phone', fromJson: FromJsonBase.jsonToString)
+  final String phone;
 
   const AuthUploadLoginRequest({
     this.email = '',
     this.password = '',
+    this.phone = '',
   });
 
-  factory AuthUploadLoginRequest.fromJson(Map<String, dynamic> json) =>
-      _$AuthUploadLoginRequestFromJson(json);
+  factory AuthUploadLoginRequest.fromJson(Map<String, dynamic> json) => _$AuthUploadLoginRequestFromJson(json);
   Map<String, dynamic> toJson() => _$AuthUploadLoginRequestToJson(this);
 
   AuthUploadLoginRequest copyWith({
     String? email,
     String? password,
+    String? phone,
   }) {
     return AuthUploadLoginRequest(
       email: email ?? this.email,
       password: password ?? this.password,
+      phone: phone ?? this.phone,
     );
   }
 }

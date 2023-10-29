@@ -14,6 +14,8 @@ AuthUploadLoginRequest _$AuthUploadLoginRequestFromJson(
       password: json['password'] == null
           ? ''
           : FromJsonBase.jsonToString(json['password']),
+      phone:
+          json['phone'] == null ? '' : FromJsonBase.jsonToString(json['phone']),
     );
 
 Map<String, dynamic> _$AuthUploadLoginRequestToJson(
@@ -21,4 +23,5 @@ Map<String, dynamic> _$AuthUploadLoginRequestToJson(
     <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
+      'phone': instance.phone,
     };
