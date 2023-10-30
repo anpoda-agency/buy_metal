@@ -40,6 +40,10 @@ class _BuyerDealStatusInfoPageState extends State<BuyerDealStatusInfoPage> {
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
+    /* bool isConfirmDeal = false;
+    bool isConfirmSupply = false;
+    bool isConfirmPayment = false;
+    bool isConfirmReceiptProduct = false; */
     return BlocProvider(
       create: (context) => BuyerDealStatusInfoBloc(
           orderId: args,
@@ -65,6 +69,91 @@ class _BuyerDealStatusInfoPageState extends State<BuyerDealStatusInfoPage> {
         */
         if (state is BuyerDealStatusInfoOpenSupplierContactsInfoState) {}
         if (state is BuyerDealStatusInfoOpenSupplierProposalInfoState) {}
+        if (state is BuyerDealStatusInfoConfirmReceiptProductState) {
+          context.read<BuyerDealStatusInfoBloc>().add(BuyerDealStatusInfoInitEvent());
+
+          //isConfirmReceiptProduct = true;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 6, 123, 0),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Товар получен',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          ));
+        }
+        if (state is BuyerDealStatusInfoConfirmPaymentState) {
+          context.read<BuyerDealStatusInfoBloc>().add(BuyerDealStatusInfoInitEvent());
+
+          //isConfirmReceiptProduct = true;
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 6, 123, 0),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Оплата подтверждена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          ));
+        }
+        if (state is BuyerDealStatusInfoCancelDealState) {
+          context.read<RouteImpl>().pop();
+          //context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.green, width: 2),
+              //borderRadius: BorderRadius.circular(0),
+            ),
+            backgroundColor: Colors.green.withOpacity(0.6),
+            content: Row(
+              children: [
+                Icon(
+                  Icons.sentiment_very_dissatisfied,
+                  color: Colors.amber[900],
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Сделка отменена',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+            /*
+                                          action: SnackBarAction(
+                                              label: 'Закрыть',
+                                              onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar),
+                                              */
+          ));
+        }
       }, builder: (context, state) {
         var orderInfoById = state.pageState.response;
         return Scaffold(
@@ -73,349 +162,501 @@ class _BuyerDealStatusInfoPageState extends State<BuyerDealStatusInfoPage> {
             title: const Text('Процесс сделки'),
             centerTitle: true,
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      Center(
-                        child: Text('СТАТУС: ${orderInfoById.status}',
-                            style: const TextStyle(fontSize: 20, color: Colors.black)),
-                      ),
-                      const SizedBox(height: 5),
-                      Center(
-                        child: Text('Время создания сделки: ${orderInfoById.creationTime}',
-                            style: const TextStyle(fontSize: 20, color: Colors.black)),
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              context.read<RouteImpl>().push(DealsRoutes.buyerDealSupplierContacts.name);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                            ),
-                            child: const Text(
-                              'О поставщике',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              context.read<BuyerDealStatusInfoBloc>().add(BuyerDealStatusInfoInitEvent());
+              /* if (state.pageState.response.status == 'AGREED') isConfirmDeal = true;
+              if (state.pageState.response.status == 'DELIVERY') isConfirmSupply = true; */
+              /* if (state.pageState.response.status == 'AGREED') isConfirmDeal = true;
+              if (state.pageState.response.status == 'WAITING_PAYMENT') isConfirmSupply = true;
+              if (state.pageState.response.status == 'DELIVERY') isConfirmPayment = true;
+              if (state.pageState.response.status == 'COMPLETED') isConfirmReceiptProduct = true; */
+            },
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        Center(
+                          child: Text('СТАТУС: ${orderInfoById.status}',
+                              style: const TextStyle(fontSize: 20, color: Colors.black)),
                         ),
-                      ),
-                      //const SizedBox(height: 0),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              context.read<RouteImpl>().push(DealsRoutes.buyerDealSupplierProposal.name);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                            ),
-                            child: const Text(
-                              'Детали заказа',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
+                        const SizedBox(height: 5),
+                        Center(
+                          child: Text('Время создания сделки: ${orderInfoById.creationTime}',
+                              style: const TextStyle(fontSize: 20, color: Colors.black)),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text('История поставки', style: TextStyle(fontSize: 20)),
-                      const SizedBox(height: 20),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.check,
-                            color: Color.fromARGB(255, 6, 123, 0),
+                        const SizedBox(height: 20),
+                        if (state.pageState.response.status == 'WAITING_PAYMENT') ...[
+                          /* Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2)),
                           ),
-                          const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'СТАТУС: Заказчик начал сделку',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                '${orderInfoById.creationTime}',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.start,
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.donut_large,
-                            color: Colors.blue,
-                          ),
-                          const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'СТАТУС: Поставщик подтвердил начало сделки',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                '${orderInfoById.creationTime}',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-
-                      /* Center(
-                        child: Text(
-                          '${orderInfoById.response.supplier.companyName} ${orderInfoById.response.supplier.companyAddress}',
-                          style: const TextStyle(fontSize: 20, color: Colors.black),
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          'от ${orderInfoById.response.creationDate}',
-                          style: const TextStyle(fontSize: 20, color: Colors.black),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          const Text(
-                            'Соответствие заявке:',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            orderInfoById.response.similar ? 'Аналог' : 'Соответствует', //аналог
-                            style: const TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Text(
-                        'Номенклатура:',
-                        style: TextStyle(fontSize: 18, color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        '${orderInfoById.response.rolledForm} ${orderInfoById.response.rolledType} ${orderInfoById.response.rolledSize}', //форма проката + классификация/тип профиля + размер
-                        style: const TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                      Text(
-                        '${orderInfoById.response.rolledParams} ${orderInfoById.response.rolledGost}', //параметры проката + гост на прокат
-                        style: const TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                      Text(
-                        '${orderInfoById.response.materialBrand} ${orderInfoById.response.materialParams} ${orderInfoById.response.materialGost}', //марка материала + параметры материала + ГОСТ на материал
-                        style: const TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Text(
-                            'Цена за тонну (с НДС):',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${orderInfoById.response.price} RUB',
-                            style: const TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Потребность в заявке:',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${orderInfoById.response.amount} т',
-                            style: const TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Сумма (с НДС):',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${orderInfoById.response.fullPrice.floorToDouble()} RUB',
-                            style: const TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            'Наличие:',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            orderInfoById.response.inStock ? 'Дa' : 'Нет',
-                            style: const TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      orderInfoById.response.deliverDate.isNotEmpty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const Text(
-                                  'Дата поступления на склад поставщика:',
-                                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  orderInfoById.response.deliverDate,
-                                  style: const TextStyle(fontSize: 20, color: Colors.black),
-                                ),
-                              ],
-                            ) 
-                          : const SizedBox.shrink(),
-                          */
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showDialog<void>(
-                            context: context,
-                            //barrierDismissible: false, // user must tap button!
-                            barrierDismissible: true, // user must tap button!
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                //title: Text(dialogTittle),
-                                //const Text('Пароли не совпадают'),
-                                content: const SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      Text(
-                                          'После просмотра контактов\nВы начинаете сделку\nс поставщиком и не сможете взаимодействовать\nс предложениями других поставщиков по данной заявке.'),
-                                      //Text('Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз'),
-                                      //Text('Проверьте, чтобы пароли совпадали'),
-                                    ],
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {},
-                                        //openDeal,
-                                        //onPressed;
-                                        //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
-                                        //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
-                                        /* (context) => context
-                                              .read<DescriptionOfSupplierProposalBloc>()
-                                              .add(DescriptionOfSupplierProposalConfirmDealEvent()); */
-
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.orange,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                                        ),
-                                        child: const Text(
-                                          'Вступить',
-                                          style: TextStyle(fontSize: 20),
+                          Container(), */
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(width: 2, color: Colors.black),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Для продолжения сделки\nвыберите действие',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                            context
+                                                .read<BuyerDealStatusInfoBloc>()
+                                                .add(BuyerDealStatusInfoConfirmPaymentEvent());
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                          child: const Text(
+                                            'Подтвердить оплату',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
                                         ),
                                       ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
-                                          //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.orange,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                            context
+                                                .read<BuyerDealStatusInfoBloc>()
+                                                .add(BuyerDealStatusInfoCancelDealEvent());
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                          child: const Text(
+                                            'Отмена сделки',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
                                         ),
-                                        child: const Text(
-                                          'Закрыть',
-                                          style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        if (state.pageState.response.status == 'DELIVERY') ...[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(width: 2, color: Colors.black),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Для продолжения сделки\nвыберите действие',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 15),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                            context
+                                                .read<BuyerDealStatusInfoBloc>()
+                                                .add(BuyerDealStatusInfoConfirmReceiptProductEvent());
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                          child: const Text(
+                                            'Заказ получен',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
                                         ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            /* context
+                                              .read<RouteImpl>()
+                                              .push(DealsSupplierRoutes.supplierDealBuyerContacts.name); */
+                                            context
+                                                .read<BuyerDealStatusInfoBloc>()
+                                                .add(BuyerDealStatusInfoCancelDealEvent());
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.orange,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                          ),
+                                          child: const Text(
+                                            'Отмена сделки',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                context.read<RouteImpl>().push(DealsRoutes.buyerDealSupplierContacts.name);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                              ),
+                              child: const Text(
+                                'О поставщике',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ),
+                        //const SizedBox(height: 0),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                context.read<RouteImpl>().push(DealsRoutes.buyerDealSupplierProposal.name);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                              ),
+                              child: const Text(
+                                'Детали заказа',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text('История поставки', style: TextStyle(fontSize: 20)),
+                        const SizedBox(height: 20),
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.start,
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check,
+                              color: Color.fromARGB(255, 6, 123, 0),
+                            ),
+                            const SizedBox(width: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'СТАТУС: Заказчик начал сделку',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  '${orderInfoById.creationTime}',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+                        state.pageState.isConfirmDeal
+                            ? Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 6, 123, 0),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Договор заключен',
+                                        //'СТАТУС: Поставщик подтвердил начало сделки',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
                                 ],
-                              );
-                            },
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                        ),
-                        child: const Text(
-                          'Связаться',
-                          style: TextStyle(fontSize: 20),
+                              )
+                            : Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.donut_large,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Ожидание заключения\nдоговора от поставщика',
+                                        //'СТАТУС: Ожидание подтверждения\nсделки от поставщика',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                        const SizedBox(height: 20),
+
+                        //const SizedBox(height: 20),
+                        state.pageState.isConfirmSupply
+                            ? Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 6, 123, 0),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Товар отправлен',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.donut_large,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Ожидание подтверждения\nпоставки от поставщика',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                        const SizedBox(height: 20),
+                        state.pageState.isConfirmPayment
+                            ? Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 6, 123, 0),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Оплата произведена',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.donut_large,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Ожидание подтверждения\nоплаты от заказчика',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                        const SizedBox(height: 20),
+                        state.pageState.isConfirmReceiptProduct
+                            ? Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 6, 123, 0),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Товар получен',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.donut_large,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'СТАТУС: Ожидание получения\nтовара заказчиком',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        '${orderInfoById.creationTime}',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<BuyerDealStatusInfoBloc>().add(BuyerDealStatusInfoInitEvent());
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          ),
+                          child: const Text(
+                            'Обновить историю',
+                            style: TextStyle(fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

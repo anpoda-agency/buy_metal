@@ -81,7 +81,8 @@ class _BuyerDealsPageState extends State<BuyerDealsPage> {
                                   onTap: () {
                                     context
                                         .read<RouteImpl>()
-                                        .push(DealsRoutes.buyerDealStatusInfo.name, args: listDeals[index].id);
+                                        .push(DealsRoutes.buyerDealStatusInfo.name, args: listDeals[index].id)
+                                        .then((value) => context.read<BuyerDealsBloc>().add(BuyerDealsInitEvent()));
                                     /*  Navigator.of(context).pushNamed(
                                           '/suppliers_list_page',
                                           arguments: listApplcations[index].id,

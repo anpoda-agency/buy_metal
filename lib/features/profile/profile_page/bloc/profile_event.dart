@@ -12,3 +12,5 @@ class ProfileMsgErr extends ProfileEvent {
 class ProfileLogOutEvent extends ProfileEvent {}
 
 class ProfileUpdateEvent extends ProfileEvent {}
+
+class ProfileGoStatisticEvent extends ProfileEvent {}

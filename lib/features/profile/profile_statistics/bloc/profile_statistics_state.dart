@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'profile_statistics_bloc.dart';
 
 abstract class ProfileStatisticsState {
@@ -20,19 +21,23 @@ class ProfileStatisticsError extends ProfileStatisticsState {
 class PageState {
   final bool onAwait;
   final String errMsg;
+  final StatisticsGetStatisticsResponse response;
 
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
+    this.response = const StatisticsGetStatisticsResponse(),
   });
 
   PageState copyWith({
     bool? onAwait,
     String? errMsg,
+    StatisticsGetStatisticsResponse? response,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
+      response: response ?? this.response,
     );
   }
 }

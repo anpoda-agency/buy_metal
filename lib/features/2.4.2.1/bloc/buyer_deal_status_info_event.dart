@@ -12,3 +12,9 @@ class BuyerDealStatusInfoMsgErrEvent extends BuyerDealStatusInfoEvent {
 class BuyerDealStatusInfoOpenSupplierContactsInfoEvent extends BuyerDealStatusInfoEvent {}
 
 class BuyerDealStatusInfoOpenSupplierProposalInfoEvent extends BuyerDealStatusInfoEvent {}
+
+class BuyerDealStatusInfoConfirmPaymentEvent extends BuyerDealStatusInfoEvent {}
+
+class BuyerDealStatusInfoConfirmReceiptProductEvent extends BuyerDealStatusInfoEvent {}
+
+class BuyerDealStatusInfoCancelDealEvent extends BuyerDealStatusInfoEvent {}

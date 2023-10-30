@@ -1,8 +1,9 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/statistics_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
-import 'package:buy_metal_app/features/profile/profile_page/bloc/profile_bloc.dart';
+import 'package:buy_metal_app/features/profile/profile_statistics/bloc/profile_statistics_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -64,26 +65,27 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProfileBloc(
+      create: (context) => ProfileStatisticsBloc(
         userRepository: context.read<GetIt>().get<UserRepository>(),
-        authRepository: context.read<GetIt>().get<AuthRepository>(),
+        statisticsRepository: context.read<GetIt>().get<StatisticsRepository>(),
+        //authRepository: context.read<GetIt>().get<AuthRepository>(),
         pageState: const PageState(),
       ),
-      child: BlocConsumer<ProfileBloc, ProfileState>(
+      child: BlocConsumer<ProfileStatisticsBloc, ProfileStatisticsState>(
         listener: (context, state) {
-          if (state is ProfileUpdateUserInfoState) {
+          /* if (state is ProfileStatisticsUpdateUserInfo) {
             //Navigator.of(context).pushNamed('/profile_edit_page', arguments: state.pageState.user).then((value) {
             //  context.read<ProfileBloc>().add(ProfileInit());
             //});
             context
                 .read<RouteImpl>()
                 .push(ProfileRoutes.profileEdit.name, args: state.pageState.user)
-                .then((value) => context.read<ProfileBloc>().add(ProfileInit()));
-          }
-          if (state is ProfileLogOutState) {
+                .then((value) => context.read<ProfileStatisticsBloc>().add(ProfileStatisticsInit()));
+          } */
+          /* if (state is ProfileLogOutState) {
             //Navigator.pushReplacementNamed(context, '/home_page');
             context.read<RouteImpl>().go(RootRoutes.startPage.name);
-          }
+          } */
         },
         builder: (context, state) {
           return Scaffold(
@@ -121,6 +123,9 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             InkWell(
+                              onTap: () {
+                                context.read<RouteImpl>().pop();
+                              },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -158,18 +163,24 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _ProfileInfoDisplayField(
-                              fieldName: 'Вы являетесь:',
-                              userInfo: state.pageState.positionRu,
+                              fieldName: 'Открыто сделок:',
+                              userInfo: state.pageState.response.createdOrdersAmount.toString(),
                               //userModel.userFIO.toString(),
                               //userInfo: 'Попов Данила',
                             ),
                             _ProfileInfoDisplayField(
-                                fieldName: 'ФИО Пользователя:', userInfo: state.pageState.user.user.fullName
-                                //userModel.userFIO.toString(),
-                                //userInfo: 'Попов Данила',
-                                ),
+                              fieldName: 'Завершено сделок:',
+                              userInfo: state.pageState.response.completedOrdersAmount.toString(),
+                              //userModel.userFIO.toString(),
+                              //userInfo: 'Попов Данила',
+                            ),
                             //_ProfileInfoDisplayField(fieldName: 'Должность в компании:', userInfo: userModel.post),
-
+                            _ProfileInfoDisplayField(
+                              fieldName: 'Сделок на сумму:',
+                              userInfo: state.pageState.response.totalMoneyAmount.toString(),
+                              //userModel.userFIO.toString(),
+                              //userInfo: 'Попов Данила',
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
@@ -177,23 +188,24 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                               width: MediaQuery.of(context).size.width,
                               height: 75,
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () {},
+                                /* () {
                                   context.read<ProfileBloc>().add(ProfileUpdateEvent());
-                                },
+                                }, */
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
                                 child: const Text(
-                                  'Редактировать',
+                                  'История сделок',
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
                             ),
                             const SizedBox(
-                              height: 60,
+                              height: 80,
                             ),
-                            SizedBox(
+                            /* SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: 75,
                               child: ElevatedButton(
@@ -232,7 +244,7 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                             ),
                             const SizedBox(
                               height: 20,
-                            ),
+                            ), */
                           ],
                         ),
                       ]),

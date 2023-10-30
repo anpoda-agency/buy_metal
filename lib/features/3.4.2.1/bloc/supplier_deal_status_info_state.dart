@@ -44,6 +44,10 @@ class PageState {
   final DealGetFindDealByIdResponse response;
   final DealUploadUpdateOrderStatusRequest requestUpdateStatus;
   final DealUploadUpdateOrderStatusResponse responseUpdateStatus;
+  final bool isConfirmDeal;
+  final bool isConfirmSupply;
+  final bool isConfirmPayment;
+  final bool isConfirmReceiptProduct;
 
   const PageState({
     this.onAwait = false,
@@ -51,6 +55,10 @@ class PageState {
     this.response = const DealGetFindDealByIdResponse(),
     this.requestUpdateStatus = const DealUploadUpdateOrderStatusRequest(),
     this.responseUpdateStatus = const DealUploadUpdateOrderStatusResponse(),
+    this.isConfirmDeal = false,
+    this.isConfirmSupply = false,
+    this.isConfirmPayment = false,
+    this.isConfirmReceiptProduct = false,
   });
 
   PageState copyWith({
@@ -59,6 +67,10 @@ class PageState {
     DealGetFindDealByIdResponse? response,
     DealUploadUpdateOrderStatusRequest? requestUpdateStatus,
     DealUploadUpdateOrderStatusResponse? responseUpdateStatus,
+    bool? isConfirmDeal,
+    bool? isConfirmSupply,
+    bool? isConfirmPayment,
+    bool? isConfirmReceiptProduct,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
@@ -66,6 +78,10 @@ class PageState {
       response: response ?? this.response,
       requestUpdateStatus: requestUpdateStatus ?? this.requestUpdateStatus,
       responseUpdateStatus: responseUpdateStatus ?? this.responseUpdateStatus,
+      isConfirmDeal: isConfirmDeal ?? this.isConfirmDeal,
+      isConfirmSupply: isConfirmSupply ?? this.isConfirmSupply,
+      isConfirmPayment: isConfirmPayment ?? this.isConfirmPayment,
+      isConfirmReceiptProduct: isConfirmReceiptProduct ?? this.isConfirmReceiptProduct,
     );
   }
 }

@@ -26,6 +26,10 @@ class ProfileLogOutState extends ProfileState {
   const ProfileLogOutState(PageState pageState) : super(pageState);
 }
 
+class ProfileGoStatisticState extends ProfileState {
+  const ProfileGoStatisticState(PageState pageState) : super(pageState);
+}
+
 class PageState {
   final bool onAwait;
   final String errMsg;

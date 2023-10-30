@@ -36,6 +36,33 @@ class SupplierDealStatusInfoBloc extends Bloc<SupplierDealStatusInfoEvent, Suppl
     await dealRepository.setDealData(deal: res);
 
     emit(SupplierDealStatusInfoUp(state.pageState.copyWith(response: res)));
+
+    if (res.status == 'AGREED') {
+      emit(SupplierDealStatusInfoUp(state.pageState.copyWith(
+        isConfirmDeal: true,
+      )));
+    }
+    if (res.status == 'WAITING_PAYMENT') {
+      emit(SupplierDealStatusInfoUp(state.pageState.copyWith(
+        isConfirmDeal: true,
+        isConfirmSupply: true,
+      )));
+    }
+    if (res.status == 'DELIVERY') {
+      emit(SupplierDealStatusInfoUp(state.pageState.copyWith(
+        isConfirmDeal: true,
+        isConfirmSupply: true,
+        isConfirmPayment: true,
+      )));
+    }
+    if (res.status == 'COMPLETED') {
+      emit(SupplierDealStatusInfoUp(state.pageState.copyWith(
+        isConfirmDeal: true,
+        isConfirmSupply: true,
+        isConfirmPayment: true,
+        isConfirmReceiptProduct: true,
+      )));
+    }
   }
 
   supplierDealStatusInfoOpenSupplierContactsInfo(
@@ -102,7 +129,7 @@ class SupplierDealStatusInfoBloc extends Bloc<SupplierDealStatusInfoEvent, Suppl
       //userRepository.user?.user.id ?? '',
     );
 
-    emit(SupplierDealStatusInfoCancelDealState(state.pageState.copyWith(responseUpdateStatus: res)));
+    emit(SupplierDealStatusInfoConfirmSupplyState(state.pageState.copyWith(responseUpdateStatus: res)));
     //emit(SupplierDealStatusInfoCancelDealState(state.pageState));
   }
 

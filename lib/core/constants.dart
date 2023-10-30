@@ -62,4 +62,7 @@ abstract class AppConstants {
   static const String userUploadBlockUserUrl = "/user/";
   static const String userGetUserPaymentsUrl = "/user/";
   static const String userUpdateUserUrl = "/user/";
+
+  //statistics-controller urls
+  static const String statisticsGetStatisticsUrl = "/statistic";
 }

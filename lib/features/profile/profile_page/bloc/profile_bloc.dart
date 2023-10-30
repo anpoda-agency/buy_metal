@@ -21,6 +21,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileMsgErr>(profileMsgErr);
     on<ProfileLogOutEvent>(profileLogOut);
     on<ProfileUpdateEvent>(profileUpdate);
+    on<ProfileGoStatisticEvent>(profileGoStatistic);
     add(ProfileInit());
   }
 
@@ -50,6 +51,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   profileUpdate(ProfileUpdateEvent event, emit) async {
     var model = userRepository.user;
     emit(ProfileUpdateUserInfoState(state.pageState.copyWith(user: model)));
+  }
+
+  profileGoStatistic(ProfileGoStatisticEvent event, emit) async {
+    //var model = userRepository.user;
+    emit(ProfileGoStatisticState(state.pageState));
   }
 
   profileMsgErr(ProfileMsgErr event, emit) async {

@@ -84,6 +84,12 @@ class _ProfilePageState extends State<ProfilePage> {
             //Navigator.pushReplacementNamed(context, '/home_page');
             context.read<RouteImpl>().go(RootRoutes.startPage.name);
           }
+          if (state is ProfileGoStatisticState) {
+            context
+                .read<RouteImpl>()
+                .push(ProfileRoutes.profileStatistics.name, args: state.pageState.user)
+                .then((value) => context.read<ProfileBloc>().add(ProfileInit()));
+          }
         },
         builder: (context, state) {
           return Scaffold(
@@ -121,6 +127,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             InkWell(
+                              /* onTap: () {
+                                context.read<RouteImpl>().pop();
+                              }, */
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -136,6 +145,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             //const SizedBox(width: 20),
                             InkWell(
+                              onTap: () {
+                                context.read<ProfileBloc>().add(ProfileGoStatisticEvent());
+                              },
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

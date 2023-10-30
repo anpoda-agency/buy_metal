@@ -11,7 +11,7 @@ class StatisticsApi {
 
   // Добавить апи метод на получение статистики!!!
 
-  Future<Response> applicationGetResponsesByApplicationId({required String path, String? accessToken}) async {
+  /* Future<Response> applicationGetResponsesByApplicationId({required String path, String? accessToken}) async {
     // request body empty
     const String endUrl = "/responses";
     try {
@@ -22,17 +22,18 @@ class StatisticsApi {
       );
       return response;
     } catch (e) {
-      rethrow;
+      rethrow;ß
     }
-  }
+  } */
 
-  Future<Response> applicationGetCustomerApplications({required String path, String? accessToken}) async {
+  Future<Response> statisticsGetStatistics({required Map<String, dynamic> queryParams, String? accessToken}) async {
     // request body empty
     //const String endUrl = "/responses";
     try {
       final Response response = await dioClient.get(
-        AppConstants.applicationGetCustomerApplicationsdUrl + path,
+        AppConstants.statisticsGetStatisticsUrl,
         accessToken: accessToken,
+        queryParameters: queryParams,
         //body: request.toJson(),
       );
       return response;
