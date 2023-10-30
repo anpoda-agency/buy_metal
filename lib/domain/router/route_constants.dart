@@ -206,6 +206,7 @@ enum DealsRoutes {
   empty, // reserved name for routing
 }
 
+// SupplierFlow
 enum DealsSupplierRoutes {
   dealsSupplier,
   supplierDealStatusInfo,
@@ -222,9 +223,21 @@ enum OrdersRoutes {
   empty, // reserved name for routing
 }
 
+// SupplierFlow
+enum ProposalsRoutes {
+  proposals,
+  empty,
+}
+
 enum CreateOrderRoutes {
   createOrder,
   successOrder,
+  empty,
+}
+
+// SupplierFlow
+enum FindCustomerRoutes {
+  findCustomer,
   empty,
 }
 
@@ -233,4 +246,10 @@ enum ProfileRoutes {
   profileEdit,
   profileStatistics,
   empty, // reserved name for routing
+}
+
+// SupplierFlow
+enum ProfileSupplierRoutes {
+  profileSupplier,
+  empty,
 }

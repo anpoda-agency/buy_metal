@@ -13,15 +13,22 @@ class GoRouterImplt {
     required GlobalKey<NavigatorState> dealsNavigatorKey,
     required GlobalKey<NavigatorState> dealsSupplierNavigatorKey, // SupplierFlow
     required GlobalKey<NavigatorState> ordersNavigatorKey,
+    required GlobalKey<NavigatorState> proposalsNavigatorKey, // SupplierFlow
     required GlobalKey<NavigatorState> createOrderNavigatorKey,
+    required GlobalKey<NavigatorState> findCustomerNavigatorKey, // SupplierFLow
     required GlobalKey<NavigatorState> profileNavigatorKey,
+    required GlobalKey<NavigatorState> profileSupplierNavigatorKey, // SupplierFlow
+
     required List<RouteBase> auth,
     required List<RouteBase> root,
     required List<RouteBase> deals,
     required List<RouteBase> dealsSupplier, // SupplierFlow
     required List<RouteBase> orders,
+    required List<RouteBase> proposals, // SupplierFlow
     required List<RouteBase> createOrder,
+    required List<RouteBase> findCustomer, // SupplierFlow
     required List<RouteBase> profile,
+    required List<RouteBase> profileSupplier, // SupplierFlow
   }) : router = GoRouter(
           navigatorKey: rootNavigatorKey,
           debugLogDiagnostics: kDebugMode,
@@ -51,15 +58,33 @@ class GoRouterImplt {
                     navigatorKey: ordersNavigatorKey,
                     routes: orders,
                   ),
+                // SupplierFlow
+                if (proposals.isNotEmpty) // SupplierFlow
+                  StatefulShellBranch(
+                    navigatorKey: proposalsNavigatorKey,
+                    routes: proposals,
+                  ),
                 if (createOrder.isNotEmpty)
                   StatefulShellBranch(
                     navigatorKey: createOrderNavigatorKey,
                     routes: createOrder,
                   ),
+                // SupplierFlow
+                if (findCustomer.isNotEmpty) // SupplierFlow
+                  StatefulShellBranch(
+                    navigatorKey: findCustomerNavigatorKey,
+                    routes: findCustomer,
+                  ),
                 if (profile.isNotEmpty)
                   StatefulShellBranch(
                     navigatorKey: profileNavigatorKey,
                     routes: profile,
+                  ),
+                // SupplierFlow
+                if (profileSupplier.isNotEmpty) // SupplierFlow
+                  StatefulShellBranch(
+                    navigatorKey: profileSupplierNavigatorKey,
+                    routes: profileSupplier,
                   ),
               ],
             ),

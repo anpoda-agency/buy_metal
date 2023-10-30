@@ -10,8 +10,12 @@ class RouteImpl {
   final GlobalKey<NavigatorState> dealsNavigatorKey;
   final GlobalKey<NavigatorState> dealsSupplierNavigatorKey; // SupplierFlow
   final GlobalKey<NavigatorState> ordersNavigatorKey;
+  final GlobalKey<NavigatorState> proposalsNavigatorKey; // SupplierFlow
   final GlobalKey<NavigatorState> createOrderNavigatorKey;
+  final GlobalKey<NavigatorState> findCustomerNavigatorKey; // SupplierFLow
   final GlobalKey<NavigatorState> profileNavigatorKey;
+  final GlobalKey<NavigatorState> profileSupplierNavigatorKey; // SupplierFlow
+
   GoRouterImplt goRouterImplt;
 
   RouteImpl({
@@ -19,16 +23,22 @@ class RouteImpl {
     required this.dealsNavigatorKey,
     required this.dealsSupplierNavigatorKey, // SupplierFlow
     required this.ordersNavigatorKey,
+    required this.proposalsNavigatorKey, // SupplierFlow
     required this.createOrderNavigatorKey,
+    required this.findCustomerNavigatorKey, // SupplierFlow
     required this.profileNavigatorKey,
+    required this.profileSupplierNavigatorKey, // SupplierFlow
   }) : goRouterImplt = GoRouterImplt(
           initPage: RootRoutes.startPage.name,
           rootNavigatorKey: rootNavigatorKey,
           dealsNavigatorKey: dealsNavigatorKey,
           dealsSupplierNavigatorKey: dealsSupplierNavigatorKey, // SupplierFlow
           ordersNavigatorKey: ordersNavigatorKey,
+          proposalsNavigatorKey: proposalsNavigatorKey, // SupplierFlow
           createOrderNavigatorKey: createOrderNavigatorKey,
+          findCustomerNavigatorKey: findCustomerNavigatorKey, // SupplierFlow
           profileNavigatorKey: profileNavigatorKey,
+          profileSupplierNavigatorKey: profileSupplierNavigatorKey, // SupplierFlow
           auth: RootRoutes.values
               .map(
                 (e) => GoRoute(
@@ -70,6 +80,15 @@ class RouteImpl {
                 ),
               )
               .toList(),
+          // SupplierFlow
+          proposals: ProposalsRoutes.values // SupplierFlow
+              .map(
+                (e) => GoRoute(
+                  path: '/${e.name}',
+                  builder: (context, GoRouterState state) => RouteConstants.proposals(e, args: state.extra),
+                ),
+              )
+              .toList(),
           createOrder: CreateOrderRoutes.values
               .map(
                 (e) => GoRoute(
@@ -78,11 +97,27 @@ class RouteImpl {
                 ),
               )
               .toList(),
+          findCustomer: FindCustomerRoutes.values // SupplierFlow
+              .map(
+                (e) => GoRoute(
+                  path: '/${e.name}',
+                  builder: (context, GoRouterState state) => RouteConstants.findCustomer(e, args: state.extra),
+                ),
+              )
+              .toList(),
           profile: ProfileRoutes.values
               .map(
                 (e) => GoRoute(
                   path: '/${e.name}',
                   builder: (context, GoRouterState state) => RouteConstants.profile(e, args: state.extra),
+                ),
+              )
+              .toList(),
+          profileSupplier: ProfileSupplierRoutes.values // SupplierFlow
+              .map(
+                (e) => GoRoute(
+                  path: '/${e.name}',
+                  builder: (context, GoRouterState state) => RouteConstants.profileSupplier(e, args: state.extra),
                 ),
               )
               .toList(),
