@@ -1,6 +1,9 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SelectionOfCreateProposalPage extends StatefulWidget {
   const SelectionOfCreateProposalPage({super.key, required this.args});
@@ -23,9 +26,20 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
     super.initState();
   }
  */
+
+  late final ApplicationUploadSearchResponse args;
+  //= ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+
+  @override
+  void initState() {
+    args = widget.args as ApplicationUploadSearchResponse;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+    //final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -54,13 +68,17 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.pushNamed(context, '/create_compliance_proposal_page');
-                          Navigator.of(context).push(
+                          /* Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => CreateComplianceProposalPage(
                                       args: args,
                                       //{'order_model': orderModel, 'user_model': userModel},
                                     )),
-                          );
+                          ); */
+                          context.read<RouteImpl>().push(
+                                FindCustomerRoutes.createComplianceProposal.name,
+                                args: args,
+                              );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
@@ -84,7 +102,8 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                       height: 100,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/create_similar_proposal_page', arguments: args);
+                          //Navigator.pushNamed(context, '/create_similar_proposal_page', arguments: args);
+
                           /*
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -94,6 +113,10 @@ class _SelectionOfCreateProposalPageState extends State<SelectionOfCreateProposa
                                     )),
                           );
                           */
+                          context.read<RouteImpl>().push(
+                                FindCustomerRoutes.createSimilarProposal.name,
+                                args: args,
+                              );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,

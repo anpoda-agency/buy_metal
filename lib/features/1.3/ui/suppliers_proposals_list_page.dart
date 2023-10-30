@@ -162,18 +162,12 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                // Бага с фаербазы, отоображало тип заявки наоборот
-                                                //state.pageState.response[index].similar ? 'Аналог' : 'Соответствие',
-                                                state.pageState.response[index].similar ? 'Соответствие' : 'Аналог',
+                                                state.pageState.response[index].similar ? 'Аналог' : 'Соответствие',
                                                 style: TextStyle(
                                                     fontSize: 18,
-                                                    //color: state.pageState.response[index].similar
-                                                    //    ? Colors.yellow
-                                                    //    : Colors.greenAccent),
-                                                    //),
                                                     color: state.pageState.response[index].similar
-                                                        ? Colors.greenAccent
-                                                        : Colors.yellow),
+                                                        ? Colors.yellow
+                                                        : Colors.greenAccent),
                                               ),
                                               Text(
                                                 state.pageState.response[index].creationDate,

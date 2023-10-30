@@ -1,5 +1,7 @@
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.1.1/bloc/selected_buyer_list_of_orders_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,11 +102,16 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
                               borderRadius: BorderRadius.circular(5)),
                           child: InkWell(
                             onTap: () {
+                              /*
                               Navigator.of(context).pushNamed(
                                 '/description_of_buyer_order_page',
                                 arguments: state.pageState.response.elementAt(index),
                               );
-
+                              */
+                              context.read<RouteImpl>().push(
+                                    FindCustomerRoutes.descriptionOfBuyerOrder.name,
+                                    args: state.pageState.response.elementAt(index),
+                                  );
                               /*  
                                 MaterialPageRoute(
                                     builder: (context) => DescriptionOfBuyerOrderPage(

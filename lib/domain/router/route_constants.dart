@@ -4,10 +4,16 @@ import 'package:buy_metal_app/features/1.5/ui/description_of_supplier_proposal_p
 import 'package:buy_metal_app/features/1.6/ui/supplier_contacts_page.dart';
 import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
 import 'package:buy_metal_app/features/1.8/success_order_page.dart';
+import 'package:buy_metal_app/features/2.1.1/ui/selected_buyer_list_of_orders_page.dart';
+import 'package:buy_metal_app/features/2.2/ui/description_of_buyer_order_page.dart';
+import 'package:buy_metal_app/features/2.3/selection_of_create_proposal_page.dart';
 import 'package:buy_metal_app/features/2.4.1.1/ui/buyer_deals_page.dart';
 import 'package:buy_metal_app/features/2.4.2.1/ui/buyer_deal_status_info_page.dart';
 import 'package:buy_metal_app/features/2.4.3/ui/buyer_deal_supplier_contacts_page.dart';
 import 'package:buy_metal_app/features/2.4.4/ui/buyer_deal_supplier_proposal_page.dart';
+import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
+import 'package:buy_metal_app/features/2.5/ui/create_similar_proposal_page.dart';
+import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
 import 'package:buy_metal_app/features/3.4.1/ui/supplier_deals_page.dart';
 import 'package:buy_metal_app/features/3.4.2.1/ui/supplier_deal_status_info_page.dart';
 import 'package:buy_metal_app/features/3.4.3/ui/supplier_deal_buyer_contacts_page.dart';
@@ -131,6 +137,26 @@ class RouteConstants {
     }
   }
 
+// Экрана с ответами поставщика даже нет, попробую сюда закинуть экран
+// из флоу заказчика, где ему ответы высвечиваются ... но там ответы
+// на конкретную заявку, похоже придется в любрм случае новый экран...
+  static proposals(ProposalsRoutes route, {Object? args}) {
+    if (route == ProposalsRoutes.proposals) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Sorry =(')),
+        body: const Center(child: Text('Page in development')),
+      );
+      //return const BuyerOrdersListPage();
+    } else if (route == ProposalsRoutes.proposalDescription) {
+      //return SuppliersProposalsListPage(args: args);
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('404')),
+        body: const Center(child: Text('Page not found')),
+      );
+    }
+  }
+
   static createOrder(CreateOrderRoutes route, {Object? args}) {
     if (route == CreateOrderRoutes.createOrder) {
       /* return Scaffold(
@@ -153,6 +179,33 @@ class RouteConstants {
     }
   }
 
+  // SupplierFlow
+  // SelectionOfCreateProposalPage
+  // CreateComplianceProposalPage
+  // CreateSimilarProposalPage
+  // SuccessProposalPage
+  static findCustomer(FindCustomerRoutes route, {Object? args}) {
+    if (route == FindCustomerRoutes.findCustomer) {
+      return const SelectedBuyerListOfOrdersPage();
+      //
+    } else if (route == FindCustomerRoutes.descriptionOfBuyerOrder) {
+      return DescriptionOfBuyerOrderPage(args: args);
+    } else if (route == FindCustomerRoutes.selectionOfCreateProposal) {
+      return SelectionOfCreateProposalPage(args: args);
+    } else if (route == FindCustomerRoutes.createComplianceProposal) {
+      return CreateComplianceProposalPage(args: args);
+    } else if (route == FindCustomerRoutes.createSimilarProposal) {
+      return CreateSimilarProposalPage(args: args);
+    } else if (route == FindCustomerRoutes.successProposal) {
+      return const SuccessProposalPage();
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('404')),
+        body: const Center(child: Text('Page not found')),
+      );
+    }
+  }
+
   static profile(ProfileRoutes route, {Object? args}) {
     if (route == ProfileRoutes.profile) {
       return ProfilePage(
@@ -163,6 +216,28 @@ class RouteConstants {
         args: args,
       );
     } else if (route == ProfileRoutes.profileStatistics) {
+      return ProfileStatisticsPage(
+        args: args,
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('404')),
+        body: const Center(child: Text('Page not found')),
+      );
+    }
+  }
+
+// SupplierFlow
+  static profileSupplier(ProfileSupplierRoutes route, {Object? args}) {
+    if (route == ProfileSupplierRoutes.profileSupplier) {
+      return ProfilePage(
+        args: args,
+      );
+    } else if (route == ProfileSupplierRoutes.profileSupplierEdit) {
+      return ProfileEditPage(
+        args: args,
+      );
+    } else if (route == ProfileSupplierRoutes.profileSupplierStatistics) {
       return ProfileStatisticsPage(
         args: args,
       );
@@ -226,6 +301,7 @@ enum OrdersRoutes {
 // SupplierFlow
 enum ProposalsRoutes {
   proposals,
+  proposalDescription,
   empty,
 }
 
@@ -238,6 +314,11 @@ enum CreateOrderRoutes {
 // SupplierFlow
 enum FindCustomerRoutes {
   findCustomer,
+  descriptionOfBuyerOrder,
+  selectionOfCreateProposal,
+  createComplianceProposal,
+  createSimilarProposal,
+  successProposal,
   empty,
 }
 
@@ -251,5 +332,7 @@ enum ProfileRoutes {
 // SupplierFlow
 enum ProfileSupplierRoutes {
   profileSupplier,
+  profileSupplierEdit,
+  profileSupplierStatistics,
   empty,
 }

@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.4/bloc/create_compliance_proposal_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +33,7 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
     super.initState();
   }
  */
+
   @override
   Widget build(BuildContext context) {
     //final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
@@ -46,7 +49,8 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
         listener: (context, state) {
           if (state is CreateComplianceProposalError) {}
           if (state is CreateComplianceProposalAllowedToPush) {
-            Navigator.pushReplacementNamed(context, '/success_proposal_page');
+            //Navigator.pushReplacementNamed(context, '/success_proposal_page');
+            context.read<RouteImpl>().go(FindCustomerRoutes.successProposal.name);
           }
         },
         builder: (context, state) {

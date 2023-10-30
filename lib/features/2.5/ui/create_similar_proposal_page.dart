@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.5/bloc/create_similar_proposal_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +55,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+    //var args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+    final args = widget.args as ApplicationUploadSearchResponse;
 
     return BlocProvider(
       create: (context) => CreateSimilarProposalBloc(
@@ -64,7 +67,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
       child: BlocConsumer<CreateSimilarProposalBloc, CreateSimilarProposalState>(
         listener: (context, state) {
           if (state is CreateSimilarProposalAllowedToPushState) {
-            Navigator.pushReplacementNamed(context, '/success_proposal_page');
+            //Navigator.pushReplacementNamed(context, '/success_proposal_page');
+            context.read<RouteImpl>().go(FindCustomerRoutes.successProposal.name);
           }
         },
         builder: (context, state) {

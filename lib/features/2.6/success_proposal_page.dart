@@ -1,4 +1,7 @@
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SuccessProposalPage extends StatelessWidget {
   const SuccessProposalPage({super.key});
@@ -33,10 +36,16 @@ class SuccessProposalPage extends StatelessWidget {
                   height: 65,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context)
+                      context.read<RouteImpl>().go(FindCustomerRoutes.findCustomer.name);
+                      /* context.read<RouteImpl>()
                         ..pop()
                         ..pop()
-                        ..pop();
+                        ..pop(); */
+
+                      /*  Navigator.of(context)
+                        ..pop()
+                        ..pop()
+                        ..pop(); */
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange[700],

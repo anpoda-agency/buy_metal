@@ -34,8 +34,11 @@ class _MyAppState extends State<MyApp> {
     dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
     dealsSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'dealsSupplier'), // SupplierFlow
     ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
+    proposalsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'proposals'), // SupplierFlow
     createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+    findCustomerNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'findCustomer'), // SupplierFlow
     profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+    profileSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileSupplier'), // SupplierFlow
   );
 
   @override

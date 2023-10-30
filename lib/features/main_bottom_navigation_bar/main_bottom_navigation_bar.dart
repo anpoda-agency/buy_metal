@@ -54,31 +54,61 @@ class MainBottomNavigationBar extends StatelessWidget {
                         Icons.list,
                         color: Colors.white,
                       ),
-                      label: 'Deals\nBuyerFlow'),
+                      //label: 'Deals\nBuyerFlow'),
+                      label: 'Сделки (З)'),
                   BottomNavigationBarItem(
+                      // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
                         color: Colors.white,
                       ),
-                      label: 'Deals\nSupplierFlow'),
+                      //label: 'Deals\nSupplierFlow'),
+                      label: 'Сделки (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,
                         color: Colors.white,
                       ),
-                      label: 'Orders'),
+                      //label: 'Orders'),
+                      label: 'Заявки (З)'),
+                  BottomNavigationBarItem(
+                      // SupplierFlow
+                      icon: Icon(
+                        Icons.list_alt,
+                        color: Colors.white,
+                      ),
+                      //label: 'Proposals'),
+                      label: 'Ответы (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         color: Colors.white,
                       ),
-                      label: 'CreateOrder'),
+                      //label: 'CreateOrder'),
+                      label: 'Создать (З)'),
+                  BottomNavigationBarItem(
+                      // SupplierFlow
+                      icon: Icon(
+                        Icons.list_alt,
+                        color: Colors.white,
+                      ),
+                      //label: 'FindCustomer'),
+                      label: 'Клиенты (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         color: Colors.white,
                       ),
-                      label: 'Profile'),
+                      //label: 'Profile'),
+                      label: 'Профиль (З)'),
+                  BottomNavigationBarItem(
+                      // SupplierFlow
+                      icon: Icon(
+                        Icons.list_alt,
+                        color: Colors.white,
+                      ),
+                      //label: 'ProfileSupplier'),
+                      label: 'Профиль (П)'),
                   /*
                         if (context.read<GetIt>().get<UserRepository>().isBusiness)
                           const BottomNavigationBarItem(

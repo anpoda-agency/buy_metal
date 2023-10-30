@@ -1,4 +1,6 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
+import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.2/bloc/description_of_buyer_order_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,9 +30,19 @@ class _DescriptionOfBuyerOrderPageState extends State<DescriptionOfBuyerOrderPag
   }
   */
 
+  late final ApplicationUploadSearchResponse args;
+  //= ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+
+  @override
+  void initState() {
+    args = widget.args as ApplicationUploadSearchResponse;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
+    //final args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
     //final args = widget.args as ApplicationUploadSearchResponse;
 
     return BlocProvider(
@@ -118,10 +130,14 @@ class _DescriptionOfBuyerOrderPageState extends State<DescriptionOfBuyerOrderPag
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(
+                          /* Navigator.of(context).pushNamed(
                             '/selection_of_create_proposal_page',
                             arguments: state.pageState.applicationInfo,
-                          );
+                          ); */
+                          context.read<RouteImpl>().push(
+                                FindCustomerRoutes.selectionOfCreateProposal.name,
+                                args: state.pageState.applicationInfo,
+                              );
                           // Navigator.pushNamed(context, '/selection_of_create_proposal_page');
                           /* Navigator.of(context).push(
                             
