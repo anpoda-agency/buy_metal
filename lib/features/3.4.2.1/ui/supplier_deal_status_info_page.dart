@@ -192,12 +192,12 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                         ),
                         const SizedBox(height: 20),
                         if (state.pageState.response.status == 'OPEN') ...[
-                          Container(
+                          /* Container(
                             width: 100,
                             height: 100,
                             decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2)),
                           ),
-                          Container(),
+                          Container(), */
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                             child: Container(
