@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final Object? args = ModalRoute.of(context)?.settings.arguments;
+    //final Object? args = ModalRoute.of(context)?.settings.arguments;
 
     return MultiProvider(
         providers: [

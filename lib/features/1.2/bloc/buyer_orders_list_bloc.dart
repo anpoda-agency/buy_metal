@@ -44,7 +44,7 @@ class BuyerOrdersListBloc extends Bloc<BuyerOrdersListEvent, BuyerOrdersListStat
         listApplcations.add(ApplicationGetCustomerApplicationsResponse.fromJson(item as Map<String, dynamic>));
       }
     } */
-    print(res);
+    //print(res);
     emit(BuyerOrdersListUpState(state.pageState.copyWith(listApplcations: res, onAwait: false)));
   }
 

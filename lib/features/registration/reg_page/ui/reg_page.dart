@@ -44,7 +44,7 @@ class _RegPageState extends State<RegPage> {
       ),
       child: BlocConsumer<RegBloc, RegState>(listener: (context, state) {
         if (state is RegAllowedToPush) {
-          print('Reg succes for, ${state.pageState.response.user.fullName}');
+          //print('Reg succes for, ${state.pageState.response.user.fullName}');
           // ДОБАВИТЬ В АРГУМЕНТЫ ПЕРЕДАЧУ МОДЕЛИ РЕКВЕСТА НА РЕГИСТРАЦИЮ
           //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
 
@@ -60,7 +60,7 @@ class _RegPageState extends State<RegPage> {
           }
         }
         if (state is RegError) {
-          print(state.pageState.errMsg);
+          //print(state.pageState.errMsg);
         }
       }, builder: (context, state) {
         return Scaffold(

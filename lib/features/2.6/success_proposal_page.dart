@@ -17,8 +17,8 @@ class SuccessProposalPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox.shrink(),
-              Column(
-                children: const [
+              const Column(
+                children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 14),
                     child: Text(

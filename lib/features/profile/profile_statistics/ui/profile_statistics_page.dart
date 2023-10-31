@@ -1,7 +1,5 @@
-import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/statistics_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
-import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/profile/profile_statistics/bloc/profile_statistics_bloc.dart';
 import 'package:flutter/material.dart';
@@ -127,13 +125,13 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                                 context.read<RouteImpl>().pop();
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 2, color: Colors.black),
-                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
-                                child: Text(
+                                child: const Text(
                                   'О компании',
                                   style: TextStyle(fontSize: 20),
                                 ),
@@ -142,13 +140,13 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                             //const SizedBox(width: 20),
                             InkWell(
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 2, color: Colors.black),
-                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
-                                child: Text(
+                                child: const Text(
                                   'Статистика',
                                   style: TextStyle(fontSize: 20),
                                 ),

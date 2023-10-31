@@ -14,6 +14,8 @@ import 'package:buy_metal_app/features/2.4.4/ui/buyer_deal_supplier_proposal_pag
 import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
 import 'package:buy_metal_app/features/2.5/ui/create_similar_proposal_page.dart';
 import 'package:buy_metal_app/features/2.6/success_proposal_page.dart';
+import 'package:buy_metal_app/features/3.2.1/ui/supplier_proposals_page.dart';
+import 'package:buy_metal_app/features/3.2.2/ui/supplier_proposal_description_page.dart';
 import 'package:buy_metal_app/features/3.4.1/ui/supplier_deals_page.dart';
 import 'package:buy_metal_app/features/3.4.2.1/ui/supplier_deal_status_info_page.dart';
 import 'package:buy_metal_app/features/3.4.3/ui/supplier_deal_buyer_contacts_page.dart';
@@ -142,13 +144,9 @@ class RouteConstants {
 // на конкретную заявку, похоже придется в любрм случае новый экран...
   static proposals(ProposalsRoutes route, {Object? args}) {
     if (route == ProposalsRoutes.proposals) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Sorry =(')),
-        body: const Center(child: Text('Page in development')),
-      );
-      //return const BuyerOrdersListPage();
-    } else if (route == ProposalsRoutes.proposalDescription) {
-      //return SuppliersProposalsListPage(args: args);
+      return const SuppliersProposalsPage();
+    } else if (route == ProposalsRoutes.supplierProposalDescription) {
+      return SupplierProposalDescriptionPage(args: args);
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -301,7 +299,7 @@ enum OrdersRoutes {
 // SupplierFlow
 enum ProposalsRoutes {
   proposals,
-  proposalDescription,
+  supplierProposalDescription,
   empty,
 }
 

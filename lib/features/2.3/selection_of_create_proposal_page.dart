@@ -1,7 +1,6 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
-import 'package:buy_metal_app/features/2.4/ui/create_compliance_proposal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

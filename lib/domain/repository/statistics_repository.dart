@@ -1,10 +1,4 @@
 // ...
-import 'package:buy_metal_app/data/models/application_models/application_get_customer_applications_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
 import 'package:buy_metal_app/data/models/statistics_models/statistics_get_statistics_response.dart';
 import 'package:buy_metal_app/data/network/api/statistics_api.dart';
 import 'package:buy_metal_app/data/network/dio_exception.dart';

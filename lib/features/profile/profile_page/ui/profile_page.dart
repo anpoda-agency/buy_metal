@@ -131,13 +131,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 context.read<RouteImpl>().pop();
                               }, */
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 2, color: Colors.black),
-                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
-                                child: Text(
+                                child: const Text(
                                   'О компании',
                                   style: TextStyle(fontSize: 20),
                                 ),
@@ -149,13 +149,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 context.read<ProfileBloc>().add(ProfileGoStatisticEvent());
                               },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 2, color: Colors.black),
-                                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
-                                child: Text(
+                                child: const Text(
                                   'Статистика',
                                   style: TextStyle(fontSize: 20),
                                 ),

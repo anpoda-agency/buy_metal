@@ -1,6 +1,4 @@
 import 'package:buy_metal_app/domain/repository/deal_repository.dart';
-import 'package:buy_metal_app/domain/router/route_constants.dart';
-import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/3.4.3/bloc/supplier_deal_buyer_contacts_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

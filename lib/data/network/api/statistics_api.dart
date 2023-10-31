@@ -1,6 +1,4 @@
 import 'package:buy_metal_app/core/constants.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
-import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
 import 'package:buy_metal_app/data/network/dio_client.dart';
 import 'package:dio/dio.dart';
 

@@ -31,7 +31,7 @@ class _AuthPageState extends State<AuthPage> {
       ),
       child: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
         if (state is AuthAllowedToPush) {
-          print('Login succes for, ${state.pageState.response.user.fullName}');
+          //print('Login succes for, ${state.pageState.response.user.fullName}');
           if (state.pageState.response.user.position == 'SUPPLIER') {
             //Navigator.pushNamedAndRemoveUntil(
             //    context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
@@ -42,7 +42,7 @@ class _AuthPageState extends State<AuthPage> {
           }
         }
         if (state is AuthError) {
-          print(state.pageState.errMsg);
+          //print(state.pageState.errMsg);
         }
       }, builder: (context, state) {
         return Scaffold(
@@ -92,9 +92,7 @@ class _AuthPageState extends State<AuthPage> {
                           authTextField(
                             false,
                             _emailTextController,
-                            (value) => context
-                                .read<AuthBloc>()
-                                .add(AuthInputEmail(value)),
+                            (value) => context.read<AuthBloc>().add(AuthInputEmail(value)),
                           ),
                           const SizedBox(
                             height: 20,
@@ -109,9 +107,7 @@ class _AuthPageState extends State<AuthPage> {
                           authTextField(
                             true,
                             _passwordTextController,
-                            (value) => context
-                                .read<AuthBloc>()
-                                .add(AuthInputPassword(value)),
+                            (value) => context.read<AuthBloc>().add(AuthInputPassword(value)),
                           ),
                           const SizedBox(
                             height: 30,
@@ -121,9 +117,7 @@ class _AuthPageState extends State<AuthPage> {
                               height: 75,
                               child: authButton(
                                 context,
-                                () => context
-                                    .read<AuthBloc>()
-                                    .add(AuthSendLogin()),
+                                () => context.read<AuthBloc>().add(AuthSendLogin()),
                                 /* 
                                     context,
                                     () => FirebaseAuth.instance
@@ -181,16 +175,13 @@ TextField authTextField(
         filled: true,
         fillColor: Colors.grey[300],
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.white)),
+            borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
         focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(15))),
-    keyboardType: isPasswordType
-        ? TextInputType.visiblePassword
-        : TextInputType.emailAddress,
+    keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
   );
 }
 

@@ -1,23 +1,19 @@
-import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
-import 'package:buy_metal_app/domain/repository/application_repository.dart';
-import 'package:buy_metal_app/domain/repository/deal_repository.dart';
+import 'package:buy_metal_app/data/models/application_response_models/application_response_get_supplier_responses_response.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
-import 'package:buy_metal_app/domain/router/route_constants.dart';
-import 'package:buy_metal_app/domain/router/route_impl.dart';
-import 'package:buy_metal_app/features/1.5/bloc/description_of_supplier_proposal_bloc.dart';
+import 'package:buy_metal_app/features/3.2.2/bloc/supplier_proposal_description_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class DescriptionOfSupplierProposalPage extends StatefulWidget {
-  const DescriptionOfSupplierProposalPage({super.key, required this.args});
+class SupplierProposalDescriptionPage extends StatefulWidget {
+  const SupplierProposalDescriptionPage({super.key, required this.args});
   final Object? args;
 
   @override
-  State<DescriptionOfSupplierProposalPage> createState() => _DescriptionOfSupplierProposalPageState();
+  State<SupplierProposalDescriptionPage> createState() => _SupplierProposalDescriptionPageState();
 }
 
-class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplierProposalPage> {
+class _SupplierProposalDescriptionPageState extends State<SupplierProposalDescriptionPage> {
   /* 
   AnswerOrderModel answerModel = const AnswerOrderModel();
   UserModel userModel = const UserModel();
@@ -30,27 +26,29 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
     super.initState();
   }
  */
-  late final ApplicationGetResponsesByApplicationIdResponse args;
+  /* late final ApplicationResponseGetSupplierResponsesResponse args;
 
   @override
   void initState() {
-    args = widget.args as ApplicationGetResponsesByApplicationIdResponse;
+    args = widget.args as ApplicationResponseGetSupplierResponsesResponse;
 
     super.initState();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
+    final args = widget.args as ApplicationResponseGetSupplierResponsesResponse;
     return BlocProvider(
-      create: (context) => DescriptionOfSupplierProposalBloc(
-          infoForDeal: args,
-          dealRepository: context.read<GetIt>().get<DealRepository>(),
-          applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
+      create: (context) => SupplierProposalDescriptionBloc(
+          proposalInfo: args,
+          //dealRepository: context.read<GetIt>().get<DealRepository>(),
+          //applicationRepository: context.read<GetIt>().get<ApplicationRepository>(),
           userRepository: context.read<GetIt>().get<UserRepository>(),
           pageState: const PageState()),
-      child: BlocConsumer<DescriptionOfSupplierProposalBloc, DescriptionOfSupplierProposalState>(
-          listener: (context, state) {
+      child:
+          BlocConsumer<SupplierProposalDescriptionBloc, SupplierProposalDescriptionState>(listener: (context, state) {
+        /*
         if (state is DescriptionOfSupplierProposalConfirmDealState) {
           //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
 
@@ -63,6 +61,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
           //context.read<RouteImpl>().go(DealsRoutes.deals.name);
           context.read<RouteImpl>().go(OrdersRoutes.supplierContacts.name, args: args);
         }
+        */
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -222,6 +221,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                         : const SizedBox.shrink(),
                   ],
                 ),
+                /*
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: SizedBox(
@@ -229,19 +229,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
-                        /* 
-                        CreateDealDialog(
-                          //dialogTittle: 'Ошибка запроса',
-                          dialogText:
-                              'После просмотра контактов\nВы начинаете сделку\nс поставщиком и не сможете взаимодействовать\nс предложениями других поставщиков по данной заявке.',
-                          //onPressed:
-                          /* (context) => context
-                              .read<DescriptionOfSupplierProposalBloc>()
-                              .add(DescriptionOfSupplierProposalConfirmDealEvent()), */
-                          context: context,
-                        ).showMyDialog(context);
- */
+                     
                         /*
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -255,10 +243,11 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                         //    .read<DescriptionOfSupplierProposalBloc>()
                         //    .add(DescriptionOfSupplierProposalConfirmDealEvent());
                         openDeal() {
-                          //Navigator.of(context).pop();
+                          /*
                           context
                               .read<DescriptionOfSupplierProposalBloc>()
                               .add(DescriptionOfSupplierProposalConfirmDealEvent());
+                          */
                         }
 
                         showDialog<void>(
@@ -289,9 +278,9 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                                         //openDeal;
 
                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                          margin: const EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+                                          margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
                                           behavior: SnackBarBehavior.floating,
-                                          shape: const RoundedRectangleBorder(
+                                          shape: RoundedRectangleBorder(
                                             side: BorderSide(color: Colors.green, width: 2),
                                             //borderRadius: BorderRadius.circular(0),
                                           ),
@@ -368,6 +357,7 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                     ),
                   ),
                 ),
+                */
               ],
             ),
           ),
@@ -425,9 +415,11 @@ class CreateDealDialog {
                     //onPressed;
                     //Navigator.of(context).pushNamed('/supplier_contacts_page', arguments: args);
                     //context.read<DescriptionOfSupplierProposalBloc>().add(DescriptionOfSupplierProposalConfirmDealEvent());
+                    /*
                     (context) => context
                         .read<DescriptionOfSupplierProposalBloc>()
                         .add(DescriptionOfSupplierProposalConfirmDealEvent());
+                    */
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

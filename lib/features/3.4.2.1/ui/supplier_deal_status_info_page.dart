@@ -74,9 +74,9 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
           context.read<RouteImpl>().pop();
           //context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 140, horizontal: 20),
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.green, width: 2),
               //borderRadius: BorderRadius.circular(0),
             ),
@@ -87,8 +87,8 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                   Icons.sentiment_very_dissatisfied,
                   color: Colors.amber[900],
                 ),
-                SizedBox(width: 20),
-                Text(
+                const SizedBox(width: 20),
+                const Text(
                   'Сделка отменена',
                   style: TextStyle(color: Colors.black),
                 ),
@@ -106,14 +106,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
           context.read<SupplierDealStatusInfoBloc>().add(SupplierDealStatusInfoInit());
           //isConfirmDeal = true;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 140, horizontal: 20),
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.green, width: 2),
               //borderRadius: BorderRadius.circular(0),
             ),
             backgroundColor: Colors.green.withOpacity(0.6),
-            content: Row(
+            content: const Row(
               children: [
                 Icon(
                   Icons.check,
@@ -132,14 +132,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
           context.read<SupplierDealStatusInfoBloc>().add(SupplierDealStatusInfoInit());
           //isConfirmSupply = true;
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            margin: EdgeInsets.symmetric(vertical: 140, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 140, horizontal: 20),
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               side: BorderSide(color: Colors.green, width: 2),
               //borderRadius: BorderRadius.circular(0),
             ),
             backgroundColor: Colors.green.withOpacity(0.6),
-            content: Row(
+            content: const Row(
               children: [
                 Icon(
                   Icons.check,
@@ -212,7 +212,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Для продолжения сделки\nвыберите действие',
                                       textAlign: TextAlign.center,
                                     ),
@@ -298,7 +298,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Для продолжения сделки\nвыберите действие',
                                       textAlign: TextAlign.center,
                                     ),
@@ -407,7 +407,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                           //mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.check,
                               color: Color.fromARGB(255, 6, 123, 0),
                             ),
@@ -415,14 +415,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'СТАТУС: Заказчик начал сделку',
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  '${orderInfoById.creationTime}',
-                                  style: TextStyle(color: Colors.black),
+                                  orderInfoById.creationTime,
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               ],
                             ),
@@ -434,7 +434,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.check,
                                     color: Color.fromARGB(255, 6, 123, 0),
                                   ),
@@ -442,15 +442,15 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Договор заключен',
                                         //'СТАТУС: Поставщик подтвердил начало сделки',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -460,7 +460,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.donut_large,
                                     color: Colors.blue,
                                   ),
@@ -468,15 +468,15 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Ожидание заключения\nдоговора от поставщика',
                                         //'СТАТУС: Ожидание подтверждения\nсделки от поставщика',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -490,7 +490,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.check,
                                     color: Color.fromARGB(255, 6, 123, 0),
                                   ),
@@ -498,14 +498,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Товар отправлен',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -515,7 +515,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.donut_large,
                                     color: Colors.blue,
                                   ),
@@ -523,14 +523,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Ожидание подтверждения\nпоставки от поставщика',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -542,7 +542,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.check,
                                     color: Color.fromARGB(255, 6, 123, 0),
                                   ),
@@ -550,14 +550,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Оплата произведена',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -567,7 +567,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.donut_large,
                                     color: Colors.blue,
                                   ),
@@ -575,14 +575,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Ожидание подтверждения\nоплаты от заказчика',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -594,7 +594,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.check,
                                     color: Color.fromARGB(255, 6, 123, 0),
                                   ),
@@ -602,14 +602,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Товар получен',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -619,7 +619,7 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                 //mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.donut_large,
                                     color: Colors.blue,
                                   ),
@@ -627,14 +627,14 @@ class _SupplierDealStatusInfoPageState extends State<SupplierDealStatusInfoPage>
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'СТАТУС: Ожидание получения\nтовара заказчиком',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${orderInfoById.creationTime}',
-                                        style: TextStyle(color: Colors.black),
+                                        orderInfoById.creationTime,
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
