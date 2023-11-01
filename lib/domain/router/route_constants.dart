@@ -24,6 +24,7 @@ import 'package:buy_metal_app/features/auth/ui/auth_page.dart';
 import 'package:buy_metal_app/features/profile/profile_editor/ui/profile_edit_page.dart';
 import 'package:buy_metal_app/features/profile/profile_page/ui/profile_page.dart';
 import 'package:buy_metal_app/features/profile/profile_statistics/ui/profile_statistics_page.dart';
+import 'package:buy_metal_app/features/profile/profile_statistics_deals_history/ui/profile_statistics_deals_history_page.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
 import 'package:buy_metal_app/features/start_page/start_page.dart';
@@ -204,6 +205,7 @@ class RouteConstants {
     }
   }
 
+// ProfileStatisticsDealsHistoryPage
   static profile(ProfileRoutes route, {Object? args}) {
     if (route == ProfileRoutes.profile) {
       return ProfilePage(
@@ -217,6 +219,10 @@ class RouteConstants {
       return ProfileStatisticsPage(
         args: args,
       );
+    } else if (route == ProfileRoutes.rofileStatisticsDealsHistory) {
+      return const ProfileStatisticsDealsHistoryPage(
+          //args: args,
+          );
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -324,6 +330,7 @@ enum ProfileRoutes {
   profile,
   profileEdit,
   profileStatistics,
+  rofileStatisticsDealsHistory,
   empty, // reserved name for routing
 }
 

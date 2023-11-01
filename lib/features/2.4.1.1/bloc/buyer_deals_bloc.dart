@@ -24,11 +24,12 @@ class BuyerDealsBloc extends Bloc<BuyerDealsEvent, BuyerDealsState> {
     var buyerId = userRepository.user?.user.id;
     var userAccessToken = userRepository.user?.accessToken;
 
-    var model = state.pageState.request.copyWith(
-        customerId: buyerId,
-        limit: 15,
-        offset: 0,
-        statuses: ["OPEN", "AGREED", "WAITING_PAYMENT", "DELIVERY", "COMPLETED"]);
+    var model = state.pageState.request.copyWith(customerId: buyerId, limit: 15, offset: 0, statuses: [
+      "OPEN",
+      "AGREED",
+      "WAITING_PAYMENT",
+      "DELIVERY",
+    ]);
     //REJECTED OPEN AGREED WAITING_PAYMENT DELIVERY COMPLETED
 
     var res = await dealRepository.dealUploadSearch(request: model, accessToken: userAccessToken);

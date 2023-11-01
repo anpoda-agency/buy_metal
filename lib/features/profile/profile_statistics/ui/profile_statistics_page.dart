@@ -1,5 +1,6 @@
 import 'package:buy_metal_app/domain/repository/statistics_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/profile/profile_statistics/bloc/profile_statistics_bloc.dart';
 import 'package:flutter/material.dart';
@@ -186,10 +187,13 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                               width: MediaQuery.of(context).size.width,
                               height: 75,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.read<RouteImpl>().push(ProfileRoutes.rofileStatisticsDealsHistory.name);
+                                },
                                 /* () {
                                   context.read<ProfileBloc>().add(ProfileUpdateEvent());
                                 }, */
+
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange[700],
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
