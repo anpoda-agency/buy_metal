@@ -27,6 +27,8 @@ import 'package:buy_metal_app/features/profile/profile_statistics/ui/profile_sta
 import 'package:buy_metal_app/features/profile/profile_statistics_deals_history/ui/profile_statistics_deals_history_page.dart';
 import 'package:buy_metal_app/features/registration/reg_confirm_conditions/ui/reg_confirm_conditions_page.dart';
 import 'package:buy_metal_app/features/registration/reg_page/ui/reg_page.dart';
+import 'package:buy_metal_app/features/registration/reg_phone_page/ui/reg_phone_pade.dart';
+import 'package:buy_metal_app/features/registration/reg_sms_code_page/ui/reg_sms_code_page.dart';
 import 'package:buy_metal_app/features/start_page/start_page.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +44,7 @@ class RouteConstants {
     }
   }
 
+// RegPhonePage, RegSmsCodePage
   static auth(RootRoutes route, {Object? args}) {
     if (route == RootRoutes.startPage) {
       return const StartPage();
@@ -51,21 +54,10 @@ class RouteConstants {
       return const RegPage();
     } else if (route == RootRoutes.regConfirmConditionsPage) {
       return RegConfirmConditionsPage(args: args);
-
-      /*
-    } else if (route == RootRoutes.registrationCode) {
+    } else if (route == RootRoutes.regPhonePage) {
+      return const RegPhonePage();
+    } else if (route == RootRoutes.regSmsCodePage) {
       return RegSmsCodePage(args: args);
-    } else if (route == RootRoutes.registrationPassword) {
-      return RegPasswordPage(args: args);
-    } else if (route == RootRoutes.registrationPersonalData) {
-      return RegFinalPage(args: args);
-    } else if (route == RootRoutes.resetPasswordPhone) {
-      return const PasswordRecoveryPhonePage();
-    } else if (route == RootRoutes.resetPasswordCode) {
-      return PasswordRecoverySmsCodePage(args: args);
-    } else if (route == RootRoutes.resetPasswordEnterPassword) {
-      return PasswordRecoveryEnterPage(args: args);
-    */
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),
@@ -260,6 +252,8 @@ enum RootRoutes {
   authPage,
   regPage,
   regConfirmConditionsPage,
+  regPhonePage,
+  regSmsCodePage,
   // Дописать машруты на восстановление пароля
 
 /* 
