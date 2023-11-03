@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/data/network/api/activation_code_api.dart';
 import 'package:buy_metal_app/data/network/api/application_api.dart';
 import 'package:buy_metal_app/data/network/api/application_response_api.dart';
 import 'package:buy_metal_app/data/network/api/auth_api.dart';
@@ -5,6 +6,7 @@ import 'package:buy_metal_app/data/network/api/deal_api.dart';
 import 'package:buy_metal_app/data/network/api/statistics_api.dart';
 import 'package:buy_metal_app/data/network/api/user_api.dart';
 import 'package:buy_metal_app/data/network/dio_client.dart';
+import 'package:buy_metal_app/domain/repository/activation_code_repository.dart';
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/application_response_repository.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
@@ -47,4 +49,7 @@ Future<void> setup() async {
 
   getIt.registerSingleton(StatisticsApi(dioClient: getIt.get<DioClient>()));
   getIt.registerSingleton(StatisticsRepository(statisticsApi: getIt.get<StatisticsApi>()));
+
+  getIt.registerSingleton(ActivationCodeApi(dioClient: getIt.get<DioClient>()));
+  getIt.registerSingleton(ActivationCodeRepository(activationCodeApi: getIt.get<ActivationCodeApi>()));
 }

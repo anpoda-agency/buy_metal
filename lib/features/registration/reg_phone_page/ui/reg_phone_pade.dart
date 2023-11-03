@@ -1,12 +1,9 @@
-import 'package:buy_metal_app/domain/repository/auth_repository.dart';
-import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/reg_phone_page/bloc/reg_phone_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class RegPhonePage extends StatefulWidget {
   const RegPhonePage({super.key});

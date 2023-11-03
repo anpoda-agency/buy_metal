@@ -3,7 +3,6 @@ import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_sms_code_page/bloc/reg_sms_code_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class RegSmsCodePage extends StatefulWidget {
   const RegSmsCodePage({super.key, required this.args});
