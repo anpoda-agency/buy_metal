@@ -27,7 +27,7 @@ class ActivationCodeRepository extends ChangeNotifier {
     notifyListeners();
   } */
 
-  Future<ActivationCodeUploadSendActivationCodeResponse> applicationUploadCreateApplication(
+  Future<ActivationCodeUploadSendActivationCodeResponse> activationCodeUploadSendActivationCode(
       {required ActivationCodeUploadSendActivationCodeRequest request, String? accessToken}) async {
     try {
       final response =

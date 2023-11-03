@@ -8,3 +8,10 @@ class RegSmsCodeMsgErr extends RegSmsCodeEvent {
   final String msg;
   RegSmsCodeMsgErr(this.msg);
 }
+
+class RegSmsCodeInputCodeEvent extends RegSmsCodeEvent {
+  final String value;
+  RegSmsCodeInputCodeEvent(this.value);
+}
+
+class RegSmsCodeSendCodeEvent extends RegSmsCodeEvent {}

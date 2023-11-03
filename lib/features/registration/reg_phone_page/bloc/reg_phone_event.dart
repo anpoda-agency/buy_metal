@@ -8,3 +8,10 @@ class RegPhoneMsgErr extends RegPhoneEvent {
   final String msg;
   RegPhoneMsgErr(this.msg);
 }
+
+class RegPhoneInputNumberEvent extends RegPhoneEvent {
+  final String value;
+  RegPhoneInputNumberEvent(this.value);
+}
+
+class RegPhoneSendRequestEvent extends RegPhoneEvent {}

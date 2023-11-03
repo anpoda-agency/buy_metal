@@ -1,8 +1,10 @@
+import 'package:buy_metal_app/domain/repository/activation_code_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/registration/reg_sms_code_page/bloc/reg_sms_code_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class RegSmsCodePage extends StatefulWidget {
   const RegSmsCodePage({super.key, required this.args});
@@ -13,20 +15,23 @@ class RegSmsCodePage extends StatefulWidget {
 }
 
 class _RegSmsCodePageState extends State<RegSmsCodePage> {
-  late String phone;
+  /* late String phone;
 
   @override
   void initState() {
     phone = (widget.args is String) ? widget.args as String : '';
     super.initState();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
+    final phoneNumber = widget.args as String;
     return BlocProvider(
       create: (context) => RegSmsCodeBloc(
         //activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
         //phoneNumber: phone,
+        activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
+        phoneNumber: phoneNumber,
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegSmsCodeBloc, RegSmsCodeState>(
@@ -70,7 +75,7 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(),
+                const SizedBox(),
                 AuthCustomSmsCodeInputWidget(
                   onChanged: (value) {},
                   //onChanged: (value) => context.read<RegistrationCodeBloc>().add(RegistrationCodeInput(value))
@@ -214,7 +219,7 @@ Widget _otpTextField(
       aspectRatio: 1,
       child: TextField(
         autofocus: autoFocus,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           //filled: true,
           //fillColor: Colors.grey[300],
           border: InputBorder.none,

@@ -1,9 +1,11 @@
+import 'package:buy_metal_app/domain/repository/activation_code_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:buy_metal_app/features/registration/reg_phone_page/bloc/reg_phone_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class RegPhonePage extends StatefulWidget {
   const RegPhonePage({super.key});
@@ -15,13 +17,13 @@ class RegPhonePage extends StatefulWidget {
 class _RegPhonePageState extends State<RegPhonePage> {
   late String position;
 
-  int _selectedType = 2;
+  //int _selectedType = 2;
   bool supplier = true;
   bool buyer = false;
 
   //final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  //final TextEditingController _passwordController = TextEditingController();
+  //final TextEditingController _confirmPasswordController = TextEditingController();
   //final TextEditingController _companyNameController = TextEditingController();
   //final TextEditingController _ownerNameController = TextEditingController();
   //final TextEditingController _postNameController = TextEditingController();
@@ -37,6 +39,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
       create: (constext) => RegPhoneBloc(
         //authRepository: context.read<GetIt>().get<AuthRepository>(),
         //userRepository: context.read<GetIt>().get<UserRepository>(),
+        activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegPhoneBloc, RegPhoneState>(listener: (context, state) {
@@ -59,6 +62,17 @@ class _RegPhonePageState extends State<RegPhonePage> {
         /* if (state is RegError) {
           //print(state.pageState.errMsg);
         } */
+        if (state is RegPhoneError) {
+          ErrorDialog(
+            dialogTittle: 'Ошибка сервера',
+            dialogText: state.pageState.errMsg,
+          ).showMyDialog(context);
+        }
+        if (state is RegPhoneAllowedToPush) {
+          context
+              .read<RouteImpl>()
+              .push('auth/${RootRoutes.regSmsCodePage.name}', args: state.pageState.request.source);
+        }
       }, builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -94,7 +108,9 @@ class _RegPhonePageState extends State<RegPhonePage> {
                       controller: _phoneController,
                       title: 'Введите номер телефона:',
                       inputType: TextInputType.phone,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        context.read<RegPhoneBloc>().add(RegPhoneInputNumberEvent(value));
+                      },
                       //onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
                     ),
                     const SizedBox.shrink(),
@@ -108,27 +124,12 @@ class _RegPhonePageState extends State<RegPhonePage> {
                           height: 75,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_selectedType == 0 || _selectedType == 1) {
-                                if (_passwordController.text == '') {
-                                  const ErrorDialog(
-                                    dialogTittle: 'Отсутствует пароль',
-                                    dialogText: 'Вы забыли придумать пароль. Пожалуйста, введите пароль',
-                                  ).showMyDialog(context);
-                                } else {
-                                  if (_passwordController.text != _confirmPasswordController.text) {
-                                    const ErrorDialog(
-                                      dialogTittle: 'Пароли не совпадают',
-                                      dialogText:
-                                          'Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз',
-                                    ).showMyDialog(context);
-                                  } else {
-                                    //context.read<RegBloc>().add(RegSendReg());
-                                  }
-                                }
+                              if (_phoneController.text.length == 11 || _phoneController.text.length == 12) {
+                                context.read<RegPhoneBloc>().add(RegPhoneSendRequestEvent());
                               } else {
                                 const ErrorDialog(
-                                  dialogTittle: 'Не выбран тип аккаунта',
-                                  dialogText: 'Сделайте выбор в поле \n"Вы являетесь"',
+                                  dialogTittle: 'Введен некорректный номер телефона',
+                                  dialogText: 'Проверьте, правильно ли указан\nномер телефона',
                                 ).showMyDialog(context);
                               }
                             },
