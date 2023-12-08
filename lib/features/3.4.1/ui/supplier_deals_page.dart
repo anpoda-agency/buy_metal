@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/3.4.1/bloc/supplier_deals_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -116,7 +117,7 @@ class _SupplierDealsPageState extends State<SupplierDealsPage> {
                                             children: [
                                               Text(
                                                 //listApplcations[index].rolledForm,
-                                                listDeals[index].application.rolledForm,
+                                                rolledFormRuNameConverter(listDeals[index].application.rolledForm),
                                                 style: const TextStyle(fontSize: 20, color: Colors.white),
                                               ),
                                               const SizedBox(
@@ -205,12 +206,26 @@ class _SupplierDealsPageState extends State<SupplierDealsPage> {
                             }),
                       ),
                     )
-                  : const Center(
-                      child: Text(
-                        'Список сделок пуст',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
-                      ),
+                  : Stack(
+                      children: [
+                        RefreshIndicator(
+                          onRefresh: () async {
+                            context.read<SupplierDealsBloc>().add(SupplierDealsInit());
+                          },
+                          child: ListView.builder(
+                              itemCount: 1,
+                              itemBuilder: (BuildContext context, index) {
+                                return const SizedBox.shrink();
+                              }),
+                        ),
+                        const Center(
+                          child: Text(
+                            'Список сделок пуст',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
                     ),
 
           /* Padding(

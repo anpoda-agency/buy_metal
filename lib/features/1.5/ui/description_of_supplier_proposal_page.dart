@@ -5,6 +5,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.5/bloc/description_of_supplier_proposal_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -64,6 +65,8 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
           context.read<RouteImpl>().go(OrdersRoutes.supplierContacts.name, args: args);
         }
       }, builder: (context, state) {
+        //                      String rolledFormName = RolledFormRuNameConverterWidget(rolledFormEnum: args.rolledForm ?? '');
+
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.black87,
@@ -117,8 +120,9 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
                     const SizedBox(
                       height: 5,
                     ),
+                    //RolledFormRuNameConverterWidget(rolledFormEnum: args.rolledForm ?? ''),
                     Text(
-                      '${args.rolledForm} ${args.rolledType} ${args.rolledSize}', //форма проката + классификация/тип профиля + размер
+                      '${rolledFormRuNameConverter(args.rolledForm)} ${args.rolledType} ${args.rolledSize}', //форма проката + классификация/тип профиля + размер
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     Text(

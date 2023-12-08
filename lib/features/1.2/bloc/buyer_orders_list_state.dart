@@ -30,30 +30,38 @@ class PageState {
   final bool onAwait;
   final String errMsg;
   final ApplicationGetCustomerApplicationsResponse applicationResponse;
-  final List<ApplicationGetCustomerApplicationsResponse> listApplcations;
+  final List<ApplicationGetCustomerApplicationsResponse> listApplcationsOldMethod;
   final String orderById;
+  final ApplicationUploadSearchRequest request;
+  final List<ApplicationUploadSearchResponse> listApplcations;
 
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
     this.applicationResponse = const ApplicationGetCustomerApplicationsResponse(),
-    this.listApplcations = const [],
+    this.listApplcationsOldMethod = const [],
     this.orderById = '',
+    this.request = const ApplicationUploadSearchRequest(),
+    this.listApplcations = const [],
   });
 
   PageState copyWith({
     bool? onAwait,
     String? errMsg,
     ApplicationGetCustomerApplicationsResponse? applicationResponse,
-    List<ApplicationGetCustomerApplicationsResponse>? listApplcations,
+    List<ApplicationGetCustomerApplicationsResponse>? listApplcationsOldMethod,
     String? orderById,
+    ApplicationUploadSearchRequest? request,
+    List<ApplicationUploadSearchResponse>? listApplcations,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       applicationResponse: applicationResponse ?? this.applicationResponse,
-      listApplcations: listApplcations ?? this.listApplcations,
+      listApplcationsOldMethod: listApplcationsOldMethod ?? this.listApplcationsOldMethod,
       orderById: orderById ?? this.orderById,
+      request: request ?? this.request,
+      listApplcations: listApplcations ?? this.listApplcations,
     );
   }
 }

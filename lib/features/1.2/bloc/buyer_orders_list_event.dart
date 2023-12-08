@@ -11,7 +11,9 @@ class BuyerOrdersListMsgErrEvent extends BuyerOrdersListEvent {
 
 class BuyerOrdersListChooseOrderEvent extends BuyerOrdersListEvent {
   final String orderById;
-  final ApplicationGetCustomerApplicationsResponse applicationResponse;
+  //  final ApplicationGetCustomerApplicationsResponse applicationResponse;
+
+  final ApplicationUploadSearchResponse applicationResponse;
   BuyerOrdersListChooseOrderEvent(this.orderById, this.applicationResponse);
 }
 

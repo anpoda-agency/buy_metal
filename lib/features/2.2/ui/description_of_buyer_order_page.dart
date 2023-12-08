@@ -2,6 +2,7 @@ import 'package:buy_metal_app/data/models/application_models/application_upload_
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.2/bloc/description_of_buyer_order_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -92,7 +93,7 @@ class _DescriptionOfBuyerOrderPageState extends State<DescriptionOfBuyerOrderPag
                         height: 5,
                       ),
                       Text(
-                        '${state.pageState.applicationInfo.rolledForm} ${state.pageState.applicationInfo.rolledType} ${state.pageState.applicationInfo.rolledSize}', //форма проката + классификация/тип профиля + размер
+                        '${rolledFormRuNameConverter(state.pageState.applicationInfo.rolledForm)} ${state.pageState.applicationInfo.rolledType} ${state.pageState.applicationInfo.rolledSize}', //форма проката + классификация/тип профиля + размер
                         style: const TextStyle(fontSize: 20, color: Colors.black),
                       ),
                       Text(

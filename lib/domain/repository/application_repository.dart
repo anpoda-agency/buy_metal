@@ -14,13 +14,30 @@ class ApplicationRepository extends ChangeNotifier {
 
   ApplicationRepository({required this.applicationApi});
 
-  ApplicationGetCustomerApplicationsResponse? _customerApplication;
+  // ApplicationGetCustomerApplicationsResponse старый метод, потому что нет документации, был выбран наугад, что в последствии привело к багам
+  /* ApplicationGetCustomerApplicationsResponse? _customerApplication;
   //const ApplicationGetCustomerApplicationsResponse(); // Попов сказал потом покажет как правильно переписать
   ApplicationGetCustomerApplicationsResponse? get customerApplication {
     return _customerApplication;
   }
 
   Future<void> setApplicationData({required ApplicationGetCustomerApplicationsResponse customerApplication}) async {
+    _customerApplication = customerApplication;
+    /* if (token != ыnull) {
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, user.user.id);
+    } */
+    notifyListeners();
+  } */
+
+// ApplicationUploadSearchResponse
+  ApplicationUploadSearchResponse? _customerApplication;
+  //const ApplicationGetCustomerApplicationsResponse(); // Попов сказал потом покажет как правильно переписать
+  ApplicationUploadSearchResponse? get customerApplication {
+    return _customerApplication;
+  }
+
+  Future<void> setApplicationData({required ApplicationUploadSearchResponse customerApplication}) async {
     _customerApplication = customerApplication;
     /* if (token != null) {
       await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);

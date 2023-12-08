@@ -1,6 +1,7 @@
 import 'package:buy_metal_app/data/models/application_response_models/application_response_get_supplier_responses_response.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/3.2.2/bloc/supplier_proposal_description_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -117,7 +118,7 @@ class _SupplierProposalDescriptionPageState extends State<SupplierProposalDescri
                       height: 5,
                     ),
                     Text(
-                      '${args.rolledForm} ${args.rolledType} ${args.rolledSize}', //форма проката + классификация/тип профиля + размер
+                      '${rolledFormRuNameConverter(args.rolledForm)} ${args.rolledType} ${args.rolledSize}', //форма проката + классификация/тип профиля + размер
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     Text(
