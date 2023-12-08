@@ -1,6 +1,7 @@
 import 'package:buy_metal_app/domain/repository/activation_code_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/registration/reg_sms_code_page/bloc/reg_sms_code_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,15 +42,19 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
             // Navigator.pushNamed(context, '/reg_password_page', arguments: state.pageState.request.source);
             context.read<RouteImpl>().push('auth/${RootRoutes.regPage.name}', args: state.pageState.request.source);
           }
-          /* if (state is RegistrationCodeError) {
-            PopUpCustomOneButtonWidget(
+          if (state is RegSmsCodeError) {
+            /* PopUpCustomOneButtonWidget(
               popUpMessage: state.pageState.errMsg,
               buttonTitle: 'Закрыть',
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            ).showPopUpCustomOneButtonWidget(context);
-          } */
+            ).showPopUpCustomOneButtonWidget(context); */
+            ErrorDialog(
+              dialogTittle: 'Ошибка',
+              dialogText: state.pageState.errMsg,
+            ).showMyDialog(context);
+          }
         },
         builder: (context, state) {
           return Scaffold(

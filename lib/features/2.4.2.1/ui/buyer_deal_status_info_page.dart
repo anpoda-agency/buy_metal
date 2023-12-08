@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.4.2.1/bloc/buyer_deal_status_info_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -67,6 +68,12 @@ class _BuyerDealStatusInfoPageState extends State<BuyerDealStatusInfoPage> {
           context.read<RouteImpl>().go(OrdersRoutes.supplierContacts.name, args: args);
         }
         */
+        if (state is BuyerDealStatusInfoErrorState) {
+          ErrorDialog(
+            dialogTittle: 'Ошибка',
+            dialogText: state.pageState.errMsg,
+          ).showMyDialog(context);
+        }
         if (state is BuyerDealStatusInfoOpenSupplierContactsInfoState) {}
         if (state is BuyerDealStatusInfoOpenSupplierProposalInfoState) {}
         if (state is BuyerDealStatusInfoConfirmReceiptProductState) {

@@ -4,6 +4,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.5/bloc/create_similar_proposal_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +71,12 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
           if (state is CreateSimilarProposalAllowedToPushState) {
             //Navigator.pushReplacementNamed(context, '/success_proposal_page');
             context.read<RouteImpl>().go(FindCustomerRoutes.successProposal.name);
+          }
+          if (state is CreateSimilarProposalErrorState) {
+            ErrorDialog(
+              dialogTittle: 'Ошибка',
+              dialogText: state.pageState.errMsg,
+            ).showMyDialog(context);
           }
         },
         builder: (context, state) {

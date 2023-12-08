@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.2/bloc/buyer_orders_list_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,12 @@ class _BuyerOrdersListPageState extends State<BuyerOrdersListPage> {
         }
         if (state is BuyerOrdersListCreateOrderState) {
           context.read<RouteImpl>().push(CreateOrderRoutes.createOrder.name);
+        }
+        if (state is BuyerOrdersListErrorState) {
+          ErrorDialog(
+            dialogTittle: 'Ошибка',
+            dialogText: state.pageState.errMsg,
+          ).showMyDialog(context);
         }
       }, builder: (context, state) {
         var listApplcations = state.pageState.listApplcations;

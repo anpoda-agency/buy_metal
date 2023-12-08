@@ -5,6 +5,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.5/bloc/description_of_supplier_proposal_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,6 +64,12 @@ class _DescriptionOfSupplierProposalPageState extends State<DescriptionOfSupplie
           // надо доделать экран заявок и го сюда закинуть
           //context.read<RouteImpl>().go(DealsRoutes.deals.name);
           context.read<RouteImpl>().go(OrdersRoutes.supplierContacts.name, args: args);
+        }
+        if (state is DescriptionOfSupplierProposalErrorState) {
+          ErrorDialog(
+            dialogTittle: 'Ошибка',
+            dialogText: state.pageState.errMsg,
+          ).showMyDialog(context);
         }
       }, builder: (context, state) {
         //                      String rolledFormName = RolledFormRuNameConverterWidget(rolledFormEnum: args.rolledForm ?? '');

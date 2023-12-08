@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/2.1.1/bloc/selected_buyer_list_of_orders_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,14 @@ class _SelectedBuyerListOfOrdersPageState extends State<SelectedBuyerListOfOrder
         pageState: const PageState(),
       ),
       child: BlocConsumer<SelectedBuyerListOfOrdersBloc, SelectedBuyerListOfOrdersState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SelectedBuyerListOfOrdersError) {
+            ErrorDialog(
+              dialogTittle: 'Ошибка',
+              dialogText: state.pageState.errMsg,
+            ).showMyDialog(context);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.white,

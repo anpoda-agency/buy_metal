@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/auth/bloc/auth_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +44,10 @@ class _AuthPageState extends State<AuthPage> {
         }
         if (state is AuthError) {
           //print(state.pageState.errMsg);
+          ErrorDialog(
+            dialogTittle: 'Неверный логин \nили пароль',
+            dialogText: state.pageState.errMsg,
+          ).showMyDialog(context);
         }
       }, builder: (context, state) {
         return Scaffold(

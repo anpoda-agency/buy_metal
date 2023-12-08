@@ -3,6 +3,7 @@ import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/1.3/bloc/suppliers_proposals_list_bloc.dart';
+import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -77,6 +78,12 @@ class _SuppliersProposalsListPageState extends State<SuppliersProposalsListPage>
             context
                 .read<RouteImpl>()
                 .push(OrdersRoutes.descriptionOfSupplierProposal.name, args: state.pageState.proposalById);
+          }
+          if (state is SuppliersProposalsListError) {
+            ErrorDialog(
+              dialogTittle: 'Ошибка',
+              dialogText: state.pageState.errMsg,
+            ).showMyDialog(context);
           }
         },
         builder: (context, state) {
