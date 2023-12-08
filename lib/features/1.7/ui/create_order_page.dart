@@ -260,40 +260,19 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                         height: 65,
                         child: ElevatedButton(
                           onPressed: () {
-                            context.read<CreateOrderBloc>().add(CreateOrderSend());
-
-                            /* try {
-                              context.read<CreateOrderBloc>().add(CreateOrderSend());
-                              Navigator.pushReplacementNamed(context, '/success_order_page');
-                            } catch (e) {
+                            if (_sizeRolledTextController.text == '') {
                               const ErrorDialog(
-                                dialogTittle: 'Ошибка запроса',
-                                dialogText: 'Не удалось создать заявку, простите =(',
+                                dialogTittle: 'Отсутствует размер проката',
+                                dialogText: 'Вы не указали размер проката. \nПожалуйста, укажите размер проката',
                               ).showMyDialog(context);
-                            } */
-
-                            /*
-                                String dateCreate =
-                                    '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
-                                await getIt
-                                    .get<ProfileRepository>()
-                                    .createOrder(
-                                        request: OrderModel(
-                                      buyerId: getIt.get<ProfileRepository>().user.id,
-                                      formRolled: dropdownValue,
-                                      type: _typeTextController.text,
-                                      sizeRolled: _sizeRolledTextController.text,
-                                      paramsRolled: _paramsRolledTextController.text,
-                                      gostRolled: _gostRolledTextController.text,
-                                      brandMaterial: _brandMaterialTextController.text,
-                                      paramsMaterial: _paramsMaterialTextController.text,
-                                      gostMaterial: _gostMaterialTextController.text,
-                                      requirement: double.parse(_requirementTextController.text),
-                                      dataCreate: dateCreate,
-                                    ))
-                                    */
-
-                            //.whenComplete(() => Navigator.pushReplacementNamed(context, '/success_order_page'));
+                            } else if (_brandMaterialTextController.text == '') {
+                              const ErrorDialog(
+                                dialogTittle: 'Отсутствует марка материала',
+                                dialogText: 'Вы не указали марку материала. \nПожалуйста, укажите марку материала',
+                              ).showMyDialog(context);
+                            } else {
+                              context.read<CreateOrderBloc>().add(CreateOrderSend());
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
@@ -314,146 +293,6 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
         );
       }),
     );
-/*
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: const Text('Создание заявки'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Выберите форму проката *', //обязательное поле
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: DropdownButton(
-                        value: dropdownValue,
-                        items: typeList.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? val) {
-                          setState(() {
-                            dropdownValue = val ?? '';
-                          });
-                        }),
-                  ),
-                ),
-                const Text(
-                  '* на каждую форму проката должна формироваться новая заявка',
-                  style: TextStyle(fontSize: 16, color: Colors.blue),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ParamsFieldWidget(
-                  title: 'Классификация/тип профиля',
-                  controller: _typeTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'Размер проката, мм *', //обязательное поле
-                  controller: _sizeRolledTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'Параметры проката',
-                  controller: _paramsRolledTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'ГОСТ на прокат',
-                  controller: _gostRolledTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'Марка материала *', //обязательное
-                  controller: _brandMaterialTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'Параметры материала',
-                  controller: _paramsMaterialTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'ГОСТ на материал',
-                  controller: _gostMaterialTextController,
-                  inputType: TextInputType.text,
-                ),
-                ParamsFieldWidget(
-                  title: 'Потребность, т',
-                  controller: _requirementTextController,
-                  inputType: TextInputType.number,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 65,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        String dateCreate =
-                            '${DateTime.now().day.toString().length < 2 ? "0${DateTime.now().day}" : DateTime.now().day}.${DateTime.now().month.toString().length < 2 ? "0${DateTime.now().month}" : DateTime.now().month}.${DateTime.now().year}';
-                        await getIt
-                            .get<ProfileRepository>()
-                            .createOrder(
-                                request: OrderModel(
-                              buyerId: getIt.get<ProfileRepository>().user.id,
-                              formRolled: dropdownValue,
-                              type: _typeTextController.text,
-                              sizeRolled: _sizeRolledTextController.text,
-                              paramsRolled: _paramsRolledTextController.text,
-                              gostRolled: _gostRolledTextController.text,
-                              brandMaterial: _brandMaterialTextController.text,
-                              paramsMaterial: _paramsMaterialTextController.text,
-                              gostMaterial: _gostMaterialTextController.text,
-                              requirement: double.parse(_requirementTextController.text),
-                              dataCreate: dateCreate,
-                            ))
-                            .whenComplete(() =>
-                                Navigator.pushReplacementNamed(context, '/success_order_page'));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.orange,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                      ),
-                      child: const Text(
-                        'Разместить заявку',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  */
   }
 }
 
@@ -546,33 +385,3 @@ class ErrorDialog {
     );
   }
 }
-
-/* String getEnumName(val) {
-  String dropdownValue;
-
-
-  if (val == typeList[0]) {
-    dropdownValue = typeListEnum[0];
-  } else if (val == typeList[1]) {
-    dropdownValue = typeListEnum[1];
-  } else if (val == typeList[2]) {
-    dropdownValue = typeListEnum[2];
-  } else if (val == typeList[3]) {
-    dropdownValue = typeListEnum[3];
-  } else if (val == typeList[4]) {
-    dropdownValue = typeListEnum[4];
-  } else if (val == typeList[5]) {
-    dropdownValue = typeListEnum[5];
-  } else if (val == typeList[6]) {
-    dropdownValue = typeListEnum[6];
-  } else if (val == typeList[7]) {
-    dropdownValue = typeListEnum[7];
-  } else if (val == typeList[8]) {
-    dropdownValue = typeListEnum[8];
-  } else if (val == typeList[9]) {
-    dropdownValue = typeListEnum[9];
-  }
-
-  return dropdownValue;
-
-} */

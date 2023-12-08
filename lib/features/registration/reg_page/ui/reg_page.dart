@@ -31,7 +31,7 @@ class _RegPageState extends State<RegPage> {
   //final TextEditingController _postNameController = TextEditingController();
   final TextEditingController _adressController = TextEditingController();
   final TextEditingController _innController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  //final TextEditingController _phoneController = TextEditingController();
 
   //final CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
@@ -270,61 +270,6 @@ class _RegPageState extends State<RegPage> {
                                   ).showMyDialog(context);
                                 }
                               },
-                              /* 
-                              async {
-                                FirebaseAuth.instance
-                                    .createUserWithEmailAndPassword(
-                                        email: _emailController.text, password: _passwordController.text)
-                                    .then((value) async {
-                                  if (_selectedType == 1) {
-                                    setState(() {
-                                      supplier = false;
-                                      buyer = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      supplier = true;
-                                      buyer = false;
-                                    });
-                                  }
-                                  User? user = FirebaseAuth.instance.currentUser;
-                                  String userId = user?.uid ?? '';
-                                  List<String> listOrders = [];
-                                  _users.doc(userId).set({
-                                    "id": user?.uid,
-                                    "user_fio": _ownerNameController.text,
-                                    //"post": _postNameController.text,
-                                    'company_name': _companyNameController.text,
-                                    'company_adress': _adressController.text,
-                                    'inn': _innController.text,
-                                    'phone': _phoneController.text,
-                                    'email': _emailController.text,
-                                    'password': _passwordController.text,
-                                    'supplier': supplier,
-                                    'buyer': buyer,
-                                    'list_orders': listOrders
-                                  });
-
-                                  if (_selectedType == 0
-                                      // _emailController.text.isNotEmpty &&
-                                      //   _passwordController.text ==
-                                      //       _confirmPasswordController.text &&
-                                      //   _adressController.text.isNotEmpty &&
-                                      //   _companyNameController.text.isNotEmpty &&
-                                      //   _innController.text.isNotEmpty &&
-                                      //   _ogrnController.text.isNotEmpty &&
-                                      //   _ownerNameController.text.isNotEmpty &&
-                                      //   _phoneController.text.isNotEmpty
-                                      ) {
-                                    Navigator.pushNamedAndRemoveUntil(context, '/selected_buyer_list_of_orders_page',
-                                        (Route<dynamic> route) => false);
-                                  } else {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                        context, '/buyer_workplace_page', (Route<dynamic> route) => false);
-                                  }
-                                });
-                              },
-                               */
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange[700],
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
