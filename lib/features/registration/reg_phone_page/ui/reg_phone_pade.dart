@@ -79,7 +79,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
             toolbarHeight: 50,
             elevation: 0,
             backgroundColor: Colors.grey[900],
-            actions: [
+            /* actions: [
               IconButton(
                   onPressed: () {
                     context.read<RouteImpl>().push('auth/${RootRoutes.regSmsCodePage.name}',
@@ -89,7 +89,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
                     //Navigator.pushNamed(context, '/reg_sms_code_page', arguments: state.pageState.request.source);
                   },
                   icon: const Icon(Icons.backup)),
-            ],
+            ], */
           ),
           backgroundColor: Colors.grey[900],
           resizeToAvoidBottomInset: false,
@@ -109,7 +109,12 @@ class _RegPhonePageState extends State<RegPhonePage> {
                       title: 'Введите номер телефона:',
                       inputType: TextInputType.phone,
                       onChanged: (value) {
-                        context.read<RegPhoneBloc>().add(RegPhoneInputNumberEvent(value));
+                        String valueDigits = value.replaceAll(RegExp('[^0-9]'), '');
+                        context.read<RegPhoneBloc>().add(RegPhoneInputNumberEvent(valueDigits));
+
+                        /* if (value != '+') {
+                          context.read<RegPhoneBloc>().add(RegPhoneInputNumberEvent(value));
+                        } */
                       },
                       //onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
                     ),
@@ -138,7 +143,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                             ),
                             child: const Text(
-                              'Зарегистрироваться',
+                              'Получить код',
                               style: TextStyle(fontSize: 20),
                             ),
                           ),

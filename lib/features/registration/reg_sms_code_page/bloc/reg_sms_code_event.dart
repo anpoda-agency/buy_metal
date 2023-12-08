@@ -9,9 +9,10 @@ class RegSmsCodeMsgErr extends RegSmsCodeEvent {
   RegSmsCodeMsgErr(this.msg);
 }
 
-class RegSmsCodeInputCodeEvent extends RegSmsCodeEvent {
+class RegSmsCodeInputValueEvent extends RegSmsCodeEvent {
   final String value;
-  RegSmsCodeInputCodeEvent(this.value);
+  final bool completed;
+  RegSmsCodeInputValueEvent(this.value, this.completed);
 }
 
 class RegSmsCodeSendCodeEvent extends RegSmsCodeEvent {}

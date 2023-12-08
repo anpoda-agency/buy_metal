@@ -1,3 +1,5 @@
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart' as aulr;
+import 'package:buy_metal_app/data/models/auth_models/auth_upload_login_response.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_request.dart';
 import 'package:buy_metal_app/data/models/auth_models/auth_upload_register_new_user_response.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
@@ -10,9 +12,11 @@ part 'reg_state.dart';
 class RegBloc extends Bloc<RegEvent, RegState> {
   final AuthRepository authRepository;
   final UserRepository userRepository;
+  final String phoneNumber;
   RegBloc({
     required this.authRepository,
     required this.userRepository,
+    required this.phoneNumber,
     required PageState pageState,
   }) : super(RegInitial(pageState)) {
     on<RegInit>(regInit);
@@ -30,7 +34,8 @@ class RegBloc extends Bloc<RegEvent, RegState> {
   }
 
   regInit(RegInit event, emit) async {
-    emit(RegUp(state.pageState));
+    var model = state.pageState.request.copyWith(phone: phoneNumber);
+    emit(RegUp(state.pageState.copyWith(request: model)));
   }
 
   regInputPosition(RegInputPosition event, emit) async {
@@ -74,34 +79,34 @@ class RegBloc extends Bloc<RegEvent, RegState> {
   }
 
   regSendReg(RegSendReg event, emit) async {
-    /*
-    var res = await authRepository.authUploadRegisterNewUser(request: state.pageState.request);
+    if (state.pageState.request.position == 'SUPPLIER') {
+      var res = await authRepository.authUploadRegisterNewUser(request: state.pageState.request);
 
-    await userRepository.setUserData(
-        user: const aulr
-            .AuthUploadLoginResponse()); // ДЕЛАЮ ИНИЦИАЛИЗАЦИЮ ПЕРЕМЕННОЙ _user КОТОРАЯ ЭКЗЕМПЛЯР КЛАССА МОДЕЛИ AuthUploadLoginResponse
-    // ЧТОБЫ ГЕТТЕР ВОЗВРАЩАЛ МНЕ ПУСТУЮ МОДЕЛЬ, А НЕ NULL
+      await userRepository.setUserData(
+          user: const aulr
+              .AuthUploadLoginResponse()); // ДЕЛАЮ ИНИЦИАЛИЗАЦИЮ ПЕРЕМЕННОЙ _user КОТОРАЯ ЭКЗЕМПЛЯР КЛАССА МОДЕЛИ AuthUploadLoginResponse
+      // ЧТОБЫ ГЕТТЕР ВОЗВРАЩАЛ МНЕ ПУСТУЮ МОДЕЛЬ, А НЕ NULL
 
-    aulr.User? repositoryUserModel = userRepository.user?.user.copyWith(
-      blocked: res.user.blocked,
-      companyAddress: res.user.companyAddress,
-      companyName: res.user.companyName,
-      email: res.user.email,
-      fullName: res.user.fullName,
-      id: res.user.id,
-      mailConfirmed: res.user.mailConfirmed,
-      phone: res.user.phone,
-      position: res.user.position,
-      registrationDate: res.user.registrationDate,
-      tin: res.user.tin,
-      //refresh: res.user.refresh
-    );
+      aulr.User? repositoryUserModel = userRepository.user?.user.copyWith(
+        blocked: res.user.blocked,
+        companyAddress: res.user.companyAddress,
+        companyName: res.user.companyName,
+        email: res.user.email,
+        fullName: res.user.fullName,
+        id: res.user.id,
+        mailConfirmed: res.user.mailConfirmed,
+        phone: res.user.phone,
+        position: res.user.position,
+        registrationDate: res.user.registrationDate,
+        tin: res.user.tin,
+        //refresh: res.user.refresh
+      );
 
-    AuthUploadLoginResponse? repositoryUserLoginResponseModel = userRepository.user?.copyWith(
-      accessToken: res.accessToken,
-      refreshToken: res.refreshToken,
-      user: repositoryUserModel,
-    );
+      AuthUploadLoginResponse? repositoryUserLoginResponseModel = userRepository.user?.copyWith(
+        accessToken: res.accessToken,
+        refreshToken: res.refreshToken,
+        user: repositoryUserModel,
+      );
 
 /*
     await userRepository.setUserData(
@@ -110,12 +115,12 @@ class RegBloc extends Bloc<RegEvent, RegState> {
             const aulr.AuthUploadLoginResponse());
             */
 
-    await userRepository.setUserData(
-        user: repositoryUserLoginResponseModel ?? const aulr.AuthUploadLoginResponse(),
-        token: res.refreshToken); // res.refreshToken / repositoryUserLoginResponseModel?.refreshToken
+      await userRepository.setUserData(
+          user: repositoryUserLoginResponseModel ?? const aulr.AuthUploadLoginResponse(),
+          token: res.refreshToken); // res.refreshToken / repositoryUserLoginResponseModel?.refreshToken
 
-    authRepository.changeAuthStatus(val: true);
-    */
+      authRepository.changeAuthStatus(val: true);
+    }
     emit(RegAllowedToPush(state.pageState));
   }
 

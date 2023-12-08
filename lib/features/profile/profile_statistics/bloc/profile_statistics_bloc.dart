@@ -17,6 +17,7 @@ class ProfileStatisticsBloc extends Bloc<ProfileStatisticsEvent, ProfileStatisti
   }) : super(ProfileStatisticsInitial(pageState)) {
     on<ProfileStatisticsInit>(profileStatisticsInit);
     on<ProfileStatisticsMsgErr>(profileStatisticsMsgErr);
+    on<ProfileStatisticsSwitchMonthEvent>(profileStatisticsSwitchMonth);
     add(ProfileStatisticsInit());
   }
 
@@ -25,12 +26,26 @@ class ProfileStatisticsBloc extends Bloc<ProfileStatisticsEvent, ProfileStatisti
 
     Map<String, dynamic> queryParams = {
       "duration": 1,
-      "month": 10,
+      "month": 1,
       "year": 2023,
     };
 
     var res = await statisticsRepository.statisticsGetStatistics(queryParams: queryParams, accessToken: accessToken);
 
+    emit(ProfileStatisticsUp(state.pageState.copyWith(response: res)));
+    //emit(ProfileStatisticsUp(state.pageState));
+  }
+
+  profileStatisticsSwitchMonth(ProfileStatisticsSwitchMonthEvent event, emit) async {
+    var accessToken = userRepository.user?.accessToken;
+
+    Map<String, dynamic> queryParams = {
+      "duration": 1,
+      "month": event.value,
+      "year": 2023,
+    };
+
+    var res = await statisticsRepository.statisticsGetStatistics(queryParams: queryParams, accessToken: accessToken);
     emit(ProfileStatisticsUp(state.pageState.copyWith(response: res)));
   }
 

@@ -9,7 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class RegPage extends StatefulWidget {
-  const RegPage({super.key});
+  const RegPage({super.key, required this.args});
+  final Object? args;
 
   @override
   State<RegPage> createState() => _RegPageState();
@@ -36,10 +37,12 @@ class _RegPageState extends State<RegPage> {
 
   @override
   Widget build(BuildContext context) {
+    final phoneNumber = widget.args as String;
     return BlocProvider(
       create: (constext) => RegBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
         userRepository: context.read<GetIt>().get<UserRepository>(),
+        phoneNumber: phoneNumber,
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegBloc, RegState>(listener: (context, state) {
@@ -51,6 +54,7 @@ class _RegPageState extends State<RegPage> {
           if (_selectedType == 0) {
             //Navigator.pushNamedAndRemoveUntil(
             //    context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
+            context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
           } else {
             //Navigator.pushNamed(context, '/reg_confirm_conditions_page', arguments: state.pageState.request);
             //context.read<RouteImpl>().go(DealsRoutes.deals.name);
@@ -200,12 +204,12 @@ class _RegPageState extends State<RegPage> {
                             inputType: TextInputType.number,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputTIN(value)),
                           ),
-                          RegFieldWidget(
+                          /* RegFieldWidget(
                             controller: _phoneController,
                             title: 'Телефон',
                             inputType: TextInputType.phone,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
-                          ),
+                          ), */
                           RegFieldWidget(
                             controller: _emailController,
                             title: 'Эл. почта',

@@ -48,7 +48,7 @@ class _StartPageState extends State<StartPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
+                  /* SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 75,
                     child: ElevatedButton(
@@ -68,7 +68,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
+                  ), */
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 75,
@@ -82,7 +82,7 @@ class _StartPageState extends State<StartPage> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: const Text(
-                        'Регистрация по телефону',
+                        'Регистрация',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

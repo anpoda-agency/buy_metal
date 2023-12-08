@@ -5,6 +5,7 @@ import 'package:buy_metal_app/features/registration/reg_sms_code_page/bloc/reg_s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pinput/pinput.dart';
 
 class RegSmsCodePage extends StatefulWidget {
   const RegSmsCodePage({super.key, required this.args});
@@ -36,12 +37,10 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
       ),
       child: BlocConsumer<RegSmsCodeBloc, RegSmsCodeState>(
         listener: (context, state) {
-          /* if (state is RegistrationCodeAllowedToPush) {
+          if (state is RegSmsCodeAllowedToPush) {
             // Navigator.pushNamed(context, '/reg_password_page', arguments: state.pageState.request.source);
-            context
-                .read<RouteImpl>()
-                .push('auth/${RootRoutes.registrationPassword.name}', args: state.pageState.request.source);
-          } */
+            context.read<RouteImpl>().push('auth/${RootRoutes.regPage.name}', args: state.pageState.request.source);
+          }
           /* if (state is RegistrationCodeError) {
             PopUpCustomOneButtonWidget(
               popUpMessage: state.pageState.errMsg,
@@ -63,28 +62,63 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
               iconTheme: const IconThemeData(
                 color: Colors.white,
               ),
-              actions: [
+              /* actions: [
                 IconButton(
                     onPressed: () {
-                      context.read<RouteImpl>().push('auth/${RootRoutes.regPage.name}', args: state.pageState);
+                      context
+                          .read<RouteImpl>()
+                          .push('auth/${RootRoutes.regPage.name}', args: state.pageState.request.source);
                       //Navigator.pushNamed(context, '/reg_password_page', arguments: state.pageState.request.source);
                     },
                     icon: const Icon(Icons.backup)),
-              ],
+              ], */
             ),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(),
-                AuthCustomSmsCodeInputWidget(
+                Column(
+                  children: [
+                    const SizedBox(
+                      //width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'Код подтверждения',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontFamily: 'SF Pro Text',
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.80,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Pinput(
+                      defaultPinTheme: PinTheme(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 80, // 42
+                          width: 60, // 36
+                          textStyle:
+                              const TextStyle(color: Colors.black, fontSize: 50, fontWeight: FontWeight.w700), // 24
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8))),
+                      //onCompleted: (pin) => (), //context.read<AuthSmsCodeBloc>().add(AuthSmsCodeInputValue(pin, true)),
+                      onChanged: (pin) => context.read<RegSmsCodeBloc>().add(RegSmsCodeInputValueEvent(pin, false)),
+                      //context.read<AuthSmsCodeBloc>().add(AuthSmsCodeInputValue(pin, false)),
+                    ),
+                  ],
+                ),
+                /* AuthCustomSmsCodeInputWidget(
                   onChanged: (value) {},
                   //onChanged: (value) => context.read<RegistrationCodeBloc>().add(RegistrationCodeInput(value))
-                ),
+                ), */
                 /* CustomButtonWidget(
                     onPressed: () => context.read<RegistrationCodeBloc>().add(RegistrationCodeSend()),
                     title: 'Продолжить',
                     backgroundColor: const Color(0xFFF5F5F5),
                     widthPadding: 50), */
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: SizedBox(
@@ -92,46 +126,14 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
                     height: 75,
                     child: ElevatedButton(
                       onPressed: () {
-                        /* if (_selectedType == 0 || _selectedType == 1) {
-                          if (_passwordController.text == '') {
-                            const ErrorDialog(
-                              dialogTittle: 'Отсутствует пароль',
-                              dialogText: 'Вы забыли придумать пароль. Пожалуйста, введите пароль',
-                            ).showMyDialog(context);
-                          } else {
-                            if (_passwordController.text != _confirmPasswordController.text) {
-                              const ErrorDialog(
-                                dialogTittle: 'Пароли не совпадают',
-                                dialogText:
-                                    'Убедитесь, что вы ввели идентичные пароли, попробуйте повторить пароль еще раз',
-                              ).showMyDialog(context);
-                            } else {
-                              // ПОТОМ РАСКОМЕНТИТЬ ТЕСТИМ ЧЕКБОКС ОТ ПОПОВА
-                              context.read<RegBloc>().add(RegSendReg());
-                              //Navigator.of(context).pushNamed('/reg_confirm_conditions_page');
-                
-                              /* if (_selectedType == 0) {
-                                        Navigator.pushNamedAndRemoveUntil(context,
-                                            '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
-                                      } else {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, '/buyer_workplace_page', (Route<dynamic> route) => false);
-                                      } */
-                            }
-                          }
-                        } else {
-                          const ErrorDialog(
-                            dialogTittle: 'Не выбран тип аккаунта',
-                            dialogText: 'Сделайте выбор в поле \n"Вы являетесь"',
-                          ).showMyDialog(context);
-                        } */
+                        context.read<RegSmsCodeBloc>().add(RegSmsCodeSendCodeEvent());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange[700],
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       child: const Text(
-                        'Зарегистрироваться',
+                        'Отправить код',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

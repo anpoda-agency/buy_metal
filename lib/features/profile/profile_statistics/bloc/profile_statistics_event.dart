@@ -8,3 +8,8 @@ class ProfileStatisticsMsgErr extends ProfileStatisticsEvent {
   final String msg;
   ProfileStatisticsMsgErr(this.msg);
 }
+
+class ProfileStatisticsSwitchMonthEvent extends ProfileStatisticsEvent {
+  final int value;
+  ProfileStatisticsSwitchMonthEvent(this.value);
+}

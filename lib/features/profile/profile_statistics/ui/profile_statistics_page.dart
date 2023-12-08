@@ -20,8 +20,26 @@ class ProfileStatisticsPage extends StatefulWidget {
 
 class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
   //late String position;
+  final List<String> monthList = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь'
+  ];
 
   late String profileType = '';
+
+  late String dropdownValue;
+
+  //bool isChoosedMonth = false;
 
   //int _selectedType = 0;
   bool supplier = true;
@@ -43,7 +61,7 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
   @override
   void initState() {
     //getIt.get<ProfileRepository>().user;
-
+    dropdownValue = monthList.first;
     //widget.args != null ? widget.args as UserModel : const UserModel();
 
     super.initState();
@@ -87,6 +105,12 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
           } */
         },
         builder: (context, state) {
+          late int monthChoosed;
+          /* if (isChoosedMonth == false) {
+            //const String defaultChoosedForm = 'Полоса';
+            //TypeListEnum formChoosed = TypeListEnum.STRIP;
+            context.read<ProfileStatisticsBloc>().add(ProfileStatisticsSwitchMonthEvent(1));
+          } */
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.black87,
@@ -123,18 +147,19 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                           children: [
                             InkWell(
                               onTap: () {
-                                context.read<RouteImpl>().pop();
+                                context.read<RouteImpl>().go(ProfileRoutes.profile.name);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: Colors.black),
+                                    color: Colors.orange[700],
+                                    //border: Border.all(width: 2, color: Colors.black),
                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
                                 child: const Text(
                                   'О компании',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -144,16 +169,69 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
+                                    color: Colors.orange[700],
                                     border: Border.all(width: 2, color: Colors.black),
                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
                                 child: const Text(
                                   'Статистика',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: DropdownButton(
+                                value: dropdownValue,
+                                items: monthList.map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? val) {
+                                  setState(() {
+                                    if (val == monthList[0]) {
+                                      monthChoosed = 1;
+                                    } else if (val == monthList[1]) {
+                                      monthChoosed = 2;
+                                    } else if (val == monthList[2]) {
+                                      monthChoosed = 3;
+                                    } else if (val == monthList[3]) {
+                                      monthChoosed = 4;
+                                    } else if (val == monthList[4]) {
+                                      monthChoosed = 5;
+                                    } else if (val == monthList[5]) {
+                                      monthChoosed = 6;
+                                    } else if (val == monthList[6]) {
+                                      monthChoosed = 7;
+                                    } else if (val == monthList[7]) {
+                                      monthChoosed = 8;
+                                    } else if (val == monthList[8]) {
+                                      monthChoosed = 9;
+                                    } else if (val == monthList[9]) {
+                                      monthChoosed = 10;
+                                    } else if (val == monthList[10]) {
+                                      monthChoosed = 11;
+                                    } else if (val == monthList[11]) {
+                                      monthChoosed = 12;
+                                    }
+
+                                    dropdownValue = val ?? 'Январь';
+                                    //isChoosedMonth = true;
+                                    context
+                                        .read<ProfileStatisticsBloc>()
+                                        .add(ProfileStatisticsSwitchMonthEvent(monthChoosed));
+                                  });
+                                }),
+                          ),
                         ),
                         const SizedBox(
                           height: 20,

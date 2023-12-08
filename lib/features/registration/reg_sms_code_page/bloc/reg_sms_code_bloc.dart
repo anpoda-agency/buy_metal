@@ -16,7 +16,7 @@ class RegSmsCodeBloc extends Bloc<RegSmsCodeEvent, RegSmsCodeState> {
   }) : super(RegSmsCodeInitial(pageState)) {
     on<RegSmsCodeInit>(regSmsCodeInit);
     on<RegSmsCodeMsgErr>(regSmsCodeMsgErr);
-    on<RegSmsCodeInputCodeEvent>(regSmsCodeInputCode);
+    on<RegSmsCodeInputValueEvent>(regSmsCodeInputValue);
     on<RegSmsCodeSendCodeEvent>(regSmsCodeSendCode);
     add(RegSmsCodeInit());
   }
@@ -37,14 +37,28 @@ class RegSmsCodeBloc extends Bloc<RegSmsCodeEvent, RegSmsCodeState> {
     )));
   }
 
-  regSmsCodeInputCode(RegSmsCodeInputCodeEvent event, emit) {
+  regSmsCodeInputValue(RegSmsCodeInputValueEvent event, emit) async {
     //
-    emit(RegSmsCodeUp(state.pageState));
+    var model = state.pageState.request.copyWith(code: event.value);
+    emit(RegSmsCodeUp(state.pageState.copyWith(request: model, errMsg: '')));
+    //event.completed ? add(RegSmsCodeSendCodeEvent()) : null;
   }
 
-  regSmsCodeSendCode(RegSmsCodeSendCodeEvent event, emit) {
+  regSmsCodeSendCode(RegSmsCodeSendCodeEvent event, emit) async {
     //
-    emit(RegSmsCodeAllowedToPush(state.pageState));
+    var res = await activationCodeRepository.activationCodeUploadConfirmNumber(request: state.pageState.request);
+    if (!res.success) {
+      if (res.message == 'Code not virified') {
+        emit(RegSmsCodeError(state.pageState.copyWith(
+          onAwait: false,
+          errMsg: 'Неверный код',
+        )));
+      } else {
+        emit(RegSmsCodeError(state.pageState.copyWith(onAwait: false, errMsg: res.message)));
+      }
+    } else {
+      emit(RegSmsCodeAllowedToPush(state.pageState));
+    }
   }
 
   @override

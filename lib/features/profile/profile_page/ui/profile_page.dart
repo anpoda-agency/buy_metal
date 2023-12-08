@@ -85,10 +85,11 @@ class _ProfilePageState extends State<ProfilePage> {
             context.read<RouteImpl>().go(RootRoutes.startPage.name);
           }
           if (state is ProfileGoStatisticState) {
-            context
+            /* context
                 .read<RouteImpl>()
                 .push(ProfileRoutes.profileStatistics.name, args: state.pageState.user)
-                .then((value) => context.read<ProfileBloc>().add(ProfileInit()));
+                .then((value) => context.read<ProfileBloc>().add(ProfileInit())); */
+            context.read<RouteImpl>().go(ProfileRoutes.profileStatistics.name, args: state.pageState.user);
           }
         },
         builder: (context, state) {
@@ -134,12 +135,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
+                                    color: Colors.orange[700],
                                     border: Border.all(width: 2, color: Colors.black),
                                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 //width: MediaQuery.of(context).size.width,
                                 child: const Text(
                                   'О компании',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -149,6 +151,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                 context.read<ProfileBloc>().add(ProfileGoStatisticEvent());
                               },
                               child: Container(
+                                //color: Colors.orange,
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[700],
+                                  //border: Border.all(width: 2, color: Colors.black),
+                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                ),
+                                //width: MediaQuery.of(context).size.width,
+                                child: const Text(
+                                  'Статистика',
+                                  style: TextStyle(fontSize: 20, color: Colors.white),
+                                ),
+                              ),
+                              // Старый вариант
+                              /* Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
@@ -159,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   'Статистика',
                                   style: TextStyle(fontSize: 20),
                                 ),
-                              ),
+                              ), */
                             ),
                           ],
                         ),

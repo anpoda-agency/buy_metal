@@ -51,7 +51,7 @@ class RouteConstants {
     } else if (route == RootRoutes.authPage) {
       return const AuthPage();
     } else if (route == RootRoutes.regPage) {
-      return const RegPage();
+      return RegPage(args: args);
     } else if (route == RootRoutes.regConfirmConditionsPage) {
       return RegConfirmConditionsPage(args: args);
     } else if (route == RootRoutes.regPhonePage) {
