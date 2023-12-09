@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/di/service_locator.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/start_page/start_page.dart';
@@ -7,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 GetIt getIt = GetIt.instance;
+final globalStream = StreamController<GlobalEvents>.broadcast();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  //final globalStream = StreamController<GlobalEvents>.broadcast();
+
   bool loading = true;
 
   var router = RouteImpl(

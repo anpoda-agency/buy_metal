@@ -1,1 +1,5 @@
-enum GlobalEvents { none }
+enum GlobalEvents {
+  createOrder,
+  createProposal,
+  createDeal,
+}

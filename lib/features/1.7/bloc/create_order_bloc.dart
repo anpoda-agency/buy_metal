@@ -1,8 +1,10 @@
 import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_request.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_create_application_response.dart';
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/1.7/ui/create_order_page.dart';
+import 'package:buy_metal_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'create_order_event.dart';
@@ -107,6 +109,8 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
 
     var res = await applicationRepository.applicationUploadCreateApplication(
         request: state.pageState.request, accessToken: token);
+
+    globalStream.add(GlobalEvents.createOrder);
     emit(CreateOrderAllowedToPush(state.pageState.copyWith(response: res)));
   }
 

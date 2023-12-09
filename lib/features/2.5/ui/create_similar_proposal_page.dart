@@ -50,15 +50,20 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   }
   */
 
+  late final ApplicationUploadSearchResponse args;
   @override
   void initState() {
+    //Map<String, dynamic> map = widget.args != null ? widget.args as Map<String, dynamic> : {};
+    //orderModel = map['order_model'];
+    //userModel = map['user_model'];
+    args = widget.args as ApplicationUploadSearchResponse;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationUploadSearchResponse;
-    final args = widget.args as ApplicationUploadSearchResponse;
+    //final args = widget.args as ApplicationUploadSearchResponse;
 
     return BlocProvider(
       create: (context) => CreateSimilarProposalBloc(
