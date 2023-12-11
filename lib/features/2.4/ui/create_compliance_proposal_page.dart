@@ -9,6 +9,7 @@ import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converte
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateComplianceProposalPage extends StatefulWidget {
   const CreateComplianceProposalPage({super.key, required this.args});
@@ -22,7 +23,10 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
   //late UserModel userModel;
   //late OrderModel orderModel;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController dateToStorageController = TextEditingController();
+  //final TextEditingController dateToStorageController = TextEditingController();
+  MaskTextInputFormatter dateToStorageController =
+      MaskTextInputFormatter(mask: '####-##-##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
+
   double price = 0;
   int selectedValue = 0;
 
@@ -333,7 +337,9 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                     height: 10,
                                   ),
                                   TextField(
-                                    controller: dateToStorageController,
+                                    // dateToStorageController
+                                    inputFormatters: [dateToStorageController],
+                                    //controller: dateToStorageController,
                                     onChanged: (value) {
                                       context
                                           .read<CreateComplianceProposalBloc>()
