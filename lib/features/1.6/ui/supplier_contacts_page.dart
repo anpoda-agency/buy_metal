@@ -1,6 +1,8 @@
 import 'package:buy_metal_app/data/models/application_models/application_get_responses_by_application_id_response.dart';
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
+import 'package:buy_metal_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -253,6 +255,7 @@ class _SupplierContactsPageState extends State<SupplierContactsPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     context.read<RouteImpl>().go(OrdersRoutes.orders.name);
+                    globalStream.add(GlobalEvents.createDeal);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

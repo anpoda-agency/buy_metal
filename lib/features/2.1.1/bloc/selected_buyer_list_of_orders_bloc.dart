@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_request.dart';
 import 'package:buy_metal_app/data/models/application_models/application_upload_search_response.dart';
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/domain/repository/application_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'selected_buyer_list_of_orders_event.dart';
@@ -18,6 +22,15 @@ class SelectedBuyerListOfOrdersBloc extends Bloc<SelectedBuyerListOfOrdersEvent,
     on<SelectedBuyerListOfOrdersInit>(selectedBuyerListOfOrdersInit);
     on<SelectedBuyerListOfOrdersMsgErr>(selectedBuyerListOfOrdersMsgErr);
     add(SelectedBuyerListOfOrdersInit());
+    subGS = globalStream.stream.listen(_refresh);
+  }
+
+  StreamSubscription<GlobalEvents>? subGS;
+
+  _refresh(GlobalEvents event) {
+    if (event == GlobalEvents.createOrder) {
+      add(SelectedBuyerListOfOrdersInit());
+    }
   }
 
   selectedBuyerListOfOrdersInit(SelectedBuyerListOfOrdersInit event, emit) async {

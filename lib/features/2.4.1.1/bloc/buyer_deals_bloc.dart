@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_request.dart';
 import 'package:buy_metal_app/data/models/deal_models/deal_upload_search_response.dart';
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/domain/repository/deal_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'buyer_deals_event.dart';
@@ -18,6 +22,15 @@ class BuyerDealsBloc extends Bloc<BuyerDealsEvent, BuyerDealsState> {
     on<BuyerDealsInitEvent>(buyerDealsInit);
     on<BuyerDealsMsgErrEvent>(buyerDealsMsgErr);
     add(BuyerDealsInitEvent());
+    subGS = globalStream.stream.listen(_refresh);
+  }
+
+  StreamSubscription<GlobalEvents>? subGS;
+
+  _refresh(GlobalEvents event) {
+    if (event == GlobalEvents.createOrder) {
+      add(BuyerDealsInitEvent());
+    }
   }
 
   buyerDealsInit(BuyerDealsInitEvent event, emit) async {
