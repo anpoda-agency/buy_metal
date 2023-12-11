@@ -49,4 +49,9 @@ class RegInputPassword extends RegEvent {
   RegInputPassword(this.value);
 }
 
+class RegInputRepeatPassword extends RegEvent {
+  final String value;
+  RegInputRepeatPassword(this.value);
+}
+
 class RegSendReg extends RegEvent {}

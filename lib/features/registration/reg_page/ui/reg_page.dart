@@ -163,10 +163,24 @@ class _RegPageState extends State<RegPage> {
                               ),
                             ],
                           ),
-                          // Конец выбора роли
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          state.pageState.errorTypeProfileText != null && state.pageState.typeProfileError
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    child: Text(
+                                      state.pageState.errorTypeProfileText,
+                                      style:
+                                          const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                    ),
+                                  ),
+                                )
+                              // Конец выбора роли
+                              : const SizedBox(
+                                  height: 22,
+                                ),
                           /* RegFieldWidget(
                             //controller: _ownerNameController,
                             title: 'POSITION (CUSTOMER or SUPPLIER)',
@@ -174,6 +188,8 @@ class _RegPageState extends State<RegPage> {
                             onChanged: (value) => context.read<RegBloc>().add(RegInputPosition(value)),
                           ), */
                           RegFieldWidget(
+                            isErrorState: state.pageState.fullNameError,
+                            errorText: state.pageState.errorFullNameText,
                             controller: _ownerNameController,
                             title: 'ФИО Пользователя',
                             inputType: TextInputType.text,
@@ -186,12 +202,16 @@ class _RegPageState extends State<RegPage> {
                             onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
                           ), */
                           RegFieldWidget(
+                            isErrorState: state.pageState.companyNameError,
+                            errorText: state.pageState.errorCompanyNameText,
                             controller: _companyNameController,
                             title: 'Наименование организации',
                             inputType: TextInputType.text,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputCompanyName(value)),
                           ),
                           RegFieldWidget(
+                            isErrorState: state.pageState.companyAddressError,
+                            errorText: state.pageState.errorCompanyAddressText,
                             controller: _adressController,
                             title: 'Фактический адрес организации',
                             inputType: TextInputType.text,
@@ -199,6 +219,8 @@ class _RegPageState extends State<RegPage> {
                           ),
 
                           RegFieldWidget(
+                            isErrorState: state.pageState.tinError,
+                            errorText: state.pageState.errorTinText,
                             controller: _innController,
                             title: 'ИНН',
                             inputType: TextInputType.number,
@@ -211,22 +233,28 @@ class _RegPageState extends State<RegPage> {
                             onChanged: (value) => context.read<RegBloc>().add(RegInputPhoneNumber(value)),
                           ), */
                           RegFieldWidget(
+                            isErrorState: state.pageState.emailError,
+                            errorText: state.pageState.errorEmailText,
                             controller: _emailController,
                             title: 'Эл. почта',
                             inputType: TextInputType.emailAddress,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputEmail(value)),
                           ),
                           RegFieldWidget(
+                            isErrorState: state.pageState.passwordError,
+                            errorText: state.pageState.errorPasswordText,
                             controller: _passwordController,
                             title: 'Придумайте пароль',
                             inputType: TextInputType.text,
                             onChanged: (value) => context.read<RegBloc>().add(RegInputPassword(value)),
                           ),
                           RegFieldWidget(
+                            isErrorState: state.pageState.repeatPasswordError,
+                            errorText: state.pageState.errorRepeatPasswordText,
                             controller: _confirmPasswordController,
                             title: 'Повторите пароль',
                             inputType: TextInputType.text,
-                            //onChanged: (value) => context.read<RegBloc>().add(RegInputFullName(value)),
+                            onChanged: (value) => context.read<RegBloc>().add(RegInputRepeatPassword(value)),
                           ),
                           const SizedBox(
                             height: 10,
@@ -236,7 +264,8 @@ class _RegPageState extends State<RegPage> {
                             height: 75,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_selectedType == 0 || _selectedType == 1) {
+                                context.read<RegBloc>().add(RegSendReg());
+                                /* if (_selectedType == 0 || _selectedType == 1) {
                                   if (_passwordController.text == '') {
                                     const ErrorDialog(
                                       dialogTittle: 'Отсутствует пароль',
@@ -268,7 +297,7 @@ class _RegPageState extends State<RegPage> {
                                     dialogTittle: 'Не выбран тип аккаунта',
                                     dialogText: 'Сделайте выбор в поле \n"Вы являетесь"',
                                   ).showMyDialog(context);
-                                }
+                                } */
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange[700],
@@ -302,11 +331,15 @@ class RegFieldWidget extends StatefulWidget {
     required this.title,
     required this.inputType,
     this.onChanged,
+    this.errorText,
+    this.isErrorState = false,
   });
   final TextEditingController? controller;
   final String title;
   final TextInputType inputType;
   final Function(String)? onChanged;
+  final String? errorText;
+  final bool isErrorState;
 
   @override
   State<RegFieldWidget> createState() => _RegFieldWidgetState();
@@ -316,7 +349,7 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -342,6 +375,23 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                     borderRadius: BorderRadius.circular(15))),
             keyboardType: widget.inputType,
           ),
+          widget.errorText != null && widget.isErrorState
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration:
+                        BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Text(
+                      widget.errorText ?? '',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                    ),
+                  ),
+                )
+              // Конец выбора роли
+              : const SizedBox(
+                  height: 22,
+                ),
         ],
       ),
     );

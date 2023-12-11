@@ -59,6 +59,9 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   createOrderInputRolledSize(CreateOrderInputRolledSize event, emit) async {
     var model = state.pageState.request.copyWith(rolledSize: event.value);
     emit(CreateOrderUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.rolledSize.isNotEmpty) {
+      emit(CreateOrderUp(state.pageState.copyWith(sizeRolledError: false)));
+    }
   }
 
   createOrderInputRolledParams(CreateOrderInputRolledParams event, emit) async {
@@ -74,6 +77,9 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   createOrderInputMaterialBrand(CreateOrderInputMaterialBrand event, emit) async {
     var model = state.pageState.request.copyWith(materialBrand: event.value);
     emit(CreateOrderUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.materialBrand.isNotEmpty) {
+      emit(CreateOrderUp(state.pageState.copyWith(brandMaterialError: false)));
+    }
   }
 
   createOrderInputMaterialParams(CreateOrderInputMaterialParams event, emit) async {
