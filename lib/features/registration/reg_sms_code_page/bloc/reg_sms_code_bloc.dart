@@ -41,23 +41,52 @@ class RegSmsCodeBloc extends Bloc<RegSmsCodeEvent, RegSmsCodeState> {
     //
     var model = state.pageState.request.copyWith(code: event.value);
     emit(RegSmsCodeUp(state.pageState.copyWith(request: model, errMsg: '')));
+    if (state.pageState.request.code.length == 4) {
+      emit(RegSmsCodeUp(state.pageState.copyWith(smsCodeError: false)));
+    }
     //event.completed ? add(RegSmsCodeSendCodeEvent()) : null;
   }
 
   regSmsCodeSendCode(RegSmsCodeSendCodeEvent event, emit) async {
-    //
-    var res = await activationCodeRepository.activationCodeUploadConfirmNumber(request: state.pageState.request);
-    if (!res.success) {
-      if (res.message == 'Code not virified') {
-        emit(RegSmsCodeError(state.pageState.copyWith(
-          onAwait: false,
-          errMsg: 'Неверный код',
-        )));
+    if (state.pageState.request.code.isNotEmpty && state.pageState.request.code.length == 4) {
+      emit(RegSmsCodeUp(state.pageState.copyWith(smsCodeError: false)));
+      var res = await activationCodeRepository.activationCodeUploadConfirmNumber(request: state.pageState.request);
+      if (!res.success) {
+        if (res.message == 'Code not verified') {
+          emit(RegSmsCodeError(state.pageState.copyWith(
+            onAwait: false,
+            errMsg: 'Неверный код',
+          )));
+          emit(RegSmsCodeInpurErrorState(state.pageState.copyWith(
+            onAwait: false,
+            smsCodeError: true,
+            errorText: 'Введите правильный смс код',
+          )));
+        } else {
+          emit(RegSmsCodeError(state.pageState.copyWith(onAwait: false, errMsg: res.message)));
+        }
       } else {
-        emit(RegSmsCodeError(state.pageState.copyWith(onAwait: false, errMsg: res.message)));
+        emit(RegSmsCodeAllowedToPush(state.pageState));
       }
     } else {
-      emit(RegSmsCodeAllowedToPush(state.pageState));
+      if (state.pageState.request.code.isEmpty) {
+        emit(RegSmsCodeInpurErrorState(state.pageState.copyWith(
+          onAwait: false,
+          smsCodeError: true,
+          errorText: 'Введите смс код',
+        )));
+      } else if (state.pageState.request.source.length != 4) {
+        emit(RegSmsCodeInpurErrorState(state.pageState.copyWith(
+          onAwait: false,
+          smsCodeError: true,
+          errorText: 'Введите правильный смс код',
+        )));
+      } else {
+        emit(RegSmsCodeInpurErrorState(state.pageState.copyWith(
+          onAwait: false,
+          smsCodeError: false,
+        )));
+      }
     }
   }
 

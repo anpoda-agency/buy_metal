@@ -14,6 +14,10 @@ class RegSmsCodeUp extends RegSmsCodeState {
   const RegSmsCodeUp(PageState pageState) : super(pageState);
 }
 
+class RegSmsCodeInpurErrorState extends RegSmsCodeState {
+  const RegSmsCodeInpurErrorState(PageState pageState) : super(pageState);
+}
+
 class RegSmsCodeError extends RegSmsCodeState {
   const RegSmsCodeError(PageState pageState) : super(pageState);
 }
@@ -28,11 +32,16 @@ class PageState {
   final ActivationCodeUploadConfirmNumberRequest request;
   final ActivationCodeUploadConfirmNumberResponse response;
 
+  final bool smsCodeError;
+  final String errorText;
+
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
     this.request = const ActivationCodeUploadConfirmNumberRequest(),
     this.response = const ActivationCodeUploadConfirmNumberResponse(),
+    this.smsCodeError = false,
+    this.errorText = '',
   });
 
   PageState copyWith({
@@ -40,12 +49,16 @@ class PageState {
     String? errMsg,
     ActivationCodeUploadConfirmNumberRequest? request,
     ActivationCodeUploadConfirmNumberResponse? response,
+    bool? smsCodeError,
+    String? errorText,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      smsCodeError: smsCodeError ?? this.smsCodeError,
+      errorText: errorText ?? this.errorText,
     );
   }
 }

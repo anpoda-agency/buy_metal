@@ -30,11 +30,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   authInputEmail(AuthInputEmail event, emit) async {
     var model = state.pageState.request.copyWith(email: event.value);
     emit(AuthUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.email.isNotEmpty) {
+      emit(AuthUp(state.pageState.copyWith(emailError: false, passwordError: false)));
+    }
   }
 
   authInputPassword(AuthInputPassword event, emit) async {
     var model = state.pageState.request.copyWith(password: event.value);
     emit(AuthUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.password.isNotEmpty) {
+      emit(AuthUp(state.pageState.copyWith(emailError: false, passwordError: false)));
+    }
   }
 
   authSendLogin(AuthSendLogin event, emit) async {

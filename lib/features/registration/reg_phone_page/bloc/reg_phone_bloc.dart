@@ -39,6 +39,9 @@ class RegPhoneBloc extends Bloc<RegPhoneEvent, RegPhoneState> {
   regPhoneInputNumber(RegPhoneInputNumberEvent event, emit) async {
     var model = state.pageState.request.copyWith(source: event.value);
     emit(RegPhoneUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.source.length == 11) {
+      emit(RegPhoneUp(state.pageState.copyWith(proneError: false)));
+    }
   }
 
   regPhoneSendRequest(RegPhoneSendRequestEvent event, emit) async {
