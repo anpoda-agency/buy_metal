@@ -61,6 +61,9 @@ class CreateComplianceProposalBloc extends Bloc<CreateComplianceProposalEvent, C
   createComplianceProposalInputPrice(CreateComplianceProposalInputPrice event, emit) async {
     var model = state.pageState.request.copyWith(price: event.value);
     emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.price > 0) {
+      emit(CreateComplianceProposalUp(state.pageState.copyWith(priceError: false)));
+    }
   }
 
   createComplianceProposalInputFullPrice(CreateComplianceProposalInputFullPrice event, emit) async {
@@ -71,28 +74,103 @@ class CreateComplianceProposalBloc extends Bloc<CreateComplianceProposalEvent, C
   createComplianceProposalInputDeliverDate(CreateComplianceProposalInputDeliverDate event, emit) async {
     var model = state.pageState.request.copyWith(deliverDate: event.value);
     emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
+    if (state.pageState.request.deliverDate.length == 10) {
+      emit(CreateComplianceProposalUp(state.pageState.copyWith(deliverDateError: false)));
+    }
   }
 
   createComplianceProposalInputInStock(CreateComplianceProposalInputInStock event, emit) async {
     var model = state.pageState.request.copyWith(inStock: event.value);
-    emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
+    emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model, isAvailableSelected: true)));
+    if (state.pageState.isAvailableSelected) {
+      emit(CreateComplianceProposalUp(state.pageState.copyWith(availableSelectedError: false)));
+    }
   }
 
   createComplianceProposalSendProposal(CreateComplianceProposalSendProposal event, emit) async {
-    DateTime now = DateTime.now();
+    // Если на складе стоит true, то не должна дата доствки проверяться
+    // Еще бага есть, что если не выбрать на складе Да или Нет, то по умолчанию отправляется false.
+    if (state.pageState.request.price > 0 && state.pageState.isAvailableSelected) {
+      emit(CreateComplianceProposalUp(state.pageState.copyWith(
+        priceError: false,
+        availableSelectedError: false,
+      )));
+      if (state.pageState.request.inStock) {
+        DateTime now = DateTime.now();
 
-    String creationDate =
-        "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
-    var model = state.pageState.request.copyWith(creationDate: creationDate);
-    emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
-    //var model = state.pageState.request.copyWith(position: event.value);
-    var token = userRepository.user?.accessToken;
+        String creationDate =
+            "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+        var model = state.pageState.request.copyWith(creationDate: creationDate);
+        emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
+        //var model = state.pageState.request.copyWith(position: event.value);
+        var token = userRepository.user?.accessToken;
 
-    var res = await applicationResponseRepository.applicationResponseUploadCreate(
-        request: state.pageState.request, accessToken: token);
-    emit(CreateComplianceProposalAllowedToPush(state.pageState.copyWith(
-      response: res,
-    )));
+        var res = await applicationResponseRepository.applicationResponseUploadCreate(
+            request: state.pageState.request, accessToken: token);
+        emit(CreateComplianceProposalAllowedToPush(state.pageState.copyWith(
+          response: res,
+        )));
+      } else if (!state.pageState.request.inStock &&
+          state.pageState.request.deliverDate.isNotEmpty &&
+          state.pageState.request.deliverDate.length == 10) {
+        DateTime now = DateTime.now();
+
+        String creationDate =
+            "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+        var model = state.pageState.request.copyWith(creationDate: creationDate);
+        emit(CreateComplianceProposalUp(state.pageState.copyWith(request: model)));
+        //var model = state.pageState.request.copyWith(position: event.value);
+        var token = userRepository.user?.accessToken;
+
+        var res = await applicationResponseRepository.applicationResponseUploadCreate(
+            request: state.pageState.request, accessToken: token);
+        emit(CreateComplianceProposalAllowedToPush(state.pageState.copyWith(
+          response: res,
+        )));
+      } else if (state.pageState.request.deliverDate.isEmpty) {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          deliverDateError: true,
+          errorDeliverDateText: 'Введите дату',
+        )));
+      } else if (state.pageState.request.deliverDate.length < 10 || state.pageState.request.deliverDate.length > 10) {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          deliverDateError: true,
+          errorDeliverDateText: 'Введите корректную дату',
+        )));
+      } else {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          deliverDateError: false,
+        )));
+      }
+    } else {
+      if (state.pageState.request.price <= 0) {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          priceError: true,
+          errorPriceText: 'Введите стоимость больше 0',
+        )));
+      } else {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          priceError: false,
+        )));
+      }
+      if (!state.pageState.isAvailableSelected) {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          availableSelectedError: true,
+          errorAvailableSelectedText: 'Выберите наличие на складе',
+        )));
+      } else {
+        emit(CreateComplianceProposalInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          availableSelectedError: false,
+        )));
+      }
+    }
   }
 
   @override

@@ -239,9 +239,26 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                             const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                           ],
                         ),
-                        const SizedBox(
+                        state.pageState.errorPriceText != null && state.pageState.priceError
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Text(
+                                    state.pageState.errorPriceText,
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 22,
+                              ),
+                        /* const SizedBox(
                           height: 10,
-                        ),
+                        ), */
                         Row(
                           children: [
                             const Text(
@@ -322,6 +339,23 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                             ),
                           ],
                         ),
+                        state.pageState.errorAvailableSelectedText != null && state.pageState.availableSelectedError
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Text(
+                                    state.pageState.errorAvailableSelectedText,
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 22,
+                              ),
                         selectedValue == 2
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,9 +392,44 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                             borderRadius: BorderRadius.circular(15))),
                                     keyboardType: TextInputType.number,
                                   ),
+                                  state.pageState.errorDeliverDateText != null && state.pageState.deliverDateError
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                            decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                                            child: Text(
+                                              state.pageState.errorDeliverDateText,
+                                              style: const TextStyle(
+                                                  fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox(
+                                          height: 22,
+                                        ),
                                 ],
                               )
                             : const SizedBox.shrink(),
+                        /* state.pageState.errorDeliverDateText != null && state.pageState.deliverDateError
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Text(
+                                    state.pageState.errorDeliverDateText,
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 22,
+                              ), */
                       ]),
                     ],
                   ),
