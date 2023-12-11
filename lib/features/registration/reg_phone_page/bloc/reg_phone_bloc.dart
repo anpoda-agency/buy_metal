@@ -31,6 +31,8 @@ class RegPhoneBloc extends Bloc<RegPhoneEvent, RegPhoneState> {
     emit(RegPhoneError(state.pageState.copyWith(
       onAwait: false,
       errMsg: event.msg,
+      //proneError: true,
+      //errorText: 'Указан неверный номер телефона'
     )));
   }
 
@@ -40,14 +42,44 @@ class RegPhoneBloc extends Bloc<RegPhoneEvent, RegPhoneState> {
   }
 
   regPhoneSendRequest(RegPhoneSendRequestEvent event, emit) async {
-    var res = await activationCodeRepository.activationCodeUploadSendActivationCode(request: state.pageState.request);
-    if (!res.success) {
-      emit(RegPhoneError(state.pageState.copyWith(
-        onAwait: false,
-        errMsg: res.message,
-      )));
+    if (state.pageState.request.source.isNotEmpty && state.pageState.request.source.length == 11) {
+      emit(RegPhoneUp(state.pageState.copyWith(proneError: false)));
+      var res = await activationCodeRepository.activationCodeUploadSendActivationCode(request: state.pageState.request);
+      if (!res.success) {
+        emit(RegPhoneError(state.pageState.copyWith(
+          onAwait: false,
+          errMsg: res.message,
+        )));
+      }
+      emit(RegPhoneAllowedToPush(state.pageState.copyWith(response: res, proneError: false)));
+    } else {
+      //emit(RegPhoneError(state.pageState));
+      if (state.pageState.request.source.isEmpty) {
+        emit(RegPhoneInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          proneError: true,
+          errorText: 'Введите ваш номер телефона',
+        )));
+      } else
+      /* {
+        emit(RegPhoneError(state.pageState.copyWith(
+          onAwait: false,
+          proneError: false,
+        )));
+      } */
+      if (state.pageState.request.source.length != 11) {
+        emit(RegPhoneInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          proneError: true,
+          errorText: 'Введите корректный номер телефона',
+        )));
+      } else {
+        emit(RegPhoneInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          proneError: false,
+        )));
+      }
     }
-    emit(RegPhoneAllowedToPush(state.pageState.copyWith(response: res)));
   }
 
   @override

@@ -105,6 +105,8 @@ class _RegPhonePageState extends State<RegPhonePage> {
                       child: LabelWidget(title: 'Регистрация'),
                     ),
                     RegFieldWidget(
+                      isErrorState: state.pageState.proneError,
+                      errorText: state.pageState.errorText,
                       controller: _phoneController,
                       title: 'Введите номер телефона:',
                       inputType: TextInputType.phone,
@@ -129,14 +131,15 @@ class _RegPhonePageState extends State<RegPhonePage> {
                           height: 75,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (_phoneController.text.length == 11 || _phoneController.text.length == 12) {
+                              context.read<RegPhoneBloc>().add(RegPhoneSendRequestEvent());
+                              /* if (_phoneController.text.length == 11 || _phoneController.text.length == 12) {
                                 context.read<RegPhoneBloc>().add(RegPhoneSendRequestEvent());
                               } else {
                                 const ErrorDialog(
                                   dialogTittle: 'Введен некорректный номер телефона',
                                   dialogText: 'Проверьте, правильно ли указан\nномер телефона',
                                 ).showMyDialog(context);
-                              }
+                              } */
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange[700],
@@ -169,11 +172,15 @@ class RegFieldWidget extends StatefulWidget {
     required this.title,
     required this.inputType,
     this.onChanged,
+    this.errorText,
+    this.isErrorState = false,
   });
   final TextEditingController? controller;
   final String title;
   final TextInputType inputType;
   final Function(String)? onChanged;
+  final String? errorText;
+  final bool isErrorState;
 
   @override
   State<RegFieldWidget> createState() => _RegFieldWidgetState();
@@ -209,6 +216,22 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                     borderRadius: BorderRadius.circular(15))),
             keyboardType: widget.inputType,
           ),
+          widget.errorText != null && widget.isErrorState
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration:
+                        BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Text(
+                      widget.errorText ?? '',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  height: 20,
+                ),
         ],
       ),
     );

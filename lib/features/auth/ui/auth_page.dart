@@ -98,9 +98,11 @@ class _AuthPageState extends State<AuthPage> {
                             false,
                             _emailTextController,
                             (value) => context.read<AuthBloc>().add(AuthInputEmail(value)),
+                            isErrorState: state.pageState.emailError,
+                            errorText: state.pageState.errorEmailText,
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           const Text(
                             'Пароль',
@@ -113,6 +115,8 @@ class _AuthPageState extends State<AuthPage> {
                             true,
                             _passwordTextController,
                             (value) => context.read<AuthBloc>().add(AuthInputPassword(value)),
+                            isErrorState: state.pageState.passwordError,
+                            errorText: state.pageState.errorPasswordText,
                           ),
                           const SizedBox(
                             height: 30,
@@ -165,28 +169,50 @@ class _AuthPageState extends State<AuthPage> {
   }
 }
 
-TextField authTextField(
+Widget authTextField(
   bool isPasswordType,
   TextEditingController controller,
-  Function(String) onChanged,
-) {
-  return TextField(
-    onChanged: onChanged,
-    controller: controller,
-    obscureText: isPasswordType,
-    enableSuggestions: !isPasswordType,
-    autocorrect: !isPasswordType,
-    decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.grey[300],
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
-        focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Colors.white,
+  Function(String) onChanged, {
+  String? errorText,
+  bool isErrorState = false,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      TextField(
+        onChanged: onChanged,
+        controller: controller,
+        obscureText: isPasswordType,
+        enableSuggestions: !isPasswordType,
+        autocorrect: !isPasswordType,
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey[300],
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.white)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.circular(15))),
+        keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
+      ),
+      errorText != null && isErrorState
+          ? Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Text(
+                  errorText,
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                ),
+              ),
+            )
+          : const SizedBox(
+              height: 20,
             ),
-            borderRadius: BorderRadius.circular(15))),
-    keyboardType: isPasswordType ? TextInputType.visiblePassword : TextInputType.emailAddress,
+    ],
   );
 }
 

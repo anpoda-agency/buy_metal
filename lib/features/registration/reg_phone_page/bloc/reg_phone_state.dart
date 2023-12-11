@@ -14,6 +14,10 @@ class RegPhoneUp extends RegPhoneState {
   const RegPhoneUp(PageState pageState) : super(pageState);
 }
 
+class RegPhoneInputErrorState extends RegPhoneState {
+  const RegPhoneInputErrorState(PageState pageState) : super(pageState);
+}
+
 class RegPhoneError extends RegPhoneState {
   const RegPhoneError(PageState pageState) : super(pageState);
 }
@@ -28,11 +32,16 @@ class PageState {
   final ActivationCodeUploadSendActivationCodeRequest request;
   final ActivationCodeUploadSendActivationCodeResponse response;
 
+  final bool proneError;
+  final String errorText;
+
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
     this.request = const ActivationCodeUploadSendActivationCodeRequest(),
     this.response = const ActivationCodeUploadSendActivationCodeResponse(),
+    this.proneError = false,
+    this.errorText = '',
   });
 
   PageState copyWith({
@@ -40,12 +49,16 @@ class PageState {
     String? errMsg,
     ActivationCodeUploadSendActivationCodeRequest? request,
     ActivationCodeUploadSendActivationCodeResponse? response,
+    bool? proneError,
+    String? errorText,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      proneError: proneError ?? this.proneError,
+      errorText: errorText ?? this.errorText,
     );
   }
 }
