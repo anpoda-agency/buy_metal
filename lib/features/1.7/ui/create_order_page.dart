@@ -203,6 +203,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                       onChanged: (value) => context.read<CreateOrderBloc>().add(CreateOrderInputRolledType(value)),
                     ),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.sizeRolledError,
+                      errorText: state.pageState.errorText,
+                      //isValidation: true,
                       title: 'Размер проката, мм *', //обязательное поле
                       controller: _sizeRolledTextController,
                       inputType: TextInputType.text,
@@ -221,6 +224,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                       onChanged: (value) => context.read<CreateOrderBloc>().add(CreateOrderInputRolledGost(value)),
                     ),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.brandMaterialError,
+                      errorText: state.pageState.errorText,
+                      //isValidation: true,
                       title: 'Марка материала *', //обязательное
                       controller: _brandMaterialTextController,
                       inputType: TextInputType.text,
@@ -260,7 +266,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                         height: 65,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (_sizeRolledTextController.text == '') {
+                            context.read<CreateOrderBloc>().add(CreateOrderSend());
+                            /* if (_sizeRolledTextController.text == '') {
                               const ErrorDialog(
                                 dialogTittle: 'Отсутствует размер проката',
                                 dialogText: 'Вы не указали размер проката. \nПожалуйста, укажите размер проката',
@@ -272,7 +279,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                               ).showMyDialog(context);
                             } else {
                               context.read<CreateOrderBloc>().add(CreateOrderSend());
-                            }
+                            } */
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
@@ -303,11 +310,17 @@ class ParamsFieldWidget extends StatefulWidget {
     required this.title,
     required this.inputType,
     required this.onChanged,
+    //this.isValidation = false,
+    this.errorText,
+    this.isErrorState = false,
   });
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
   final Function(String) onChanged;
+  //final bool isValidation;
+  final String? errorText;
+  final bool isErrorState;
 
   @override
   State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
@@ -317,7 +330,9 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      //padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 0),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -328,10 +343,21 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
           const SizedBox(
             height: 10,
           ),
-          TextField(
+          TextFormField(
+            //widget.isValidation
+            /* validator: (val) {
+              if (widget.isValidation) {
+                if (val == null || val.isEmpty) {
+                  return 'TextField is empty';
+                }
+                return null;
+              }
+              return null;
+            }, */
             onChanged: widget.onChanged,
             controller: widget.controller,
             decoration: InputDecoration(
+                //errorText: widget.isValidation ? validateTextField(widget.controller.text) : null,
                 filled: true,
                 fillColor: Colors.grey[300],
                 enabledBorder: OutlineInputBorder(
@@ -343,11 +369,34 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
                     borderRadius: BorderRadius.circular(15))),
             keyboardType: widget.inputType,
           ),
+          widget.errorText != null && widget.isErrorState
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration:
+                        const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Text(
+                      widget.errorText ?? '',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  height: 20,
+                ),
         ],
       ),
     );
   }
 }
+
+/* String validateTextField(String value) {
+  if (value.isEmpty) {
+    return 'Внесите обязательные данные';
+  }
+  return '';
+} */
 
 class ErrorDialog {
   const ErrorDialog({required this.dialogTittle, required this.dialogText});

@@ -92,26 +92,61 @@ class CreateOrderBloc extends Bloc<CreateOrderEvent, CreateOrderState> {
   }
 
   createOrderSend(CreateOrderSend event, emit) async {
-    DateTime now = DateTime.now();
+    if (state.pageState.request.rolledSize.isNotEmpty && state.pageState.request.materialBrand.isNotEmpty) {
+      DateTime now = DateTime.now();
 
-    String creationDate =
-        "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
-    //String dateForSed = DateTime.now().toString();
-    //"${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}T${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}.${now.microsecond.toString().padLeft(3, '0')}Z";
-    //DateTime.now().toString();
+      String creationDate =
+          "${now.day.toString().padLeft(2, '0')}-${now.month.toString().padLeft(2, '0')}-${now.year.toString()} ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}";
+      //String dateForSed = DateTime.now().toString();
+      //"${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}T${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}.${now.microsecond.toString().padLeft(3, '0')}Z";
+      //DateTime.now().toString();
 
-    var userId = userRepository.user?.user.id;
+      var userId = userRepository.user?.user.id;
 
-    var token = userRepository.user?.accessToken;
+      var token = userRepository.user?.accessToken;
 
-    var model = state.pageState.request.copyWith(creationDate: creationDate, userId: userId);
-    emit(CreateOrderUp(state.pageState.copyWith(request: model)));
+      var model = state.pageState.request.copyWith(creationDate: creationDate, userId: userId);
+      emit(CreateOrderUp(state.pageState.copyWith(request: model)));
 
-    var res = await applicationRepository.applicationUploadCreateApplication(
-        request: state.pageState.request, accessToken: token);
+      var res = await applicationRepository.applicationUploadCreateApplication(
+          request: state.pageState.request, accessToken: token);
 
-    globalStream.add(GlobalEvents.createOrder);
-    emit(CreateOrderAllowedToPush(state.pageState.copyWith(response: res)));
+      globalStream.add(GlobalEvents.createOrder);
+      emit(CreateOrderAllowedToPush(state.pageState.copyWith(response: res)));
+    } else {
+      /* if (state.pageState.request.rolledSize.isEmpty && state.pageState.request.materialBrand.isEmpty) {
+        emit(CreateOrderError(state.pageState.copyWith(
+          onAwait: false,
+          sizeRolledError: true,
+          brandMaterialError: true,
+        )));
+      } */
+      emit(CreateOrderError(state.pageState));
+      if (state.pageState.request.rolledSize.isEmpty) {
+        emit(CreateOrderInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          sizeRolledError: true,
+          errorText: 'Введите обязательные данные',
+        )));
+      } else {
+        emit(CreateOrderInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          sizeRolledError: false,
+        )));
+      }
+      if (state.pageState.request.materialBrand.isEmpty) {
+        emit(CreateOrderInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          brandMaterialError: true,
+          errorText: 'Введите обязательные данные',
+        )));
+      } else {
+        emit(CreateOrderInputErrorState(state.pageState.copyWith(
+          onAwait: false,
+          brandMaterialError: false,
+        )));
+      }
+    }
   }
 
   createOrderMsgErr(CreateOrderMsgErr event, emit) async {

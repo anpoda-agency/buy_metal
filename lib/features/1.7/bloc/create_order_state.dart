@@ -18,6 +18,10 @@ class CreateOrderError extends CreateOrderState {
   const CreateOrderError(PageState pageState) : super(pageState);
 }
 
+class CreateOrderInputErrorState extends CreateOrderState {
+  const CreateOrderInputErrorState(PageState pageState) : super(pageState);
+}
+
 class CreateOrderAllowedToPush extends CreateOrderState {
   const CreateOrderAllowedToPush(PageState pageState) : super(pageState);
 }
@@ -30,6 +34,10 @@ class PageState {
   final String creationDate;
   final String userId;
 
+  final bool sizeRolledError;
+  final bool brandMaterialError;
+  final String errorText;
+
   const PageState({
     this.onAwait = false,
     this.errMsg = '',
@@ -37,6 +45,9 @@ class PageState {
     this.response = const ApplicationUploadCreateApplicationResponse(),
     this.creationDate = '',
     this.userId = '',
+    this.sizeRolledError = false,
+    this.brandMaterialError = false,
+    this.errorText = '',
   });
 
   PageState copyWith({
@@ -46,6 +57,9 @@ class PageState {
     ApplicationUploadCreateApplicationResponse? response,
     String? creationDate,
     String? userId,
+    bool? sizeRolledError,
+    bool? brandMaterialError,
+    String? errorText,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
@@ -54,6 +68,9 @@ class PageState {
       response: response ?? this.response,
       creationDate: creationDate ?? this.creationDate,
       userId: userId ?? this.userId,
+      sizeRolledError: sizeRolledError ?? this.sizeRolledError,
+      brandMaterialError: brandMaterialError ?? this.brandMaterialError,
+      errorText: errorText ?? this.errorText,
     );
   }
 }
