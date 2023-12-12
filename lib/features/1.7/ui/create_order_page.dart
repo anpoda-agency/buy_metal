@@ -97,8 +97,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
       child: BlocConsumer<CreateOrderBloc, CreateOrderState>(listener: (context, state) {
         if (state is CreateOrderError) {
           const ErrorDialog(
-            dialogTittle: 'Ошибка запроса',
-            dialogText: 'Не удалось создать заявку, простите =(',
+            dialogTittle: 'Ошибка',
+            dialogText: 'Не удалось создать заявку \nПроверьте поля заявки',
           ).showMyDialog(context);
         }
         if (state is CreateOrderAllowedToPush) {
