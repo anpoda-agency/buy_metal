@@ -9,6 +9,7 @@ import 'package:buy_metal_app/features/core_widgets/rolled_form_ru_name_converte
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateSimilarProposalPage extends StatefulWidget {
   const CreateSimilarProposalPage({super.key, required this.args});
@@ -37,7 +38,10 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   final TextEditingController _brandMaterialTextController = TextEditingController();
   final TextEditingController _paramsMaterialTextController = TextEditingController();
   final TextEditingController _gostMaterialTextController = TextEditingController();
-  final TextEditingController _dateTextController = TextEditingController();
+  //final TextEditingController _dateTextController = TextEditingController();
+
+  MaskTextInputFormatter dateToStorageController =
+      MaskTextInputFormatter(mask: '####-##-##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
   //final CollectionReference _similarProposal = FirebaseFirestore.instance.collection('similar_proposals');
   /*
@@ -135,6 +139,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                     ),
                     const SizedBox(height: 10),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.rolledTypeError,
+                      errorText: state.pageState.errorRolledTypeText,
                       title: 'Классификация/тип профиля *',
                       controller: _typeTextController,
                       inputType: TextInputType.text,
@@ -143,6 +149,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           .add(CreateSimilarProposalInputRolledTypeEvent(value)),
                     ),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.rolledSizeError,
+                      errorText: state.pageState.errorRolledSizeText,
                       title: 'Размер проката, мм *', //обязательное поле
                       controller: _sizeRolledTextController,
                       inputType: TextInputType.text,
@@ -151,6 +159,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           .add(CreateSimilarProposalInputRolledSizeEvent(value)),
                     ),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.rolledParamsError,
+                      errorText: state.pageState.errorRolledParamsText,
                       title: 'Параметры проката *',
                       controller: _paramsRolledTextController,
                       inputType: TextInputType.text,
@@ -167,6 +177,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           .add(CreateSimilarProposalInputRolledGostEvent(value)),
                     ),
                     ParamsFieldWidget(
+                      isErrorState: state.pageState.materialBrandError,
+                      errorText: state.pageState.errorMaterialBrandText,
                       title: 'Марка материала *', //обязательное
                       controller: _brandMaterialTextController,
                       inputType: TextInputType.text,
@@ -200,7 +212,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                           width: 10,
                         ),
                         Text(
-                          _requirement,
+                          '${args.amount} т',
                           style: const TextStyle(fontSize: 20, color: Colors.black),
                         ),
                       ],
@@ -245,7 +257,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                                       .add(CreateSimilarProposalInputPriceEvent(double.parse(val)));
                                   context
                                       .read<CreateSimilarProposalBloc>()
-                                      .add(CreateSimilarProposalInputPriceEvent(price));
+                                      .add(CreateSimilarProposalInputFullPriceEvent(price));
                                 });
                               }
                             },
@@ -269,9 +281,25 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                       ],
                     ),
-                    const SizedBox(
+                    state.pageState.errorPriceText != null && state.pageState.priceError
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 2, bottom: 2),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                state.pageState.errorPriceText,
+                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 22,
+                          ),
+                    /* const SizedBox(
                       height: 10,
-                    ),
+                    ), */
                     Row(
                       children: [
                         const Text(
@@ -307,7 +335,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                             onTap: () {
                               setState(() {
                                 selectedValue = 1;
-                                _dateTextController.clear();
+                                dateToStorageController.clear();
                                 context
                                     .read<CreateSimilarProposalBloc>()
                                     .add(CreateSimilarProposalInputInStockEvent(true));
@@ -353,6 +381,22 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         ),
                       ],
                     ),
+                    state.pageState.errorAvailableSelectedText != null && state.pageState.availableSelectedError
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 2, bottom: 2),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                state.pageState.errorAvailableSelectedText,
+                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(
+                            height: 22,
+                          ),
                     selectedValue == 2
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,7 +417,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                                       .read<CreateSimilarProposalBloc>()
                                       .add(CreateSimilarProposalInputDeliverDateEvent(value));
                                 },
-                                controller: _dateTextController,
+                                inputFormatters: [dateToStorageController],
+                                //controller: _dateTextController,
                                 decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.grey[300],
@@ -387,6 +432,23 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                                         borderRadius: BorderRadius.circular(15))),
                                 keyboardType: TextInputType.number,
                               ),
+                              state.pageState.errorDeliverDateText != null && state.pageState.deliverDateError
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                        decoration: const BoxDecoration(
+                                            color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                                        child: Text(
+                                          state.pageState.errorDeliverDateText,
+                                          style: const TextStyle(
+                                              fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(
+                                      height: 22,
+                                    ),
                             ],
                           )
                         : const SizedBox.shrink(),
@@ -574,11 +636,15 @@ class ParamsFieldWidget extends StatefulWidget {
     required this.title,
     required this.inputType,
     required this.onChanged,
+    this.errorText,
+    this.isErrorState = false,
   });
   final TextEditingController controller;
   final String title;
   final TextInputType inputType;
   final Function(String) onChanged;
+  final String? errorText;
+  final bool isErrorState;
 
   @override
   State<ParamsFieldWidget> createState() => _ParamsFieldWidgetState();
@@ -588,7 +654,7 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -614,6 +680,23 @@ class _ParamsFieldWidgetState extends State<ParamsFieldWidget> {
                     borderRadius: BorderRadius.circular(15))),
             keyboardType: widget.inputType,
           ),
+          widget.errorText != null && widget.isErrorState
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration:
+                        const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Text(
+                      widget.errorText ?? '',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
+                    ),
+                  ),
+                )
+              // Конец выбора роли
+              : const SizedBox(
+                  height: 20,
+                ),
         ],
       ),
     );

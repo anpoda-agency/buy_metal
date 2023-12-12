@@ -90,6 +90,7 @@ class CreateComplianceProposalBloc extends Bloc<CreateComplianceProposalEvent, C
   createComplianceProposalSendProposal(CreateComplianceProposalSendProposal event, emit) async {
     // Если на складе стоит true, то не должна дата доствки проверяться
     // Еще бага есть, что если не выбрать на складе Да или Нет, то по умолчанию отправляется false.
+    // Update* Все пункты учел и исправил :)
     if (state.pageState.request.price > 0 && state.pageState.isAvailableSelected) {
       emit(CreateComplianceProposalUp(state.pageState.copyWith(
         priceError: false,

@@ -9,16 +9,19 @@ class CreateSimilarProposalMsgErrEvent extends CreateSimilarProposalEvent {
   CreateSimilarProposalMsgErrEvent(this.msg);
 }
 
+// обязательное
 class CreateSimilarProposalInputRolledTypeEvent extends CreateSimilarProposalEvent {
   final String value;
   CreateSimilarProposalInputRolledTypeEvent(this.value);
 }
 
+// обязательное
 class CreateSimilarProposalInputRolledSizeEvent extends CreateSimilarProposalEvent {
   final String value;
   CreateSimilarProposalInputRolledSizeEvent(this.value);
 }
 
+// обязательное
 class CreateSimilarProposalInputRolledParamsEvent extends CreateSimilarProposalEvent {
   final String value;
   CreateSimilarProposalInputRolledParamsEvent(this.value);
@@ -29,6 +32,7 @@ class CreateSimilarProposalInputRolledGostEvent extends CreateSimilarProposalEve
   CreateSimilarProposalInputRolledGostEvent(this.value);
 }
 
+// обязательное
 class CreateSimilarProposalInputMaterialBrandEvent extends CreateSimilarProposalEvent {
   final String value;
   CreateSimilarProposalInputMaterialBrandEvent(this.value);
