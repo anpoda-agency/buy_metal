@@ -1,34 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_upload_login_response.dart';
+part of 'user_upload_find_user_by_id_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthUploadLoginResponse _$AuthUploadLoginResponseFromJson(
+UserUploadFindUserByIdResponse _$UserUploadFindUserByIdResponseFromJson(
         Map<String, dynamic> json) =>
-    AuthUploadLoginResponse(
-      accessToken: json['accessToken'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['accessToken']),
-      refreshToken: json['refreshToken'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['refreshToken']),
-      user: json['user'] == null
-          ? const User()
-          : User.fromJson(json['user'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$AuthUploadLoginResponseToJson(
-        AuthUploadLoginResponse instance) =>
-    <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
-      'user': instance.user,
-    };
-
-User _$UserFromJson(Map<String, dynamic> json) => User(
+    UserUploadFindUserByIdResponse(
       blocked: json['blocked'] == null
           ? false
           : FromJsonBase.jsonToBool(json['blocked']),
@@ -55,16 +35,15 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       position: json['position'] == null
           ? ''
           : FromJsonBase.jsonToString(json['position']),
-      refresh: json['refresh'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['refresh']),
       registrationDate: json['registrationDate'] == null
           ? ''
           : FromJsonBase.jsonToString(json['registrationDate']),
       tin: json['tin'] == null ? '' : FromJsonBase.jsonToString(json['tin']),
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$UserUploadFindUserByIdResponseToJson(
+        UserUploadFindUserByIdResponse instance) =>
+    <String, dynamic>{
       'blocked': instance.blocked,
       'companyAddress': instance.companyAddress,
       'companyName': instance.companyName,
@@ -75,7 +54,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'phone': instance.phone,
       'phoneConfirmed': instance.phoneConfirmed,
       'position': instance.position,
-      'refresh': instance.refresh,
       'registrationDate': instance.registrationDate,
       'tin': instance.tin,
     };

@@ -8,6 +8,22 @@ class UserApi {
 
   UserApi({required this.dioClient});
 
+  Future<Response> userUploadFindUserById({required String path, String? accessToken}) async {
+    // request body empty
+    //const String endUrl = "/block";
+
+    try {
+      final Response response = await dioClient.post(
+        AppConstants.userUploadFindUserById + path,
+        //body: request.toJson(),
+        accessToken: accessToken,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Response> userUpdateUser(
       {required UserUpdateUserRequest request, required String path, String? accessToken}) async {
     var body = request.toJson();

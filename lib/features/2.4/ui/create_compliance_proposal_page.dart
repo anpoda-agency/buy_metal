@@ -239,7 +239,8 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                             const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                           ],
                         ),
-                        state.pageState.errorPriceText != null && state.pageState.priceError
+                        //state.pageState.errorPriceText != null &&
+                        state.pageState.priceError
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 2, bottom: 2),
                                 child: Container(
@@ -339,7 +340,8 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                             ),
                           ],
                         ),
-                        state.pageState.errorAvailableSelectedText != null && state.pageState.availableSelectedError
+                        //state.pageState.errorAvailableSelectedText != null &&
+                        state.pageState.availableSelectedError
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 2, bottom: 2),
                                 child: Container(
@@ -392,7 +394,8 @@ class _CreateComplianceProposalPageState extends State<CreateComplianceProposalP
                                             borderRadius: BorderRadius.circular(15))),
                                     keyboardType: TextInputType.number,
                                   ),
-                                  state.pageState.errorDeliverDateText != null && state.pageState.deliverDateError
+                                  //state.pageState.errorDeliverDateText != null &&
+                                  state.pageState.deliverDateError
                                       ? Padding(
                                           padding: const EdgeInsets.only(top: 2, bottom: 2),
                                           child: Container(

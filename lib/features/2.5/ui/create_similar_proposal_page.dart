@@ -27,7 +27,7 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
   final TextEditingController _priceController = TextEditingController();
   double price = 0;
 
-  final String _requirement = '5.4 т';
+  //final String _requirement = '5.4 т';
   //bool _inStock = false;
   //bool _notStock = false;
 
@@ -281,7 +281,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         const Text('RUB', style: TextStyle(fontSize: 20, color: Colors.black))
                       ],
                     ),
-                    state.pageState.errorPriceText != null && state.pageState.priceError
+                    //state.pageState.errorPriceText != null &&
+                    state.pageState.priceError
                         ? Padding(
                             padding: const EdgeInsets.only(top: 2, bottom: 2),
                             child: Container(
@@ -381,7 +382,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                         ),
                       ],
                     ),
-                    state.pageState.errorAvailableSelectedText != null && state.pageState.availableSelectedError
+                    //state.pageState.errorAvailableSelectedText != null &&
+                    state.pageState.availableSelectedError
                         ? Padding(
                             padding: const EdgeInsets.only(top: 2, bottom: 2),
                             child: Container(
@@ -432,7 +434,8 @@ class _CreateSimilarProposalPageState extends State<CreateSimilarProposalPage> {
                                         borderRadius: BorderRadius.circular(15))),
                                 keyboardType: TextInputType.number,
                               ),
-                              state.pageState.errorDeliverDateText != null && state.pageState.deliverDateError
+                              //state.pageState.errorDeliverDateText != null &&
+                              state.pageState.deliverDateError
                                   ? Padding(
                                       padding: const EdgeInsets.only(top: 2, bottom: 2),
                                       child: Container(

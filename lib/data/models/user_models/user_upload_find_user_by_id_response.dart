@@ -3,41 +3,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'package:buy_metal_app/data/models/from_json.dart';
 
-part 'auth_upload_login_response.g.dart';
+part 'user_upload_find_user_by_id_response.g.dart';
 
 @JsonSerializable()
-class AuthUploadLoginResponse {
-  @JsonKey(name: 'accessToken', fromJson: FromJsonBase.jsonToString)
-  final String accessToken;
-  @JsonKey(name: 'refreshToken', fromJson: FromJsonBase.jsonToString)
-  final String refreshToken;
-  @JsonKey(name: 'user')
-  final User user;
-
-  const AuthUploadLoginResponse({
-    this.accessToken = '',
-    this.refreshToken = '',
-    this.user = const User(),
-  });
-
-  factory AuthUploadLoginResponse.fromJson(Map<String, dynamic> json) => _$AuthUploadLoginResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$AuthUploadLoginResponseToJson(this);
-
-  AuthUploadLoginResponse copyWith({
-    String? accessToken,
-    String? refreshToken,
-    User? user,
-  }) {
-    return AuthUploadLoginResponse(
-      accessToken: accessToken ?? this.accessToken,
-      refreshToken: refreshToken ?? this.refreshToken,
-      user: user ?? this.user,
-    );
-  }
-}
-
-@JsonSerializable()
-class User {
+class UserUploadFindUserByIdResponse {
   @JsonKey(name: 'blocked', fromJson: FromJsonBase.jsonToBool)
   final bool blocked;
   @JsonKey(name: 'companyAddress', fromJson: FromJsonBase.jsonToString)
@@ -58,14 +27,12 @@ class User {
   final bool phoneConfirmed;
   @JsonKey(name: 'position', fromJson: FromJsonBase.jsonToString)
   final String position;
-  @JsonKey(name: 'refresh', fromJson: FromJsonBase.jsonToString)
-  final String refresh;
   @JsonKey(name: 'registrationDate', fromJson: FromJsonBase.jsonToString)
   final String registrationDate;
   @JsonKey(name: 'tin', fromJson: FromJsonBase.jsonToString)
   final String tin;
 
-  const User({
+  const UserUploadFindUserByIdResponse({
     this.blocked = false,
     this.companyAddress = '',
     this.companyName = '',
@@ -76,15 +43,15 @@ class User {
     this.phone = '',
     this.phoneConfirmed = false,
     this.position = '',
-    this.refresh = '',
     this.registrationDate = '',
     this.tin = '',
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  factory UserUploadFindUserByIdResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserUploadFindUserByIdResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$UserUploadFindUserByIdResponseToJson(this);
 
-  User copyWith({
+  UserUploadFindUserByIdResponse copyWith({
     bool? blocked,
     String? companyAddress,
     String? companyName,
@@ -95,11 +62,10 @@ class User {
     String? phone,
     bool? phoneConfirmed,
     String? position,
-    String? refresh,
     String? registrationDate,
     String? tin,
   }) {
-    return User(
+    return UserUploadFindUserByIdResponse(
       blocked: blocked ?? this.blocked,
       companyAddress: companyAddress ?? this.companyAddress,
       companyName: companyName ?? this.companyName,
@@ -110,7 +76,6 @@ class User {
       phone: phone ?? this.phone,
       phoneConfirmed: phoneConfirmed ?? this.phoneConfirmed,
       position: position ?? this.position,
-      refresh: refresh ?? this.refresh,
       registrationDate: registrationDate ?? this.registrationDate,
       tin: tin ?? this.tin,
     );

@@ -112,13 +112,14 @@ class _RegSmsCodePageState extends State<RegSmsCodePage> {
                       onChanged: (pin) => context.read<RegSmsCodeBloc>().add(RegSmsCodeInputValueEvent(pin, false)),
                       //context.read<AuthSmsCodeBloc>().add(AuthSmsCodeInputValue(pin, false)),
                     ),
-                    state.pageState.errorText != null && state.pageState.smsCodeError
+                    //state.pageState.errorText != null &&
+                    state.pageState.smsCodeError
                         ? Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: Container(
                               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
-                                  color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  color: Colors.grey[900], borderRadius: const BorderRadius.all(Radius.circular(10))),
                               child: Text(
                                 state.pageState.errorText,
                                 style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),

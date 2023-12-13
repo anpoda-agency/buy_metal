@@ -221,8 +221,8 @@ class _RegFieldWidgetState extends State<RegFieldWidget> {
                   padding: const EdgeInsets.only(top: 2),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                    decoration:
-                        BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[900], borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: Text(
                       widget.errorText ?? '',
                       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red),
