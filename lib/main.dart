@@ -33,11 +33,19 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  //final globalStream = StreamController<GlobalEvents>.broadcast();
+var router = RouteImpl(
+  rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+  dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
+  dealsSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'dealsSupplier'), // SupplierFlow
+  ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
+  proposalsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'proposals'), // SupplierFlow
+  createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+  findCustomerNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'findCustomer'), // SupplierFlow
+  profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+  profileSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileSupplier'), // SupplierFlow
+);
 
-  bool loading = true;
-
+Widget startRouter() {
   var router = RouteImpl(
     rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
     dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
@@ -49,6 +57,33 @@ class _MyAppState extends State<MyApp> {
     profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
     profileSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileSupplier'), // SupplierFlow
   );
+  return MultiProvider(
+      providers: [
+        RepositoryProvider(create: (context) => getIt),
+        RepositoryProvider(create: (context) => router),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router.goRouterImplt.router,
+      ));
+}
+
+class _MyAppState extends State<MyApp> {
+  //final globalStream = StreamController<GlobalEvents>.broadcast();
+
+  bool loading = true;
+
+  /* var router = RouteImpl(
+    rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+    dealsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'deals'),
+    dealsSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'dealsSupplier'), // SupplierFlow
+    ordersNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'orders'),
+    proposalsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'proposals'), // SupplierFlow
+    createOrderNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'createOrders'),
+    findCustomerNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'findCustomer'), // SupplierFlow
+    profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+    profileSupplierNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profileSupplier'), // SupplierFlow
+  ); */
 
   @override
   void initState() {
@@ -70,11 +105,24 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  /* Widget startRouter() {
+    return MultiProvider(
+        providers: [
+          RepositoryProvider(create: (context) => getIt),
+          RepositoryProvider(create: (context) => router),
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router.goRouterImplt.router,
+        ));
+  } */
+
   @override
   Widget build(BuildContext context) {
     //final Object? args = ModalRoute.of(context)?.settings.arguments;
 
-    return MultiProvider(
+    return startRouter();
+    /* MultiProvider(
         providers: [
           RepositoryProvider(create: (context) => getIt),
           RepositoryProvider(create: (context) => router),
@@ -129,7 +177,7 @@ class _MyAppState extends State<MyApp> {
         home: const StartPage(),
       ),
       */
-        );
+        ); */
   }
 }
 

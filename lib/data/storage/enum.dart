@@ -3,4 +3,6 @@ enum GlobalEvents {
   createOrder,
   createProposal,
   createDeal,
+  toSupplierBar,
+  toBuyerBar,
 }

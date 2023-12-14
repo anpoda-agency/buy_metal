@@ -12,11 +12,11 @@ import 'package:go_router/go_router.dart';
   }
 } */
 
-class MainBottomNavigationBar extends StatelessWidget {
-  const MainBottomNavigationBar({
+class SupplierBottomNavigationBar extends StatelessWidget {
+  const SupplierBottomNavigationBar({
     required this.navigationShell,
     Key? key,
-  }) : super(key: key ?? const ValueKey<String>('MainBottomNavigationBar'));
+  }) : super(key: key ?? const ValueKey<String>('SupplierBottomNavigationBar'));
 
   final StatefulNavigationShell navigationShell;
 
@@ -50,65 +50,37 @@ class MainBottomNavigationBar extends StatelessWidget {
                 elevation: 0,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.list,
-                        color: Colors.white,
-                      ),
-                      //label: 'Deals\nBuyerFlow'),
-                      label: 'Сделки (З)'),
-                  /* BottomNavigationBarItem(
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
                         color: Colors.white,
                       ),
                       //label: 'Deals\nSupplierFlow'),
-                      label: 'Сделки (П)'), */
+                      label: 'Сделки (П)'),
                   BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.map,
-                        color: Colors.white,
-                      ),
-                      //label: 'Orders'),
-                      label: 'Заявки (З)'),
-                  /* BottomNavigationBarItem(
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
                         color: Colors.white,
                       ),
                       //label: 'Proposals'),
-                      label: 'Ответы (П)'), */
+                      label: 'Ответы (П)'),
                   BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      //label: 'CreateOrder'),
-                      label: 'Создать (З)'),
-                  /* BottomNavigationBarItem(
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
                         color: Colors.white,
                       ),
                       //label: 'FindCustomer'),
-                      label: 'Клиенты (П)'), */
+                      label: 'Клиенты (П)'),
                   BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      //label: 'Profile'),
-                      label: 'Профиль (З)'),
-                  /* BottomNavigationBarItem(
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
                         color: Colors.white,
                       ),
                       //label: 'ProfileSupplier'),
-                      label: 'Профиль (П)'), */
+                      label: 'Профиль (П)'),
                   /*
                         if (context.read<GetIt>().get<UserRepository>().isBusiness)
                           const BottomNavigationBarItem(

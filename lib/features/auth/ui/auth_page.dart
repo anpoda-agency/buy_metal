@@ -1,10 +1,13 @@
+import 'package:buy_metal_app/data/storage/enum.dart';
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
 import 'package:buy_metal_app/domain/repository/user_repository.dart';
+import 'package:buy_metal_app/domain/router/go_router/go_router_impl.dart';
 import 'package:buy_metal_app/domain/router/route_constants.dart';
 import 'package:buy_metal_app/domain/router/route_impl.dart';
 import 'package:buy_metal_app/features/auth/bloc/auth_bloc.dart';
 import 'package:buy_metal_app/features/core_widgets/error_dialog_widget.dart';
 import 'package:buy_metal_app/features/core_widgets/label_widget.dart';
+import 'package:buy_metal_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -36,9 +39,22 @@ class _AuthPageState extends State<AuthPage> {
           if (state.pageState.response.user.position == 'SUPPLIER') {
             //Navigator.pushNamedAndRemoveUntil(
             //    context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
-            context.read<RouteImpl>().go(DealsRoutes.deals.name);
+            globalStream.add(GlobalEvents.toSupplierBar);
+
+            /* context.read<RouteImpl>().newRoutesPath(
+                //DealsRoutes.deals.name,
+                [DealsSupplierRoutes.dealsSupplier.name]); */
+            /* context.read<RouteImpl>()
+              ..go(DealsRoutes.deals.name)
+              ..go(DealsSupplierRoutes.dealsSupplier.name); */
+            context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
+            // ПОСТАВЩИК ДОЛЖЕН В СВОИ СДЕЛКИ ПРОВАЛИВАТЬСЯ - БАГА
+            //context.read<RouteImpl>().go(DealsRoutes.deals.name);
           } else {
             //Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
+            globalStream.add(GlobalEvents.toBuyerBar);
+            buyerBar();
+            startRouter();
             context.read<RouteImpl>().go(DealsRoutes.deals.name);
           }
         }
