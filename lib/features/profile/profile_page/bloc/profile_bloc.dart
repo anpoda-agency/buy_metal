@@ -43,7 +43,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   profileLogOut(ProfileLogOutEvent event, emit) async {
-    //await userRepository.clearUserData();
+    await userRepository.clearUserData();
     authRepository.changeAuthStatus(val: false);
     emit(ProfileLogOutState(state.pageState.copyWith()));
   }

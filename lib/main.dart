@@ -17,6 +17,7 @@ final globalStream = StreamController<GlobalEvents>.broadcast();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  //init(globalStream);
   //initGetIt();
   runApp(const MyApp());
 }
