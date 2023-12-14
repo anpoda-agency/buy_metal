@@ -18,13 +18,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //init(globalStream);
-  //initGetIt();
+  initGetIt();
   runApp(const MyApp());
 }
 
 /* void initGetIt() async {
   setup();
 } */
+
+void initGetIt() async {
+  setup(globalStream);
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

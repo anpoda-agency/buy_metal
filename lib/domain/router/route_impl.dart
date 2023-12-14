@@ -1,9 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'go_router/go_router_impl.dart';
 import 'route_constants.dart';
+
+GetIt getIt = GetIt.instance;
 
 class RouteImpl {
   final GlobalKey<NavigatorState> rootNavigatorKey;

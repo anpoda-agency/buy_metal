@@ -26,6 +26,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 final getIt = GetIt.instance;
 
+//void setup() {
 Future<bool> setup(StreamController<GlobalEvents> gs) async {
   await PrefStorageInstance.load();
 
@@ -45,10 +46,12 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
   getIt.registerSingleton<DioClient>(DioClient(getIt<Dio>()));
 
   getIt.registerSingleton(AuthApi(dioClient: getIt<DioClient>()));
+  //var authRepo =
   var authRepo = getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()));
 
   getIt.registerSingleton(UserApi(dioClient: getIt<DioClient>()));
-  var userRepo = getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>()));
+  //var userRepo =
+  getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>()));
 
   getIt.registerSingleton(ApplicationApi(dioClient: getIt.get<DioClient>()));
   getIt.registerSingleton(ApplicationRepository(applicationApi: getIt.get<ApplicationApi>()));
@@ -65,15 +68,21 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
   getIt.registerSingleton(ActivationCodeApi(dioClient: getIt.get<DioClient>()));
   getIt.registerSingleton(ActivationCodeRepository(activationCodeApi: getIt.get<ActivationCodeApi>()));
 
+  //var authRepo = getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()));
+  //var userRepo = getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>()));
+
   String? token = await storage.getRecord(PrefName.refreshToken);
   String? userId = await storage.getRecord(PrefName.userId);
 
   if (token != null && token.isNotEmpty && userId != null && userId.isNotEmpty) {
     try {
-      AuthUploadRefreshTokenResponse resTokens = await authRepo.authUploadRefreshToken(path: token);
-      UserUploadFindUserByIdResponse userModel =
-          await userRepo.userUploadFindUserById(path: userId, accessToken: resTokens.accessToken);
-      await userRepo.setUserData(
+      AuthUploadRefreshTokenResponse resTokens = await getIt
+          .registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()))
+          .authUploadRefreshToken(path: token);
+      UserUploadFindUserByIdResponse userModel = await getIt
+          .registerSingleton(UserRepository(userApi: getIt.get<UserApi>()))
+          .userUploadFindUserById(path: userId, accessToken: resTokens.accessToken);
+      await getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>())).setUserData(
           user: aulr.AuthUploadLoginResponse(
             accessToken: resTokens.accessToken,
             refreshToken: resTokens.refreshToken,
@@ -93,10 +102,10 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
             ),
           ),
           token: resTokens.refreshToken);
-      authRepo.changeAuthStatus(val: true);
+      getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>())).changeAuthStatus(val: true);
     } catch (e) {
-      userRepo.clearUserData();
-      authRepo.changeAuthStatus(val: false);
+      getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>())).clearUserData();
+      getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>())).changeAuthStatus(val: false);
     }
   }
 
@@ -106,9 +115,11 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
         String? token = await storage.getRecord(PrefName.refreshToken);
         String? userId = await storage.getRecord(PrefName.userId);
         if (token != null && token.isNotEmpty && userId != null && userId.isNotEmpty) {
-          AuthUploadRefreshTokenResponse? resTokens = await authRepo.authUploadRefreshToken(path: token);
-          aulr.User userModel = userRepo.user!.user;
-          await userRepo.setUserData(
+          AuthUploadRefreshTokenResponse? resTokens = await getIt
+              .registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()))
+              .authUploadRefreshToken(path: token);
+          aulr.User userModel = getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>())).user!.user;
+          await getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>())).setUserData(
               user: aulr.AuthUploadLoginResponse(
                 accessToken: resTokens.accessToken,
                 refreshToken: resTokens.refreshToken,
@@ -134,8 +145,8 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
           handler.resolve(await _retry(options));
         }
       } else if (error.response?.data['message'] == 'Refresh tokens not same') {
-        userRepo.clearUserData();
-        authRepo.changeAuthStatus(val: false);
+        getIt.registerSingleton(UserRepository(userApi: getIt.get<UserApi>())).clearUserData();
+        getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>())).changeAuthStatus(val: false);
         gs.add(GlobalEvents.toStart);
       }
     }

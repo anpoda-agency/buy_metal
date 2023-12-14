@@ -25,6 +25,8 @@ class AuthRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  //bool _isSupplier = false,
+
   Future<AuthUploadLoginResponse> authUploadLogin({required AuthUploadLoginRequest request}) async {
     try {
       final response = await authApi.authUploadLogin(request: request);

@@ -49,6 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await userRepository.setUserData(user: res, token: res.refreshToken);
       authRepository.changeAuthStatus(val: true);
+
       emit(AuthAllowedToPush(state.pageState.copyWith(response: res)));
     } else {
       //emit(AuthError(state.pageState));

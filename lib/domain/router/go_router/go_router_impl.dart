@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/main_bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+GetIt getIt = GetIt.instance;
+
 class GoRouterImplt {
+  /* GetIt getIt = GetIt.instance;
+
+  bool isSupplier = context.read<GetIt>().get<UserRepository>(); */
+  //final UserRepository userRepository;
+
   GoRouterImplt({
+    //required this.userRepository,
     required String initPage,
     required GlobalKey<NavigatorState> rootNavigatorKey,
     required GlobalKey<NavigatorState> dealsNavigatorKey,
@@ -38,50 +47,58 @@ class GoRouterImplt {
             ...root,
             StatefulShellRoute.indexedStack(
               builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-                return MainBottomNavigationBar(navigationShell: navigationShell);
+                return MainBottomNavigationBar(
+                  navigationShell: navigationShell,
+                  userRepository: context.read<GetIt>().get<UserRepository>(),
+                );
                 //return StatefulNavigationShell(navigationShell: navigationShell);
               },
               branches: [
-                if (deals.isNotEmpty)
+                if (deals.isNotEmpty && getIt.get<UserRepository>().user?.user.position == 'CUSTOMER')
                   StatefulShellBranch(
                     navigatorKey: dealsNavigatorKey,
                     routes: deals,
                   ),
                 // SupplierFlow
-                if (dealsSupplier.isNotEmpty) // SupplierFlow
+                //if (GetIt.instance.get<UserRepository>().user?.user.position == 'SUPPLIER')
+                if (dealsSupplier.isNotEmpty &&
+                    getIt.get<UserRepository>().user?.user.position == 'SUPPLIER') // SupplierFlow
                   StatefulShellBranch(
                     navigatorKey: dealsSupplierNavigatorKey,
                     routes: dealsSupplier,
                   ),
-                if (orders.isNotEmpty)
+                if (orders.isNotEmpty && getIt.get<UserRepository>().user?.user.position == 'CUSTOMER')
                   StatefulShellBranch(
                     navigatorKey: ordersNavigatorKey,
                     routes: orders,
                   ),
                 // SupplierFlow
-                if (proposals.isNotEmpty) // SupplierFlow
+                if (proposals.isNotEmpty &&
+                    getIt.get<UserRepository>().user?.user.position == 'SUPPLIER') // SupplierFlow
                   StatefulShellBranch(
                     navigatorKey: proposalsNavigatorKey,
                     routes: proposals,
                   ),
-                if (createOrder.isNotEmpty)
+                if (createOrder.isNotEmpty && getIt.get<UserRepository>().user?.user.position == 'CUSTOMER')
                   StatefulShellBranch(
                     navigatorKey: createOrderNavigatorKey,
                     routes: createOrder,
                   ),
                 // SupplierFlow
-                if (findCustomer.isNotEmpty) // SupplierFlow
+                if (findCustomer.isNotEmpty &&
+                    getIt.get<UserRepository>().user?.user.position == 'SUPPLIER') // SupplierFlow
                   StatefulShellBranch(
                     navigatorKey: findCustomerNavigatorKey,
                     routes: findCustomer,
                   ),
-                if (profile.isNotEmpty)
+                if (profile.isNotEmpty && getIt.get<UserRepository>().user?.user.position == 'CUSTOMER')
                   StatefulShellBranch(
                     navigatorKey: profileNavigatorKey,
                     routes: profile,
                   ),
                 // SupplierFlow
-                if (profileSupplier.isNotEmpty) // SupplierFlow
+                if (profileSupplier.isNotEmpty &&
+                    getIt.get<UserRepository>().user?.user.position == 'SUPPLIER') // SupplierFlow
                   StatefulShellBranch(
                     navigatorKey: profileSupplierNavigatorKey,
                     routes: profileSupplier,

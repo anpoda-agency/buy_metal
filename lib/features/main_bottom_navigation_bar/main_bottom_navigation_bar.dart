@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,10 @@ import 'package:go_router/go_router.dart';
 } */
 
 class MainBottomNavigationBar extends StatelessWidget {
+  final UserRepository userRepository;
+
   const MainBottomNavigationBar({
+    required this.userRepository,
     required this.navigationShell,
     Key? key,
   }) : super(key: key ?? const ValueKey<String>('MainBottomNavigationBar'));
@@ -22,6 +26,8 @@ class MainBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //bool isSupplier = context.read<GetIt>().get<UserRepository>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -48,67 +54,75 @@ class MainBottomNavigationBar extends StatelessWidget {
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 elevation: 0,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
+                items: <BottomNavigationBarItem>[
+                  const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.list,
                         color: Colors.white,
                       ),
                       //label: 'Deals\nBuyerFlow'),
                       label: 'Сделки (З)'),
-                  BottomNavigationBarItem(
-                      // SupplierFlow
-                      icon: Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      //label: 'Deals\nSupplierFlow'),
-                      label: 'Сделки (П)'),
-                  BottomNavigationBarItem(
+                  if (userRepository.user?.user.position == 'SUPPLIER') ...[
+                    const BottomNavigationBarItem(
+                        // SupplierFlow
+                        icon: Icon(
+                          Icons.list_alt,
+                          color: Colors.white,
+                        ),
+                        //label: 'Deals\nSupplierFlow'),
+                        label: 'Сделки (П)'),
+                  ],
+                  const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,
                         color: Colors.white,
                       ),
                       //label: 'Orders'),
                       label: 'Заявки (З)'),
-                  BottomNavigationBarItem(
-                      // SupplierFlow
-                      icon: Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      //label: 'Proposals'),
-                      label: 'Ответы (П)'),
-                  BottomNavigationBarItem(
+                  if (userRepository.user?.user.position == 'SUPPLIER') ...[
+                    const BottomNavigationBarItem(
+                        // SupplierFlow
+                        icon: Icon(
+                          Icons.list_alt,
+                          color: Colors.white,
+                        ),
+                        //label: 'Proposals'),
+                        label: 'Ответы (П)'),
+                  ],
+                  const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         color: Colors.white,
                       ),
                       //label: 'CreateOrder'),
                       label: 'Создать (З)'),
-                  BottomNavigationBarItem(
-                      // SupplierFlow
-                      icon: Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      //label: 'FindCustomer'),
-                      label: 'Клиенты (П)'),
-                  BottomNavigationBarItem(
+                  if (userRepository.user?.user.position == 'SUPPLIER') ...[
+                    const BottomNavigationBarItem(
+                        // SupplierFlow
+                        icon: Icon(
+                          Icons.list_alt,
+                          color: Colors.white,
+                        ),
+                        //label: 'FindCustomer'),
+                        label: 'Клиенты (П)'),
+                  ],
+                  const BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
                         color: Colors.white,
                       ),
                       //label: 'Profile'),
                       label: 'Профиль (З)'),
-                  BottomNavigationBarItem(
-                      // SupplierFlow
-                      icon: Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      //label: 'ProfileSupplier'),
-                      label: 'Профиль (П)'),
+                  if (userRepository.user?.user.position == 'SUPPLIER') ...[
+                    const BottomNavigationBarItem(
+                        // SupplierFlow
+                        icon: Icon(
+                          Icons.list_alt,
+                          color: Colors.white,
+                        ),
+                        //label: 'ProfileSupplier'),
+                        label: 'Профиль (П)'),
+                  ],
                   /*
                         if (context.read<GetIt>().get<UserRepository>().isBusiness)
                           const BottomNavigationBarItem(
