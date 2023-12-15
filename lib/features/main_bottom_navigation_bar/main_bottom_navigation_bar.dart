@@ -169,9 +169,21 @@ class MainBottomNavigationBar extends StatelessWidget {
   }
 
   void _onTap(BuildContext context, int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
+    if (userRepository.user?.user.position == 'CUSTOMER') {
+      if (index == 0 || index == 2 || index == 4 || index == 6) {
+        navigationShell.goBranch(
+          index,
+          initialLocation: index == navigationShell.currentIndex,
+        );
+      }
+    }
+    if (userRepository.user?.user.position == 'SUPPLIER') {
+      if (index == 1 || index == 3 || index == 5 || index == 7) {
+        navigationShell.goBranch(
+          index,
+          initialLocation: index == navigationShell.currentIndex,
+        );
+      }
+    }
   }
 }
