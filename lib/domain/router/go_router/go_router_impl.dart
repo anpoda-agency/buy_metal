@@ -1,4 +1,5 @@
 import 'package:buy_metal_app/domain/repository/auth_repository.dart';
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:buy_metal_app/features/main_bottom_navigation_bar/main_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -38,7 +39,10 @@ class GoRouterImplt {
             ...root,
             StatefulShellRoute.indexedStack(
               builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-                return MainBottomNavigationBar(navigationShell: navigationShell);
+                return MainBottomNavigationBar(
+                  navigationShell: navigationShell,
+                  userRepository: context.read<GetIt>().get<UserRepository>(),
+                );
                 //return StatefulNavigationShell(navigationShell: navigationShell);
               },
               branches: [

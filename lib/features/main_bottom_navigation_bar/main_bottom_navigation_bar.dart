@@ -1,3 +1,4 @@
+import 'package:buy_metal_app/domain/repository/user_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,9 @@ import 'package:go_router/go_router.dart';
 } */
 
 class MainBottomNavigationBar extends StatelessWidget {
+  final UserRepository userRepository;
   const MainBottomNavigationBar({
+    required this.userRepository,
     required this.navigationShell,
     Key? key,
   }) : super(key: key ?? const ValueKey<String>('MainBottomNavigationBar'));
@@ -48,11 +51,11 @@ class MainBottomNavigationBar extends StatelessWidget {
                 showUnselectedLabels: true,
                 type: BottomNavigationBarType.fixed,
                 elevation: 0,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.list,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'CUSTOMER' ? Colors.white : Colors.black,
                       ),
                       //label: 'Deals\nBuyerFlow'),
                       label: 'Сделки (З)'),
@@ -60,14 +63,14 @@ class MainBottomNavigationBar extends StatelessWidget {
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'SUPPLIER' ? Colors.white : Colors.black,
                       ),
                       //label: 'Deals\nSupplierFlow'),
                       label: 'Сделки (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.map,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'CUSTOMER' ? Colors.white : Colors.black,
                       ),
                       //label: 'Orders'),
                       label: 'Заявки (З)'),
@@ -75,14 +78,14 @@ class MainBottomNavigationBar extends StatelessWidget {
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'SUPPLIER' ? Colors.white : Colors.black,
                       ),
                       //label: 'Proposals'),
                       label: 'Ответы (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'CUSTOMER' ? Colors.white : Colors.black,
                       ),
                       //label: 'CreateOrder'),
                       label: 'Создать (З)'),
@@ -90,14 +93,14 @@ class MainBottomNavigationBar extends StatelessWidget {
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'SUPPLIER' ? Colors.white : Colors.black,
                       ),
                       //label: 'FindCustomer'),
                       label: 'Клиенты (П)'),
                   BottomNavigationBarItem(
                       icon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'CUSTOMER' ? Colors.white : Colors.black,
                       ),
                       //label: 'Profile'),
                       label: 'Профиль (З)'),
@@ -105,7 +108,7 @@ class MainBottomNavigationBar extends StatelessWidget {
                       // SupplierFlow
                       icon: Icon(
                         Icons.list_alt,
-                        color: Colors.white,
+                        color: userRepository.user?.user.position == 'SUPPLIER' ? Colors.white : Colors.black,
                       ),
                       //label: 'ProfileSupplier'),
                       label: 'Профиль (П)'),

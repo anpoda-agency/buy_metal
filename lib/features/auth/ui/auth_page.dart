@@ -36,7 +36,7 @@ class _AuthPageState extends State<AuthPage> {
           if (state.pageState.response.user.position == 'SUPPLIER') {
             //Navigator.pushNamedAndRemoveUntil(
             //    context, '/selected_buyer_list_of_orders_page', (Route<dynamic> route) => false);
-            context.read<RouteImpl>().go(DealsRoutes.deals.name);
+            context.read<RouteImpl>().go(DealsSupplierRoutes.dealsSupplier.name);
           } else {
             //Navigator.pushNamedAndRemoveUntil(context, '/buyer_workplace_page', (Route<dynamic> route) => false);
             context.read<RouteImpl>().go(DealsRoutes.deals.name);
