@@ -27,19 +27,19 @@ class _SupplierProposalDescriptionPageState extends State<SupplierProposalDescri
     super.initState();
   }
  */
-  /* late final ApplicationResponseGetSupplierResponsesResponse args;
+  late final ApplicationResponseGetSupplierResponsesResponse args;
 
   @override
   void initState() {
     args = widget.args as ApplicationResponseGetSupplierResponsesResponse;
 
     super.initState();
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
     //var args = ModalRoute.of(context)!.settings.arguments as ApplicationGetResponsesByApplicationIdResponse;
-    final args = widget.args as ApplicationResponseGetSupplierResponsesResponse;
+    //final args = widget.args as ApplicationResponseGetSupplierResponsesResponse;
     return BlocProvider(
       create: (context) => SupplierProposalDescriptionBloc(
           proposalInfo: args,

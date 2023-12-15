@@ -85,11 +85,20 @@ class _ProfilePageState extends State<ProfilePage> {
             context.read<RouteImpl>().go(RootRoutes.startPage.name);
           }
           if (state is ProfileGoStatisticState) {
+            if (context.read<GetIt>().get<UserRepository>().user?.user.position == 'CUSTOMER') {
+              context.read<RouteImpl>().go(ProfileRoutes.profileStatistics.name, args: state.pageState.user);
+            }
+            if (context.read<GetIt>().get<UserRepository>().user?.user.position == 'SUPPLIER') {
+              context
+                  .read<RouteImpl>()
+                  .go(ProfileSupplierRoutes.profileSupplierStatistics.name, args: state.pageState.user);
+            }
+
             /* context
                 .read<RouteImpl>()
                 .push(ProfileRoutes.profileStatistics.name, args: state.pageState.user)
                 .then((value) => context.read<ProfileBloc>().add(ProfileInit())); */
-            context.read<RouteImpl>().go(ProfileRoutes.profileStatistics.name, args: state.pageState.user);
+            //context.read<RouteImpl>().go(ProfileRoutes.profileStatistics.name, args: state.pageState.user);
           }
         },
         builder: (context, state) {

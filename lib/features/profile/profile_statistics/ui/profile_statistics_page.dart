@@ -145,24 +145,48 @@ class _ProfileStatisticsPageState extends State<ProfileStatisticsPage> {
                           //mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                context.read<RouteImpl>().go(ProfileRoutes.profile.name);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                decoration: BoxDecoration(
-                                    color: Colors.orange[700],
-                                    //border: Border.all(width: 2, color: Colors.black),
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                                //width: MediaQuery.of(context).size.width,
-                                child: const Text(
-                                  'О компании',
-                                  style: TextStyle(fontSize: 20, color: Colors.white),
+                            if (context.read<GetIt>().get<UserRepository>().user?.user.position == 'CUSTOMER') ...[
+                              InkWell(
+                                onTap: () {
+                                  context.read<RouteImpl>().go(ProfileRoutes.profile.name);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.orange[700],
+                                      //border: Border.all(width: 2, color: Colors.black),
+                                      borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                  //width: MediaQuery.of(context).size.width,
+                                  child: const Text(
+                                    'О компании',
+                                    style: TextStyle(fontSize: 20, color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
+
+                            if (context.read<GetIt>().get<UserRepository>().user?.user.position == 'SUPPLIER') ...[
+                              InkWell(
+                                onTap: () {
+                                  context.read<RouteImpl>().go(ProfileSupplierRoutes.profileSupplier.name);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  //margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.orange[700],
+                                      //border: Border.all(width: 2, color: Colors.black),
+                                      borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                  //width: MediaQuery.of(context).size.width,
+                                  child: const Text(
+                                    'О компании',
+                                    style: TextStyle(fontSize: 20, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+
                             //const SizedBox(width: 20),
                             InkWell(
                               child: Container(
